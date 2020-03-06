@@ -24,6 +24,7 @@
 
 #include "veins/veins.h"
 #include <tr1/unordered_map>
+#include <boost/functional/hash.hpp>
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
 #include "veins/modules/application/traci/infoMsg_m.h"
 #include "veins/modules/application/traci/reportMsg_m.h"
@@ -32,33 +33,42 @@
 
 namespace veins {
 
-/**
- * @brief
- * This is a stub for a typical Veins application layer.
- * Most common functions are overloaded.
- * See MyVeinsApp.cc for hints
- *
- * @author David Eckhoff
- *
- */
+struct vehStats {
+	int msgCount = 0;      		//messages received from veh
+	int trueMsgCount = 0; //messages received from veh which were evaluated to true by self
+	float rep = 0.5;       		//current calculated rep of vehicle
+	float repOrignal = 0.5;		//rep of vehicle from last server communication
+	int reportedCount = 0; 		//number of reports received on this vehicle
+	int reportedTrueCount = 0; //number of reports received on this vehicle that stated it was truthful.
+};
+typedef std::tr1::unordered_map<int, bool> int2boolmap;
+typedef std::tr1::unordered_map<std::pair<int, int>, int2boolmap*,
+		boost::hash<std::pair<int, int>>> intpair_2_int2boolmapptr;
+typedef std::tr1::unordered_map<int, vehStats*> int_2_vehStatsptr;
 
-class VEINS_API MyVeinsApp : public DemoBaseApplLayer {
+class VEINS_API MyVeinsApp: public DemoBaseApplLayer {
 public:
-    void initialize(int stage) override;
-    void finish() override;
+	void initialize(int stage) override;
+	void finish() override;
 protected:
-    void onWSM(BaseFrame1609_4* wsm) override;
-    void onWSA(DemoServiceAdvertisment* wsa) override;
+	void onWSM(BaseFrame1609_4 *wsm) override;
+	void onWSA(DemoServiceAdvertisment *wsa) override;
 
-    void handleSelfMsg(cMessage* msg) override;
-    void handlePositionUpdate(cObject* obj) override;
-    bool inaccurateBoolCheck(bool val, float detectionAccuracy=0.9);
-    void setSendingAccuracy();
-    int currentSubscribedServiceId;
-    std::tr1::unordered_map<int, std::pair<int, double>> counts;
-    int sent;
-    int sentCorrect;
-    float sendingAccuracy;
+	void handleSelfMsg(cMessage *msg) override;
+	void handlePositionUpdate(cObject *obj) override;
+	bool inaccurateBoolCheck(bool val, float accuracy = 0.9); //used for simulating errors while evaluating and generating information.
+	float scoreCalculator(float old, int trueCount, int count);
+	void setSendingAccuracy();
+	int currentSubscribedServiceId;
+	//storing various data on other vehicles in network map{vehId->vehStats}
+	int_2_vehStatsptr vehicles;
+	//storing reports for each message.  map{ <senderId,msgId> --> map{ reporter->value } }
+	intpair_2_int2boolmapptr reportsArchive;
+
+	int sent;               // Simulation purposes. for recording scalar
+	int sentCorrect;		// Simulation purposes. for recording scalar
+	float sendingAccuracy;  // to control behaviour of node.
+	float evaluatingAccuracy;
 };
 
 } // namespace veins

@@ -28,57 +28,75 @@ using namespace veins;
 
 Define_Module(veins::MyVeinsApp);
 
+bool MyVeinsApp::inaccurateBoolCheck(bool val, float accuracy) {
+	srand((int) simTime().raw() + myId);
+	if ((rand() % 1000) < (accuracy * 1000))
+		return val;
+	return val ? false : true;
+}
+float MyVeinsApp::scoreCalculator(float old, int trueCount, int count) {
+	float fn = exp(-0.006 * count);     // y= e^(-0.006*x)
+	return fn * old + (1 - fn) * ((float) trueCount / (float) count);
+}
+
 void MyVeinsApp::initialize(int stage) {
 	DemoBaseApplLayer::initialize(stage);
 	if (stage == 0) {
 		EV << "Initializing " << par("appName").stringValue() << std::endl;
 		currentSubscribedServiceId = -1;
 		sent = 0;
-		sentCorrect=0;
+		sentCorrect = 0;
+		evaluatingAccuracy = 1;
 		setSendingAccuracy();
 	} else if (stage == 1) {
 	}
 }
-void MyVeinsApp::setSendingAccuracy(int stage) {
+void MyVeinsApp::setSendingAccuracy() {
 	srand(myId);
-	sendingAccuracy=(rand()%1000<100)?0.0:1.0;      //randomly set accuracy of 10% vehicles to 0 and remaining to 1.
+	sendingAccuracy = (rand() % 1000 < 100) ? 0.0 : 1.0; //randomly set accuracy of 10% vehicles to 0 and remaining to 1.
 	//can alternatively make a bool val called "isbad" and #define badAccuracy and goodAccuracy and pass these in inaccurateboolcheck according to isbad value.
 }
-
-
-
 
 void MyVeinsApp::finish() {
 	recordScalar("#sent", sent);
 	int recieved = 0;
-	for (auto x : counts)
-		recieved += x.second.first;
+	for (auto x : vehicles)
+		recieved += x.second->msgCount;
 	recordScalar("#recieved", recieved);
 	recordScalar("mySendingAccuracy", sendingAccuracy);
 	//accuracy can be made fuzzy for good and bad in other experiments, there actual accuracy will wary from set accuracy especially if 'sent' is not large.
-	recordScalar("myFinalRealAccuracy", (float)sentCorrect/(float)sent)
+	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent);
 	DemoBaseApplLayer::finish();
 }
 void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) {
-	try {
-		infoMsg *wsm = check_and_cast<infoMsg*>(frame);
-		try {
-			counts[wsm->getSenderAddress()].first++;
-		} catch (...) {
-			counts[wsm->getSenderAddress()] = std::make_pair((int) 1,
-					(double) 0);
-		}
-		EV << "\n------------------------------------------\n";
-		EV << "counts for" << myId << " are:\n";
-		for (auto x : counts)
-			EV << x.first << "-sent-" << x.second.first << "\n";
-		EV << "------------------------------------------\n";
-	} catch (...) {
-		try {
-			reportMsg *wsm = check_and_cast<reportMsg*>(frame);
-			EV << "TODO";
-		} catch (...) {
-			EV << "Unknown type WSS Recieved";
+	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) {
+		int senderId = wsm->getSenderAddress();
+		int msgId = wsm->getMsgId();
+		std::pair<int, int> senderId_msgId = std::make_pair(senderId, msgId);
+		if (vehicles.find(senderId) == vehicles.end()) //if a message has been received from this sender for the first time...
+			vehicles[senderId] = new vehStats();
+		vehStats *veh = vehicles[senderId];
+		if (reportsArchive.find(senderId_msgId) == reportsArchive.end()) //if neither a report of this message has been received earlier nor this message
+			reportsArchive[senderId_msgId] = new int2boolmap;
+		int2boolmap *reports = reportsArchive[senderId_msgId];
+		if (reports->find(myId) == reports->end()) { //if this message has been received for the first time by SELF..
+			bool msgVal = inaccurateBoolCheck(wsm->getCorrect(),
+					evaluatingAccuracy);
+			(*reports)[myId] = msgVal;
+			//can instead create a fn "handleReport(reporterID,reporteeID,msgID,val)" to add entry to reportsArchive and also update rep,
+			//same fn could be called from reportmsg handing block.
+			veh->msgCount++;
+			veh->reportedCount++;
+			if (msgVal) {
+				veh->trueMsgCount++;
+				veh->reportedTrueCount++;
+			}
+			veh->rep = scoreCalculator(veh->repOrignal, veh->reportedTrueCount,
+					veh->reportedCount);
+			EV << "\n------------------------------------------\n";
+			EV << "myId=" << myId << "\nSenderId=" << senderId << "\tcount="
+						<< veh->reportedCount << "\ttrue="
+						<< veh->reportedTrueCount << "\tscore" << veh->rep;
 		}
 	}
 }
@@ -113,8 +131,9 @@ void MyVeinsApp::handlePositionUpdate(cObject *obj) {
 		populateWSM(wsm);
 		wsm->setSenderAddress(myId);
 		wsm->setMsgId(sent++);
-		wsm->setCorrect(inaccurateBoolCheck(true,sendingAccuracy));
-		if(wsm->getCorrect()) sentCorrect++;
+		wsm->setCorrect(inaccurateBoolCheck(true, sendingAccuracy));
+		if (wsm->getCorrect())
+			sentCorrect++;
 		if (dataOnSch) {
 			startService(Channel::sch2, 1337, "My test Service");
 			// started service and server advertising, schedule message to self to send later
@@ -129,9 +148,3 @@ void MyVeinsApp::handlePositionUpdate(cObject *obj) {
 // member variables such as currentPosition and currentSpeed are updated in the parent class
 }
 
-bool MyVeinsApp::inaccurateBoolCheck(bool val, float accuracy = 0.9) {
-	srand((int) simTime().raw() + myId);
-	if ((rand() % 1000) < (accuracy * 1000))
-		return val;
-	return val ? false : true;
-}
