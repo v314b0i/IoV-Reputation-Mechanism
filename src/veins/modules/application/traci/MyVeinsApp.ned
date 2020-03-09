@@ -28,6 +28,11 @@ import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 //
 simple MyVeinsApp extends DemoBaseApplLayer
 {
-    @class(veins::MyVeinsApp);
-    string appName = default("My first Veins App!");
+    parameters:
+    	@class(veins::MyVeinsApp);
+    	string appName = default("My first Veins App!");
+    	int percentageWithBadSendingAccuracy;
+    	int badSendingAccuracyPercentage;
+    	int goodSendingAccuracyPercentage;
+    	int evaluatingAccuracyPercentage;
 }

@@ -35,7 +35,7 @@ bool MyVeinsApp::inaccurateBoolCheck(bool val, float accuracy) {
 	return val ? false : true;
 }
 float MyVeinsApp::scoreCalculator(float old, int trueCount, int count) {
-	float fn = exp(-0.006 * count);     // y= e^(-0.006*x)
+	float fn = exp(-0.006 * count); // y= e^(-0.006*x)    y goes from 1 to 0 for x from 0 to infinity
 	return fn * old + (1 - fn) * ((float) trueCount / (float) count);
 }
 
@@ -46,15 +46,25 @@ void MyVeinsApp::initialize(int stage) {
 		currentSubscribedServiceId = -1;
 		sent = 0;
 		sentCorrect = 0;
-		evaluatingAccuracy = 1;
-		setSendingAccuracy();
+		/*int x= getNumParams();
+		for(int i=0;i<x;i++){
+			EV<<par(i)<<std::endl;
+		}*/
+		evaluatingAccuracy = (float)par("evaluatingAccuracyPercentage").intValue()
+				/ (float) 100;
+		sendingAccuracy = setSendingAccuracy();
+		EV << "sending Accuracy for " << myId << " is " << sendingAccuracy
+					<< "\n";
 	} else if (stage == 1) {
 	}
 }
-void MyVeinsApp::setSendingAccuracy() {
-	srand(myId);
-	sendingAccuracy = (rand() % 1000 < 100) ? 0.0 : 1.0; //randomly set accuracy of 10% vehicles to 0 and remaining to 1.
-	//can alternatively make a bool val called "isbad" and #define badAccuracy and goodAccuracy and pass these in inaccurateboolcheck according to isbad value.
+float MyVeinsApp::setSendingAccuracy() {
+	srand(myId + (int) simTime().raw());
+	int a = (rand() % 1000);
+	return (float) (
+			a < (par("percentageWithBadSendingAccuracy").intValue() * 10) ?
+					par("badSendingAccuracyPercentage").intValue() :
+					par("goodSendingAccuracyPercentage").intValue()) / (float) 100;
 }
 
 void MyVeinsApp::finish() {
@@ -68,12 +78,13 @@ void MyVeinsApp::finish() {
 	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent);
 	DemoBaseApplLayer::finish();
 }
-void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) {
+
+void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) {
 		int senderId = wsm->getSenderAddress();
 		int msgId = wsm->getMsgId();
 		std::pair<int, int> senderId_msgId = std::make_pair(senderId, msgId);
-		if (vehicles.find(senderId) == vehicles.end()) //if a message has been received from this sender for the first time...
+		if (vehicles.find(senderId) == vehicles.end()) //if neither a message from this sender not a report on this sender has been recieved before
 			vehicles[senderId] = new vehStats();
 		vehStats *veh = vehicles[senderId];
 		if (reportsArchive.find(senderId_msgId) == reportsArchive.end()) //if neither a report of this message has been received earlier nor this message
@@ -97,6 +108,55 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) {
 			EV << "myId=" << myId << "\nSenderId=" << senderId << "\tcount="
 						<< veh->reportedCount << "\ttrue="
 						<< veh->reportedTrueCount << "\tscore" << veh->rep;
+			reportMsg *wsm = new reportMsg();
+			populateWSM(wsm);
+			wsm->setReporterAddress(myId);
+			wsm->setReporteeAddress(senderId);
+			wsm->setReportedMsgId(msgId);
+			wsm->setFoundValid(msgVal);
+			if (dataOnSch) {
+				startService(Channel::sch2, 1337, "My test Service");
+				scheduleAt(
+						computeAsynchronousSendingTime(1, ChannelType::service),
+						wsm);
+			} else
+				sendDown(wsm);
+		}
+	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
+		int reporteeId = wsm->getReporteeAddress();
+		int reporterId = wsm->getReporterAddress();
+		int msgId = wsm->getReportedMsgId();
+		bool foundValid = wsm->getFoundValid();
+		std::pair<int, int> reporteeId_msgId = std::make_pair(reporteeId,
+				msgId);
+		if (reportsArchive.find(reporteeId_msgId) == reportsArchive.end()) //if neither a report of this message has been received earlier nor this message
+			reportsArchive[reporteeId_msgId] = new int2boolmap;	//TODO add delay here or timer via self msg so that its more likely to recieve a msg first before receiveing a report on it.
+		int2boolmap *reports = reportsArchive[reporteeId_msgId];
+		if (reports->find(reporterId) == reports->end()) { //if this report has not been recieved before
+			if (reports->find(myId) == reports->end()) { // if the message being reported HAS NOT been recieved by self (we update the reporteE's score as per report)
+				(*reports)[reporterId] = foundValid;
+				if (vehicles.find(reporteeId) == vehicles.end())
+					vehicles[reporteeId] = new vehStats();
+				vehStats *veh = vehicles[reporteeId];
+				veh->reportedCount++;
+				if (foundValid)
+					veh->reportedTrueCount++;
+				veh->rep = scoreCalculator(veh->repOrignal,
+						veh->reportedTrueCount, veh->reportedCount);
+			} else {// if the message being reported HAS been recieved by self (we update the reporteR's score as per its consistency with self's report)
+				if (vehicles.find(reporterId) == vehicles.end()) //if neither a message from this reportee not a report on this reportee has been recieved before
+					vehicles[reporterId] = new vehStats();
+				vehStats *veh = vehicles[reporterId];
+				veh->reportedCount++;
+				veh->reportComparisonCount++;
+				if ((*reports)[reporterId] == (*reports)[myId]) {
+					veh->reportedTrueCount++;
+					veh->reportComparisonTrueCount++;
+				}
+				veh->rep = scoreCalculator(veh->repOrignal,
+						veh->reportedTrueCount, veh->reportedCount);
+			}
+
 		}
 	}
 }
@@ -126,7 +186,7 @@ void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 void MyVeinsApp::handlePositionUpdate(cObject *obj) {
 	DemoBaseApplLayer::handlePositionUpdate(obj);
 	srand((int) simTime().raw() + myId);
-	if (rand() % 1000 < 50) {
+	if (rand() % 1000 < 100) {
 		infoMsg *wsm = new infoMsg();
 		populateWSM(wsm);
 		wsm->setSenderAddress(myId);
@@ -136,15 +196,11 @@ void MyVeinsApp::handlePositionUpdate(cObject *obj) {
 			sentCorrect++;
 		if (dataOnSch) {
 			startService(Channel::sch2, 1337, "My test Service");
-			// started service and server advertising, schedule message to self to send later
 			scheduleAt(computeAsynchronousSendingTime(1, ChannelType::service),
 					wsm);
 		} else {
-			// send right away on CCH, because channel switching is disabled
 			sendDown(wsm);
 		}
 	}
-// the vehicle has moved. Code that reacts to new positions goes here.
-// member variables such as currentPosition and currentSpeed are updated in the parent class
 }
 

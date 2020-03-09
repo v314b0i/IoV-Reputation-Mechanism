@@ -38,8 +38,12 @@ struct vehStats {
 	int trueMsgCount = 0; //messages received from veh which were evaluated to true by self
 	float rep = 0.5;       		//current calculated rep of vehicle
 	float repOrignal = 0.5;		//rep of vehicle from last server communication
-	int reportedCount = 0; 		//number of reports received on this vehicle
-	int reportedTrueCount = 0; //number of reports received on this vehicle that stated it was truthful.
+	int reportedCount = 0; 		//number of reports received on this vehicle + number of reports by this vehicle that were compared with a report by self.
+	int reportedTrueCount = 0; //number of reports received on this vehicle that stated it was truthful + number of reports by this vehicle that matched with a report by self.
+
+	//for analysis purposes
+	int reportComparisonCount = 0;    //number of times a report by it was compared by a report by self and result treated as a report on it
+	int reportComparisonTrueCount = 0;//number of times a report by it was compared by a report by self and it was a match.
 };
 typedef std::tr1::unordered_map<int, bool> int2boolmap;
 typedef std::tr1::unordered_map<std::pair<int, int>, int2boolmap*,
@@ -58,7 +62,7 @@ protected:
 	void handlePositionUpdate(cObject *obj) override;
 	bool inaccurateBoolCheck(bool val, float accuracy = 0.9); //used for simulating errors while evaluating and generating information.
 	float scoreCalculator(float old, int trueCount, int count);
-	void setSendingAccuracy();
+	float setSendingAccuracy();
 	int currentSubscribedServiceId;
 	//storing various data on other vehicles in network map{vehId->vehStats}
 	int_2_vehStatsptr vehicles;
