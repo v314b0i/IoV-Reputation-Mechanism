@@ -1,3 +1,5 @@
 #TODO:
 -update routes file to meaningful traffic (same pool of vehicles)
--record rep scores as vectors.
+-reports aren't being used... something's broken? recieved messages=recieved reports for each node. fix it. maybe nned to write own int pair hash since its not.
+-some day improve the p2p system itself..not suitable for long gap betwee rsu pull-pushm, see notebook
+-implement the RSU applns

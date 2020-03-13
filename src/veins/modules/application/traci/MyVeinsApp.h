@@ -54,6 +54,12 @@ class VEINS_API MyVeinsApp: public DemoBaseApplLayer {
 public:
 	void initialize(int stage) override;
 	void finish() override;
+    enum MyApplMessageKinds {
+        SEND_INFOMSG_EVT,
+		//SEND_REPORTMSG_EVT,
+        INFO_MSG,
+		REPORT_MSG
+    };
 protected:
 	void onWSM(BaseFrame1609_4 *wsm) override;
 	void onWSA(DemoServiceAdvertisment *wsa) override;
@@ -63,16 +69,33 @@ protected:
 	bool inaccurateBoolCheck(bool val, float accuracy = 0.9); //used for simulating errors while evaluating and generating information.
 	float scoreCalculator(float old, int trueCount, int count);
 	float setSendingAccuracy();
+	void initVehicle(int id); //to create new entry in vehicles map and stats collection maps
 	int currentSubscribedServiceId;
 	//storing various data on other vehicles in network map{vehId->vehStats}
 	int_2_vehStatsptr vehicles;
 	//storing reports for each message.  map{ <senderId,msgId> --> map{ reporter->value } }
 	intpair_2_int2boolmapptr reportsArchive;
 
-	int sent;               // Simulation purposes. for recording scalar
-	int sentCorrect;		// Simulation purposes. for recording scalar
 	float sendingAccuracy;  // to control behaviour of node.
 	float evaluatingAccuracy;
+	cMessage* sendMsgEvt;
+	//cMessage* sendReportEvt;
+	simtime_t messageInterval;
+	simtime_t reportDelay;
+	simtime_t messageIntervalVarianceLimit;
+
+
+	//--FOR STATS--
+	int sent;
+	int sentCorrect;
+	cOutVector sentVector;
+	cOutVector sentCorrectVector;
+    std::tr1::unordered_map<int, cOutVector*> repScoreVector;
+    std::tr1::unordered_map<int, cHistogram*> repScoreStats;
+    std::tr1::unordered_map<int, cOutVector*> reportedVector;
+    std::tr1::unordered_map<int, cOutVector*> reportedTrueVector;
+    std::tr1::unordered_map<int, cOutVector*> reportComparisonVector;
+    std::tr1::unordered_map<int, cOutVector*> msgVector;
 };
 
 } // namespace veins
