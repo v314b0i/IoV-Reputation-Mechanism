@@ -32,34 +32,38 @@
 //using namespace omnetpp;
 
 namespace veins {
+typedef std::tr1::unordered_map<int, bool> reporterId_2_val;
+typedef std::tr1::unordered_map<int, reporterId_2_val*> msgId_2_reporterId2val;
+//typedef std::tr1::unordered_map<int, msgId_2_reporterId2val*> senderId_2_msgId2reporterId2val;
+/*typedef std::tr1::unordered_map<std::pair<int, int>, int2boolmap*,
+ boost::hash<std::pair<int, int>>> intpair_2_int2boolmapptr;*/
 
 struct vehStats {
-	int msgCount = 0;      		//messages received from veh
-	int trueMsgCount = 0; //messages received from veh which were evaluated to true by self
 	float rep = 0.5;       		//current calculated rep of vehicle
 	float repOrignal = 0.5;		//rep of vehicle from last server communication
-	int reportedCount = 0; 		//number of reports received on this vehicle + number of reports by this vehicle that were compared with a report by self.
+	int reportedCount = 0; //number of reports received on this vehicle + number of reports by this vehicle that were compared with a report by self.
 	int reportedTrueCount = 0; //number of reports received on this vehicle that stated it was truthful + number of reports by this vehicle that matched with a report by self.
+	msgId_2_reporterId2val messages;
 
-	//for analysis purposes
-	int reportComparisonCount = 0;    //number of times a report by it was compared by a report by self and result treated as a report on it
-	int reportComparisonTrueCount = 0;//number of times a report by it was compared by a report by self and it was a match.
+
+	//--FOR STATS--
+	int reportComparisonCount = 0; //number of times a report by it was compared by a report by self and result treated as a report on it
+	int reportComparisonTrueCount = 0; //number of times a report by it was compared by a report by self and it was a match.
+	int msgCount = 0;      		//messages received from veh
+	int trueMsgCount = 0; //messages received from veh which were evaluated to true by self
 };
-typedef std::tr1::unordered_map<int, bool> int2boolmap;
-typedef std::tr1::unordered_map<std::pair<int, int>, int2boolmap*,
-		boost::hash<std::pair<int, int>>> intpair_2_int2boolmapptr;
-typedef std::tr1::unordered_map<int, vehStats*> int_2_vehStatsptr;
+
 
 class VEINS_API MyVeinsApp: public DemoBaseApplLayer {
 public:
 	void initialize(int stage) override;
 	void finish() override;
-    enum MyApplMessageKinds {
-        SEND_INFOMSG_EVT,
+	enum MyApplMessageKinds {
+		SEND_INFOMSG_EVT,
 		//SEND_REPORTMSG_EVT,
-        INFO_MSG,
+		INFO_MSG,
 		REPORT_MSG
-    };
+	};
 protected:
 	void onWSM(BaseFrame1609_4 *wsm) override;
 	void onWSA(DemoServiceAdvertisment *wsa) override;
@@ -72,30 +76,33 @@ protected:
 	void initVehicle(int id); //to create new entry in vehicles map and stats collection maps
 	int currentSubscribedServiceId;
 	//storing various data on other vehicles in network map{vehId->vehStats}
-	int_2_vehStatsptr vehicles;
+	std::tr1::unordered_map<int, vehStats*> vehicles;
+
+	// Abandoned data structs... switched to having everything in the vehicles object.
 	//storing reports for each message.  map{ <senderId,msgId> --> map{ reporter->value } }
-	intpair_2_int2boolmapptr reportsArchive;
+	//intpair_2_int2boolmapptr reportsArchive;
+	//storing reports for each message.  "map{ <senderId> --> map{ <msgId> --> map{ reporter->value } } }"
+	//senderId_2_msgId2reporterId2val reportsArchive;
 
 	float sendingAccuracy;  // to control behaviour of node.
 	float evaluatingAccuracy;
-	cMessage* sendMsgEvt;
+	cMessage *sendMsgEvt;
 	//cMessage* sendReportEvt;
 	simtime_t messageInterval;
 	simtime_t reportDelay;
 	simtime_t messageIntervalVarianceLimit;
-
 
 	//--FOR STATS--
 	int sent;
 	int sentCorrect;
 	cOutVector sentVector;
 	cOutVector sentCorrectVector;
-    std::tr1::unordered_map<int, cOutVector*> repScoreVector;
-    std::tr1::unordered_map<int, cHistogram*> repScoreStats;
-    std::tr1::unordered_map<int, cOutVector*> reportedVector;
-    std::tr1::unordered_map<int, cOutVector*> reportedTrueVector;
-    std::tr1::unordered_map<int, cOutVector*> reportComparisonVector;
-    std::tr1::unordered_map<int, cOutVector*> msgVector;
+	std::tr1::unordered_map<int, cOutVector*> repScoreVector;
+	std::tr1::unordered_map<int, cHistogram*> repScoreStats;
+	std::tr1::unordered_map<int, cOutVector*> reportedVector;
+	std::tr1::unordered_map<int, cOutVector*> reportedTrueVector;
+	std::tr1::unordered_map<int, cOutVector*> reportComparisonVector;
+	std::tr1::unordered_map<int, cOutVector*> msgVector;
 };
 
 } // namespace veins

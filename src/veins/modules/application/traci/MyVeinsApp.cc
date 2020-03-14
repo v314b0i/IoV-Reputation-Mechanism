@@ -36,7 +36,7 @@ bool MyVeinsApp::inaccurateBoolCheck(bool val, float accuracy) {
 	return val ? false : true;
 }
 float MyVeinsApp::scoreCalculator(float old, int trueCount, int count) {
-	float fn = exp(-0.006 * count); // y= e^(-0.006*x)    y goes from 1 to 0 for x from 0 to infinity
+	float fn = exp(-0.02 * count); // y= e^(-0.006*x)    y goes from 1 to 0 for x from 0 to infinity
 	return fn * old + (1 - fn) * ((float) trueCount / (float) count);
 }
 
@@ -93,13 +93,18 @@ float MyVeinsApp::setSendingAccuracy() {
 
 void MyVeinsApp::finish() {
 	recordScalar("#sent", sent);
-	int recieved = 0;
-	for (auto x : vehicles)
-		recieved += x.second->msgCount;
-	recordScalar("#recieved", recieved);
+	int recievedMessages = 0;
+	int recievedReports = 0;
+	for (auto x : vehicles) {
+		recievedMessages += x.second->msgCount;
+		recievedReports += x.second->reportedCount;
+	}
+	recordScalar("#recievedMessages", recievedMessages);
+	recordScalar("#recievedReports", recievedReports - recievedMessages);
+
 	recordScalar("mySendingAccuracy", sendingAccuracy);
-//accuracy can be made fuzzy for good and bad in other experiments, there actual accuracy will wary from set accuracy especially if 'sent' is not large.
-	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent);
+	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent); //if set sending accuracy is fuzzy the actual accuracy will wary while #sent is not large.
+
 	char name[25];
 	for (auto it = repScoreStats.begin(); it != repScoreStats.end(); ++it) {
 		sprintf(name, "RepScoreStats-%d", (it->first - 15) / 6);
@@ -108,54 +113,59 @@ void MyVeinsApp::finish() {
 	}
 	for (auto it = repScoreVector.begin(); it != repScoreVector.end(); ++it)
 		delete it->second;
-	for (auto it = vehicles.begin(); it != vehicles.end(); ++it)
+	for (auto it = vehicles.begin(); it != vehicles.end(); ++it) {
+		for (auto it2 = it->second->messages.begin();
+				it2 != it->second->messages.end(); ++it2)
+			delete it2->second;
 		delete it->second;
-	for (auto it = reportsArchive.begin(); it != reportsArchive.end(); ++it)
-		delete it->second;
+	}
 	for (auto it = reportedVector.begin(); it != reportedVector.end(); ++it)
-			delete it->second;
-	for (auto it = reportedTrueVector.begin(); it != reportedTrueVector.end(); ++it)
-			delete it->second;
-	for (auto it = reportComparisonVector.begin(); it != reportComparisonVector.end(); ++it)
-			delete it->second;
+		delete it->second;
+	for (auto it = reportedTrueVector.begin(); it != reportedTrueVector.end();
+			++it)
+		delete it->second;
+	for (auto it = reportComparisonVector.begin();
+			it != reportComparisonVector.end(); ++it)
+		delete it->second;
 	for (auto it = msgVector.begin(); it != msgVector.end(); ++it)
-			delete it->second;
+		delete it->second;
 
 	DemoBaseApplLayer::finish();
 }
 
 void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
+	//TODO deal with reports on self
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) { //TODO
 		EV_WARN << INFO_MSG;
 		int senderId = wsm->getSenderAddress();
 		int msgId = wsm->getMsgId();
-		std::pair<int, int> senderId_msgId = std::make_pair(senderId, msgId);
 		if (vehicles.find(senderId) == vehicles.end()) //if neither a message from this sender not a report on this sender has been recieved before
 			initVehicle(senderId);
-		vehStats *veh = vehicles[senderId];
-		if (reportsArchive.find(senderId_msgId) == reportsArchive.end()) //if neither a report of this message has been received earlier nor this message
-			reportsArchive[senderId_msgId] = new int2boolmap;
-		int2boolmap *reports = reportsArchive[senderId_msgId];
-		if (reports->find(myId) == reports->end()) { //if this message has been received for the first time by SELF..
+		vehStats &veh = *(vehicles[senderId]);
+		if (veh.messages.find(msgId) == veh.messages.end()) //if neither a report of this message has been received earlier nor this message
+			veh.messages[msgId] = new reporterId_2_val;
+		reporterId_2_val &reports = *(veh.messages[msgId]);
+		if (reports.find(myId) == reports.end()) { //if this message has been received for the first time by SELF..
 			bool msgVal = inaccurateBoolCheck(wsm->getCorrect(),
 					evaluatingAccuracy);
-			(*reports)[myId] = msgVal;
+			reports[myId] = msgVal;
 			//can instead create a fn "handleReport(reporterID,reporteeID,msgID,val)" to add entry to reportsArchive and also update rep,
 			//same fn could be called from reportmsg handling block.
-			veh->msgCount++;
-			veh->reportedCount++;
+			veh.msgCount++;
+			veh.reportedCount++;
 			if (msgVal) {
-				veh->trueMsgCount++;
-				veh->reportedTrueCount++;
+				veh.trueMsgCount++;
+				veh.reportedTrueCount++;
 			}
-			veh->rep = scoreCalculator(veh->repOrignal, veh->reportedTrueCount,
-					veh->reportedCount);
+			veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount,
+					veh.reportedCount);
 
-			repScoreVector[senderId]->record(veh->rep); //for simulation stats collection only
-			repScoreStats[senderId]->collect(veh->rep); //for simulation stats collection only
-			reportedVector[senderId]->record(veh->reportedCount);
-			reportedTrueVector[senderId]->record(veh->reportedTrueCount);
-			msgVector[senderId]->record(veh->msgCount);
+			repScoreVector[senderId]->record(veh.rep); //for simulation stats collection only
+			repScoreStats[senderId]->collect(veh.rep); //for simulation stats collection only
+			reportedVector[senderId]->record(veh.reportedCount);
+			reportedTrueVector[senderId]->record(veh.reportedTrueCount);
+			msgVector[senderId]->record(veh.msgCount);
+
 			reportMsg *rep = new reportMsg();
 			populateWSM(rep);
 			rep->setReporterAddress(myId);
@@ -177,47 +187,50 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		int reporterId = wsm->getReporterAddress();
 		int msgId = wsm->getReportedMsgId();
 		bool foundValid = wsm->getFoundValid();
-		std::pair<int, int> reporteeId_msgId = std::make_pair(reporteeId,
-				msgId);
-		if (reportsArchive.find(reporteeId_msgId) == reportsArchive.end()) //if neither a report of this message has been received earlier nor this message
-			reportsArchive[reporteeId_msgId] = new int2boolmap;	//TODO add delay here or timer via self msg so that its more likely to recieve a msg first before receiveing a report on it.
-		int2boolmap *reports = reportsArchive[reporteeId_msgId];
-		if (reports->find(reporterId) == reports->end()) { //if this report has not been recieved before
-			//sendDown(wsm);
-			if (reports->find(myId) == reports->end()) { // if the message being reported HAS NOT been recieved by self (we update the reporteE's score as per report)
-				(*reports)[reporterId] = foundValid;
-				if (vehicles.find(reporteeId) == vehicles.end()) //if neither a message from this sender not a report on this sender has been recieved before
-					initVehicle(reporteeId);
-				vehStats *veh = vehicles[reporteeId];
-				veh->reportedCount++;
-				if (foundValid)
-					veh->reportedTrueCount++;
-				veh->rep = scoreCalculator(veh->repOrignal,
-						veh->reportedTrueCount, veh->reportedCount);
+		//std::pair<int, int> reporteeId_msgId = std::make_pair(reporteeId,
+		//		msgId);
+		if (vehicles.find(reporterId) == vehicles.end())
+			initVehicle(reporterId);
+		vehStats &reporter = *(vehicles[reporterId]);
+		if (vehicles.find(reporteeId) == vehicles.end())
+			initVehicle(reporteeId);
+		vehStats &reportee = *(vehicles[reporteeId]);
 
-				repScoreVector[reporteeId]->record(veh->rep); //for simulation stats collection only
-				repScoreStats[reporteeId]->collect(veh->rep); //for simulation stats collection only
-				reportedVector[reporteeId]->record(veh->reportedCount);
-				reportedTrueVector[reporteeId]->record(veh->reportedTrueCount);
+		if (reportee.messages.find(msgId) == reportee.messages.end()) //if neither a report of this message has been received earlier nor this message
+			reportee.messages[msgId] = new reporterId_2_val;//TODO add delay here or timer via self msg so that its more likely to recieve a msg first before receiveing a report on it.
+		reporterId_2_val &reports = *(reportee.messages[msgId]);
+		if (reports.find(reporterId) == reports.end()) { //if this report has not been recieved before
+				//sendDown(wsm);
+			if (reports.find(myId) == reports.end()) { // if the message being reported HAS NOT been recieved by self (we update the reporteE's score as per report)
+				reports[reporterId] = foundValid;
+				reportee.reportedCount++;
+				if (foundValid)
+					reportee.reportedTrueCount++;
+				reportee.rep = scoreCalculator(reportee.repOrignal,
+						reportee.reportedTrueCount, reportee.reportedCount);
+
+				repScoreVector[reporteeId]->record(reportee.rep); //for simulation stats collection only
+				repScoreStats[reporteeId]->collect(reportee.rep); //for simulation stats collection only
+				reportedVector[reporteeId]->record(reportee.reportedCount);
+				reportedTrueVector[reporteeId]->record(
+						reportee.reportedTrueCount);
 
 			} else { // if the message being reported HAS been recieved by self (we update the reporteR's score as per its consistency with self's report)
-				if (vehicles.find(reporterId) == vehicles.end()) //if neither a message from this reportee not a report on this reportee has been recieved before
-					initVehicle(reporterId);
-				vehStats *veh = vehicles[reporterId];
-				veh->reportedCount++;
-				veh->reportComparisonCount++;
-				if ((*reports)[reporterId] == (*reports)[myId]) {
-					veh->reportedTrueCount++;
-					veh->reportComparisonTrueCount++;
+				reporter.reportedCount++;
+				reporter.reportComparisonCount++;
+				if (reports[reporterId] == reports[myId]) {
+					reporter.reportedTrueCount++;
+					reporter.reportComparisonTrueCount++;
 				}
-				veh->rep = scoreCalculator(veh->repOrignal,
-						veh->reportedTrueCount, veh->reportedCount);
-				repScoreVector[reporterId]->record(veh->rep); //for simulation stats collection only
-				repScoreStats[reporterId]->collect(veh->rep); //for simulation stats collection only
-				reportedVector[reporterId]->record(veh->reportedCount);
-				reportedTrueVector[reporterId]->record(veh->reportedTrueCount);
+				reporter.rep = scoreCalculator(reporter.repOrignal,
+						reporter.reportedTrueCount, reporter.reportedCount);
+				repScoreVector[reporterId]->record(reporter.rep); //for simulation stats collection only
+				repScoreStats[reporterId]->collect(reporter.rep); //for simulation stats collection only
+				reportedVector[reporterId]->record(reporter.reportedCount);
+				reportedTrueVector[reporterId]->record(
+						reporter.reportedTrueCount);
 				reportComparisonVector[reporterId]->record(
-						veh->reportComparisonCount);
+						reporter.reportComparisonCount);
 			}
 
 		}
@@ -225,6 +238,9 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 }
 void MyVeinsApp::initVehicle(int id) {
 	vehicles[id] = new vehStats();
+	//vehicles[id]->messages = new reporterId_2_val;
+	//reportsArchive[id] = new msgId_2_reporterId2val();
+
 	repScoreStats[id] = new cHistogram; //for simulation stats collection only
 	repScoreVector[id] = new cOutVector; //for simulation stats collection only
 	reportedVector[id] = new cOutVector;
@@ -243,6 +259,7 @@ void MyVeinsApp::initVehicle(int id) {
 	sprintf(name, "msgVector-%d", (id - 15) / 6);
 	msgVector[id]->setName(name);
 }
+
 void MyVeinsApp::onWSA(DemoServiceAdvertisment *wsa) {
 	EV << "onWSAinvoked: DemoServiceAdvertisment";
 	if (currentSubscribedServiceId == -1) {
