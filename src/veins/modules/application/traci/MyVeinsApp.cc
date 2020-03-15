@@ -31,9 +31,7 @@ Define_Module(veins::MyVeinsApp);
 
 bool MyVeinsApp::inaccurateBoolCheck(bool val, float accuracy) {
 	srand((int) simTime().raw() + myId);
-	if ((rand() % 1000) < (accuracy * 1000))
-		return val;
-	return val ? false : true;
+	return ((rand() % 1000) < (accuracy * 1000))? val : !val;
 }
 float MyVeinsApp::scoreCalculator(float old, int trueCount, int count) {
 	float fn = exp(-0.02 * count); // y= e^(-0.006*x)    y goes from 1 to 0 for x from 0 to infinity
@@ -47,10 +45,17 @@ void MyVeinsApp::initialize(int stage) {
 		currentSubscribedServiceId = -1;
 		sent = 0;
 		sentCorrect = 0;
+		recMsg = 0;
+		recRprt = 0;
+		sentRprt = 0;
 		messageInterval = par("messageInterval");
 		messageIntervalVarianceLimit = par("messageIntervalVarianceLimit");
+		reportGenTime = par("reportGenTime");
+		reportGenTimeVarianceLimit = par("reportGenTimeVarianceLimit");
 		messageIntervalVarianceLimit = SimTime(
 				messageIntervalVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		reportGenTimeVarianceLimit = SimTime(
+				reportGenTimeVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
 		evaluatingAccuracy =
 				(float) par("evaluatingAccuracyPercentage").intValue()
 						/ (float) 100;
@@ -62,7 +67,7 @@ void MyVeinsApp::initialize(int stage) {
 
 		sentVector.setName("sentVector");
 		sentCorrectVector.setName("sentCorrectVector");
-
+		sentReportsVector.setName("sentReportsVector");
 	} else if (stage == 1) {
 		//manually setting nodes 1,3 as bad and 0,2 as good.
 		if ((int) myId == 21 || (int) myId == 33) {
@@ -93,14 +98,17 @@ float MyVeinsApp::setSendingAccuracy() {
 
 void MyVeinsApp::finish() {
 	recordScalar("#sent", sent);
+	recordScalar("#sentReports", sentRprt);
 	int recievedMessages = 0;
 	int recievedReports = 0;
 	for (auto x : vehicles) {
 		recievedMessages += x.second->msgCount;
 		recievedReports += x.second->reportedCount;
 	}
-	recordScalar("#recievedMessages", recievedMessages);
-	recordScalar("#recievedReports", recievedReports - recievedMessages);
+	recordScalar("recievedMessagesSum", recievedMessages);
+	recordScalar("recievedReportsSum", recievedReports - recievedMessages);
+	recordScalar("#recievedMessages", recMsg);
+	recordScalar("#recievedReports", recRprt);
 
 	recordScalar("mySendingAccuracy", sendingAccuracy);
 	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent); //if set sending accuracy is fuzzy the actual accuracy will wary while #sent is not large.
@@ -136,6 +144,7 @@ void MyVeinsApp::finish() {
 void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
 	//TODO deal with reports on self
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) { //TODO
+		recMsg++;
 		EV_WARN << INFO_MSG;
 		int senderId = wsm->getSenderAddress();
 		int msgId = wsm->getMsgId();
@@ -173,15 +182,12 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			rep->setReportedMsgId(msgId);
 			rep->setFoundValid(msgVal);
 			rep->setKind(REPORT_MSG);
-			if (dataOnSch) {
-				startService(Channel::sch2, 1337, "My test Service");
-				scheduleAt(
-						computeAsynchronousSendingTime(1, ChannelType::service),
-						rep);
-			} else
-				sendDown(rep);
+			srand((int) simTime().raw() + myId);
+			simtime_t variance = reportGenTimeVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
+			scheduleAt(simTime() + reportGenTime + variance, rep);
 		}
 	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
+		recRprt++;
 		EV_WARN << REPORT_MSG;
 		int reporteeId = wsm->getReporteeAddress();
 		int reporterId = wsm->getReporterAddress();
@@ -197,10 +203,10 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		vehStats &reportee = *(vehicles[reporteeId]);
 
 		if (reportee.messages.find(msgId) == reportee.messages.end()) //if neither a report of this message has been received earlier nor this message
-			reportee.messages[msgId] = new reporterId_2_val;//TODO add delay here or timer via self msg so that its more likely to recieve a msg first before receiveing a report on it.
+			reportee.messages[msgId] = new reporterId_2_val; //TODO add delay here or timer via self msg so that its more likely to recieve a msg first before receiveing a report on it.
 		reporterId_2_val &reports = *(reportee.messages[msgId]);
 		if (reports.find(reporterId) == reports.end()) { //if this report has not been recieved before
-				//sendDown(wsm);
+				//sendDown(wsm->dup());
 			if (reports.find(myId) == reports.end()) { // if the message being reported HAS NOT been recieved by self (we update the reporteE's score as per report)
 				reports[reporterId] = foundValid;
 				reportee.reportedCount++;
@@ -216,7 +222,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 						reportee.reportedTrueCount);
 
 			} else { // if the message being reported HAS been recieved by self (we update the reporteR's score as per its consistency with self's report)
-				reporter.reportedCount++;
+				/*reporter.reportedCount++;
 				reporter.reportComparisonCount++;
 				if (reports[reporterId] == reports[myId]) {
 					reporter.reportedTrueCount++;
@@ -230,7 +236,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 				reportedTrueVector[reporterId]->record(
 						reporter.reportedTrueCount);
 				reportComparisonVector[reporterId]->record(
-						reporter.reportComparisonCount);
+						reporter.reportComparisonCount);*/
 			}
 
 		}
@@ -287,13 +293,7 @@ void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 		if (wsm->getCorrect())
 			sentCorrectVector.record(++sentCorrect);
 		sentVector.record(sent);
-
-		if (dataOnSch) {
-			startService(Channel::sch2, 1337, "My test Service");
-			scheduleAt(computeAsynchronousSendingTime(1, ChannelType::service),
-					wsm);
-		} else
-			sendDown(wsm);
+		sendDown(wsm);
 
 		srand((int) simTime().raw() + myId);
 		simtime_t variance = messageIntervalVarianceLimit
@@ -302,8 +302,10 @@ void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 
 	} else if (infoMsg *wsm = dynamic_cast<infoMsg*>(msg))
 		sendDown(wsm);
-	else if (reportMsg *wsm = dynamic_cast<reportMsg*>(msg))
+	else if (reportMsg *wsm = dynamic_cast<reportMsg*>(msg)){
 		sendDown(wsm);
+		sentReportsVector.record(++sentRprt);
+	}
 	else
 		DemoBaseApplLayer::handleSelfMsg(msg);
 }

@@ -34,4 +34,6 @@ simple MyVeinsApp extends DemoBaseApplLayer
     	int evaluatingAccuracyPercentage;
     	double messageInterval = default(5s) @unit(s);
     	double messageIntervalVarianceLimit = default(2000ms) @unit(ms);
+    	double reportGenTime = default(7s) @unit(s);
+    	double reportGenTimeVarianceLimit	= default(5000ms) @unit(ms);
 }

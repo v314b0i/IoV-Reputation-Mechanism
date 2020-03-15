@@ -83,7 +83,7 @@ protected:
 	//intpair_2_int2boolmapptr reportsArchive;
 	//storing reports for each message.  "map{ <senderId> --> map{ <msgId> --> map{ reporter->value } } }"
 	//senderId_2_msgId2reporterId2val reportsArchive;
-
+	int sent;
 	float sendingAccuracy;  // to control behaviour of node.
 	float evaluatingAccuracy;
 	cMessage *sendMsgEvt;
@@ -91,12 +91,17 @@ protected:
 	simtime_t messageInterval;
 	simtime_t reportDelay;
 	simtime_t messageIntervalVarianceLimit;
+	simtime_t reportGenTime;
+	simtime_t reportGenTimeVarianceLimit;
 
 	//--FOR STATS--
-	int sent;
 	int sentCorrect;
+	int recMsg;
+	int recRprt;
+	int sentRprt;
 	cOutVector sentVector;
 	cOutVector sentCorrectVector;
+	cOutVector sentReportsVector;
 	std::tr1::unordered_map<int, cOutVector*> repScoreVector;
 	std::tr1::unordered_map<int, cHistogram*> repScoreStats;
 	std::tr1::unordered_map<int, cOutVector*> reportedVector;
