@@ -31,7 +31,7 @@ Define_Module(veins::MyVeinsApp);
 
 bool MyVeinsApp::inaccurateBoolCheck(bool val, float accuracy) {
 	srand((int) simTime().raw() + myId);
-	return ((rand() % 1000) < (accuracy * 1000))? val : !val;
+	return ((rand() % 1000) < (accuracy * 1000)) ? val : !val;
 }
 float MyVeinsApp::scoreCalculator(float old, int trueCount, int count) {
 	float fn = exp(-0.02 * count); // y= e^(-0.006*x)    y goes from 1 to 0 for x from 0 to infinity
@@ -42,7 +42,6 @@ void MyVeinsApp::initialize(int stage) {
 	DemoBaseApplLayer::initialize(stage);
 	if (stage == 0) {
 		EV << "Initializing " << par("appName").stringValue() << std::endl;
-		currentSubscribedServiceId = -1;
 		sent = 0;
 		sentCorrect = 0;
 		recMsg = 0;
@@ -61,10 +60,6 @@ void MyVeinsApp::initialize(int stage) {
 						/ (float) 100;
 		sendingAccuracy = setSendingAccuracy();
 		sendMsgEvt = new cMessage("Send Message Event", SEND_INFOMSG_EVT);
-		//sendReportEvt = new cMessage("Send Report Event", SEND_REPORTMSG_EVT);
-		//sendReportEvt->
-		//todo create enum of message kinds in .h file such that SEND_MSG_EVT is mapped to 0, see demobaseapp for reference.
-
 		sentVector.setName("sentVector");
 		sentCorrectVector.setName("sentCorrectVector");
 		sentReportsVector.setName("sentReportsVector");
@@ -142,7 +137,7 @@ void MyVeinsApp::finish() {
 }
 
 void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
-	//TODO deal with reports on self
+	//TODO deal with reports on self, or maybe not
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) { //TODO
 		recMsg++;
 		EV_WARN << INFO_MSG;
@@ -158,8 +153,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			bool msgVal = inaccurateBoolCheck(wsm->getCorrect(),
 					evaluatingAccuracy);
 			reports[myId] = msgVal;
-			//can instead create a fn "handleReport(reporterID,reporteeID,msgID,val)" to add entry to reportsArchive and also update rep,
-			//same fn could be called from reportmsg handling block.
+			//can instead here just do wsm = rep at the end and let the report handling happen in the next if block itself
 			veh.msgCount++;
 			veh.reportedCount++;
 			if (msgVal) {
@@ -183,7 +177,8 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			rep->setFoundValid(msgVal);
 			rep->setKind(REPORT_MSG);
 			srand((int) simTime().raw() + myId);
-			simtime_t variance = reportGenTimeVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
+			simtime_t variance = reportGenTimeVarianceLimit
+					* ((float) (rand() % 1000) / (float) 500 - 1);
 			scheduleAt(simTime() + reportGenTime + variance, rep);
 		}
 	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
@@ -193,8 +188,6 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		int reporterId = wsm->getReporterAddress();
 		int msgId = wsm->getReportedMsgId();
 		bool foundValid = wsm->getFoundValid();
-		//std::pair<int, int> reporteeId_msgId = std::make_pair(reporteeId,
-		//		msgId);
 		if (vehicles.find(reporterId) == vehicles.end())
 			initVehicle(reporterId);
 		vehStats &reporter = *(vehicles[reporterId]);
@@ -203,7 +196,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		vehStats &reportee = *(vehicles[reporteeId]);
 
 		if (reportee.messages.find(msgId) == reportee.messages.end()) //if neither a report of this message has been received earlier nor this message
-			reportee.messages[msgId] = new reporterId_2_val; //TODO add delay here or timer via self msg so that its more likely to recieve a msg first before receiveing a report on it.
+			reportee.messages[msgId] = new reporterId_2_val;
 		reporterId_2_val &reports = *(reportee.messages[msgId]);
 		if (reports.find(reporterId) == reports.end()) { //if this report has not been recieved before
 				//sendDown(wsm->dup());
@@ -223,20 +216,20 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 
 			} else { // if the message being reported HAS been recieved by self (we update the reporteR's score as per its consistency with self's report)
 				/*reporter.reportedCount++;
-				reporter.reportComparisonCount++;
-				if (reports[reporterId] == reports[myId]) {
-					reporter.reportedTrueCount++;
-					reporter.reportComparisonTrueCount++;
-				}
-				reporter.rep = scoreCalculator(reporter.repOrignal,
-						reporter.reportedTrueCount, reporter.reportedCount);
-				repScoreVector[reporterId]->record(reporter.rep); //for simulation stats collection only
-				repScoreStats[reporterId]->collect(reporter.rep); //for simulation stats collection only
-				reportedVector[reporterId]->record(reporter.reportedCount);
-				reportedTrueVector[reporterId]->record(
-						reporter.reportedTrueCount);
-				reportComparisonVector[reporterId]->record(
-						reporter.reportComparisonCount);*/
+				 reporter.reportComparisonCount++;
+				 if (reports[reporterId] == reports[myId]) {
+				 reporter.reportedTrueCount++;
+				 reporter.reportComparisonTrueCount++;
+				 }
+				 reporter.rep = scoreCalculator(reporter.repOrignal,
+				 reporter.reportedTrueCount, reporter.reportedCount);
+				 repScoreVector[reporterId]->record(reporter.rep); //for simulation stats collection only
+				 repScoreStats[reporterId]->collect(reporter.rep); //for simulation stats collection only
+				 reportedVector[reporterId]->record(reporter.reportedCount);
+				 reportedTrueVector[reporterId]->record(
+				 reporter.reportedTrueCount);
+				 reportComparisonVector[reporterId]->record(
+				 reporter.reportComparisonCount);*/
 			}
 
 		}
@@ -266,7 +259,7 @@ void MyVeinsApp::initVehicle(int id) {
 	msgVector[id]->setName(name);
 }
 
-void MyVeinsApp::onWSA(DemoServiceAdvertisment *wsa) {
+/*void MyVeinsApp::onWSA(DemoServiceAdvertisment *wsa) {
 	EV << "onWSAinvoked: DemoServiceAdvertisment";
 	if (currentSubscribedServiceId == -1) {
 		mac->changeServiceChannel(
@@ -278,7 +271,7 @@ void MyVeinsApp::onWSA(DemoServiceAdvertisment *wsa) {
 					wsa->getPsid(), "Mirrored Traffic Service");
 		}
 	}
-}
+}*/
 
 void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 	if (msg->getKind() == SEND_INFOMSG_EVT) {
@@ -288,25 +281,20 @@ void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 		wsm->setMsgId(sent++);
 		wsm->setCorrect(inaccurateBoolCheck(true, sendingAccuracy));
 		wsm->setKind(INFO_MSG);
-		//todo set msg kind
-
 		if (wsm->getCorrect())
 			sentCorrectVector.record(++sentCorrect);
 		sentVector.record(sent);
 		sendDown(wsm);
-
 		srand((int) simTime().raw() + myId);
 		simtime_t variance = messageIntervalVarianceLimit
-				* ((float) (rand() % 1000) / (float) 500 - 1);
+				* (((float) (rand() % 1000) / (float) 500) - 1);
 		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);
-
 	} else if (infoMsg *wsm = dynamic_cast<infoMsg*>(msg))
 		sendDown(wsm);
-	else if (reportMsg *wsm = dynamic_cast<reportMsg*>(msg)){
+	else if (reportMsg *wsm = dynamic_cast<reportMsg*>(msg)) {
 		sendDown(wsm);
 		sentReportsVector.record(++sentRprt);
-	}
-	else
+	} else
 		DemoBaseApplLayer::handleSelfMsg(msg);
 }
 

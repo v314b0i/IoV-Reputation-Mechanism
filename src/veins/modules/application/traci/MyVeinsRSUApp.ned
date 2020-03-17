@@ -23,11 +23,11 @@
 package org.car2x.veins.modules.application.traci;
 import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
-simple MyVeinsApp extends DemoBaseApplLayer
+simple MyVeinsRSUApp extends DemoBaseApplLayer
 {
     parameters:
-    	@class(veins::MyVeinsApp);
-    	string appName = default("MyVeinsApp");
+    	@class(veins::MyVeinsRSUApp);
+    	string appName = default("MyVeinsRSUApp");
     	int percentageWithBadSendingAccuracy;
     	int badSendingAccuracyPercentage;
     	int goodSendingAccuracyPercentage;
