@@ -30,25 +30,35 @@ protected:
 	float setSendingAccuracy();
 	void initVehicle(int id); //to create new entry in vehicles map and stats collection maps
 	//int currentSubscribedServiceId;
-	std::tr1::unordered_map<int, vehStats*> vehicles;
+	int2vehStats vehicles;
 	int sent;
 	float sendingAccuracy;  // to control behaviour of node.
 	float evaluatingAccuracy;
 	cMessage *sendMsgEvt;
 	simtime_t messageInterval;
-	simtime_t reportDelay;
 	simtime_t messageIntervalVarianceLimit;
 	simtime_t reportGenTime;
 	simtime_t reportGenTimeVarianceLimit;
-
+	simtime_t requestResponseDelay;
+	simtime_t requestResponseDelayVarianceLimit;
+	simtime_t requestDelay;
+	simtime_t requestDelayVarianceLimit;
 	//--FOR STATS--
 	int sentCorrect;
 	int recMsg;
 	int recRprt;
 	int sentRprt;
+	int sentDumpRequests;
+	int sentDumps;
+	int receivedDumpRequests;
+	int receivedDumps;
 	cOutVector sentVector;
 	cOutVector sentCorrectVector;
 	cOutVector sentReportsVector;
+	cOutVector sentDumpsVector;
+	cOutVector sentDumpRequestsVector;
+	cOutVector receivedDumpsVector;
+	cOutVector receivedDumpRequestsVector;
 	std::tr1::unordered_map<int, cOutVector*> repScoreVector;
 	std::tr1::unordered_map<int, cHistogram*> repScoreStats;
 	std::tr1::unordered_map<int, cOutVector*> reportedVector;

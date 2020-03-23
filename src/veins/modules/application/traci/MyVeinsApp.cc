@@ -23,8 +23,12 @@
 #include "veins/modules/application/traci/MyVeinsApp.h"
 #include "veins/modules/application/traci/infoMsg_m.h"
 #include "veins/modules/application/traci/reportMsg_m.h"
+#include "veins/modules/application/traci/requestDumpMsg_m.h"
+#include "veins/modules/application/traci/reportDumpMsg_m.h"
 #include <stdlib.h>
 #include <string.h>
+#include <string>
+#include <iostream>
 using namespace veins;
 
 Define_Module(veins::MyVeinsApp);
@@ -47,14 +51,28 @@ void MyVeinsApp::initialize(int stage) {
 		recMsg = 0;
 		recRprt = 0;
 		sentRprt = 0;
+		sentDumpRequests = 0;
+		sentDumps = 0;
+		receivedDumpRequests = 0;
+		receivedDumps = 0;
 		messageInterval = par("messageInterval");
 		messageIntervalVarianceLimit = par("messageIntervalVarianceLimit");
 		reportGenTime = par("reportGenTime");
 		reportGenTimeVarianceLimit = par("reportGenTimeVarianceLimit");
+		requestDelay = par("requestDelay");
+		requestDelayVarianceLimit = par("requestDelayVarianceLimit");
+		requestResponseDelay = par("requestResponseDelay");
+		requestResponseDelayVarianceLimit = par(
+				"requestResponseDelayVarianceLimit");
 		messageIntervalVarianceLimit = SimTime(
 				messageIntervalVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
 		reportGenTimeVarianceLimit = SimTime(
 				reportGenTimeVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		requestDelayVarianceLimit = SimTime(
+				requestDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		requestResponseDelayVarianceLimit = SimTime(
+				requestResponseDelayVarianceLimit.inUnit(SIMTIME_S),
+				SIMTIME_MS);
 		evaluatingAccuracy =
 				(float) par("evaluatingAccuracyPercentage").intValue()
 						/ (float) 100;
@@ -63,6 +81,10 @@ void MyVeinsApp::initialize(int stage) {
 		sentVector.setName("sentVector");
 		sentCorrectVector.setName("sentCorrectVector");
 		sentReportsVector.setName("sentReportsVector");
+		sentDumpsVector.setName("sentDumpsVector");
+		sentDumpRequestsVector.setName("sentDumpRequestsVector");
+		receivedDumpsVector.setName("receivedDumpsVector");
+		receivedDumpRequestsVector.setName("receivedDumpRequestsVector");
 	} else if (stage == 1) {
 		//manually setting nodes 1,3 as bad and 0,2 as good.
 		if ((int) myId == 21 || (int) myId == 33) {
@@ -132,7 +154,6 @@ void MyVeinsApp::finish() {
 		delete it->second;
 	for (auto it = msgVector.begin(); it != msgVector.end(); ++it)
 		delete it->second;
-
 	DemoBaseApplLayer::finish();
 }
 
@@ -171,6 +192,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 
 			reportMsg *rep = new reportMsg();
 			populateWSM(rep);
+			rep->setName("Report Message");
 			rep->setReporterAddress(myId);
 			rep->setReporteeAddress(senderId);
 			rep->setReportedMsgId(msgId);
@@ -194,7 +216,6 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		if (vehicles.find(reporteeId) == vehicles.end())
 			initVehicle(reporteeId);
 		vehStats &reportee = *(vehicles[reporteeId]);
-
 		if (reportee.messages.find(msgId) == reportee.messages.end()) //if neither a report of this message has been received earlier nor this message
 			reportee.messages[msgId] = new reporterId_2_val;
 		reporterId_2_val &reports = *(reportee.messages[msgId]);
@@ -233,6 +254,53 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			}
 
 		}
+	} else if (requestDumpMsg *wsm = dynamic_cast<requestDumpMsg*>(frame)) {
+		receivedDumpRequestsVector.record(++receivedDumpRequests);
+		int senderId = wsm->getSenderAddress();
+		int requestedReporteeId = wsm->getRequestedReporteeAddress();
+		if (vehicles.find(requestedReporteeId) == vehicles.end())
+			return;
+		if (vehicles.find(senderId) == vehicles.end())
+			initVehicle(senderId);
+		vehStats &veh = *(vehicles[senderId]);
+		std::string trueMsgs = "", falseMsgs = "", mId;
+		for (auto it = veh.messages.begin(); it != veh.messages.end(); ++it) {
+			reporterId_2_val &reports = *(veh.messages[it->first]);
+			mId = std::to_string(it->first).append(",");
+			if (reports.find(myId) != reports.end()) {
+				if (reports[myId])
+					trueMsgs = trueMsgs.append(mId);
+				else
+					falseMsgs = falseMsgs.append(mId);
+			}
+		}
+		if (trueMsgs.length() > 2 || falseMsgs.length() > 2) {
+			reportDumpMsg *dump = new reportDumpMsg();
+			populateWSM(dump);
+			dump->setName("Report Dump Message");
+			dump->setSenderAddress(myId);
+			dump->setReporteeAddress(requestedReporteeId);
+			dump->setTrueMsgs(trueMsgs.c_str());
+			dump->setFalseMsgs(falseMsgs.c_str());
+			srand((int) simTime().raw() + myId);
+			simtime_t variance = requestResponseDelayVarianceLimit
+					* ((float) (rand() % 1000) / (float) 500 - 1);
+			scheduleAt(simTime() + requestResponseDelay + variance, dump);
+		}
+	} else if (reportDumpMsg *wsm = dynamic_cast<reportDumpMsg*>(frame)) {
+		receivedDumpsVector.record(++receivedDumps);
+		int reporteeId = wsm->getReporteeAddress();
+		int senderId = wsm->getSenderAddress();
+		if (vehicles.find(reporteeId) == vehicles.end())
+			initVehicle(reporteeId);
+		vehStats &veh = *(vehicles[senderId]);
+		std::stringstream tss(wsm->getTrueMsgs());
+		std::stringstream fss(wsm->getTrueMsgs());
+		std::string word;
+		while (getline(tss, word, ','))
+			(*(veh.messages[std::stoi(word)]))[senderId] = true;
+		while (getline(fss, word, ','))
+			(*(veh.messages[std::stoi(word)]))[senderId] = false;
 	}
 }
 void MyVeinsApp::initVehicle(int id) {
@@ -257,43 +325,59 @@ void MyVeinsApp::initVehicle(int id) {
 	reportComparisonVector[id]->setName(name);
 	sprintf(name, "msgVector-%d", (id - 15) / 6);
 	msgVector[id]->setName(name);
+	requestDumpMsg *req = new requestDumpMsg();
+	populateWSM(req);
+	req->setName("Dump Request Message");
+	req->setSenderAddress(myId);
+	req->setRequestedReporteeAddress(id);
+	srand((int) simTime().raw() + myId + id);
+	simtime_t variance = requestDelayVarianceLimit
+			* ((float) (rand() % 1000) / (float) 500 - 1);
+	scheduleAt(simTime() + requestDelay + variance, req);
 }
 
 /*void MyVeinsApp::onWSA(DemoServiceAdvertisment *wsa) {
-	EV << "onWSAinvoked: DemoServiceAdvertisment";
-	if (currentSubscribedServiceId == -1) {
-		mac->changeServiceChannel(
-				static_cast<Channel>(wsa->getTargetChannel()));
-		currentSubscribedServiceId = wsa->getPsid();
-		if (currentOfferedServiceId != wsa->getPsid()) {
-			stopService();
-			startService(static_cast<Channel>(wsa->getTargetChannel()),
-					wsa->getPsid(), "Mirrored Traffic Service");
-		}
-	}
-}*/
+ EV << "onWSAinvoked: DemoServiceAdvertisment";
+ if (currentSubscribedServiceId == -1) {
+ mac->changeServiceChannel(
+ static_cast<Channel>(wsa->getTargetChannel()));
+ currentSubscribedServiceId = wsa->getPsid();
+ if (currentOfferedServiceId != wsa->getPsid()) {
+ stopService();
+ startService(static_cast<Channel>(wsa->getTargetChannel()),
+ wsa->getPsid(), "Mirrored Traffic Service");
+ }
+ }
+ }*/
 
 void MyVeinsApp::handleSelfMsg(cMessage *msg) {
-	if (msg->getKind() == SEND_INFOMSG_EVT) {
+	if (infoMsg *wsm = dynamic_cast<infoMsg*>(msg)) {
+		if (wsm->getCorrect())
+			sentCorrectVector.record(++sentCorrect);
+		sentVector.record(wsm->getMsgId());
+		sendDown(wsm);
+	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(msg)) {
+		sentReportsVector.record(++sentRprt);
+		sendDown(wsm);
+	} else if (requestDumpMsg *wsm = dynamic_cast<requestDumpMsg*>(msg)) {
+		sentDumpRequestsVector.record(++sentDumpRequests);
+		sendDown(wsm);
+	} else if (reportDumpMsg *wsm = dynamic_cast<reportDumpMsg*>(msg)) {
+		sentDumpsVector.record(++sentDumps);
+		sendDown(wsm);
+	} else if (msg->getKind() == SEND_INFOMSG_EVT) {
 		infoMsg *wsm = new infoMsg();
 		populateWSM(wsm);
+		wsm->setName("Info Message");
 		wsm->setSenderAddress(myId);
 		wsm->setMsgId(sent++);
 		wsm->setCorrect(inaccurateBoolCheck(true, sendingAccuracy));
 		wsm->setKind(INFO_MSG);
-		if (wsm->getCorrect())
-			sentCorrectVector.record(++sentCorrect);
-		sentVector.record(sent);
 		sendDown(wsm);
 		srand((int) simTime().raw() + myId);
 		simtime_t variance = messageIntervalVarianceLimit
 				* (((float) (rand() % 1000) / (float) 500) - 1);
 		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);
-	} else if (infoMsg *wsm = dynamic_cast<infoMsg*>(msg))
-		sendDown(wsm);
-	else if (reportMsg *wsm = dynamic_cast<reportMsg*>(msg)) {
-		sendDown(wsm);
-		sentReportsVector.record(++sentRprt);
 	} else
 		DemoBaseApplLayer::handleSelfMsg(msg);
 }

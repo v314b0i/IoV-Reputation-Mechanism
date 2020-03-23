@@ -16,7 +16,6 @@ cplusplus {{
 #include "veins/base/utils/Coord.h"
 #include "veins/modules/messages/BaseFrame1609_4_m.h"
 #include "veins/base/utils/SimpleAddress.h"
-#include "veins/modules/application/traci/myClasses.h"
 }}
 
 namespace veins;
@@ -24,11 +23,8 @@ namespace veins;
 class BaseFrame1609_4;
 class noncobject Coord;
 class LAddress::L2Type extends void;
-class reportDumpClass;
 
-
-
-packet infoMsg extends BaseFrame1609_4 {
+packet requestDumpMsg extends BaseFrame1609_4 {
     LAddress::L2Type senderAddress = -1;
-	reportDumpClass dump;
+	LAddress::L2Type requestedReporteeAddress = -1; //-1 to denote all.
 }

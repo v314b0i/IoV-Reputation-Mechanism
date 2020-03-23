@@ -1,4 +1,5 @@
 #include <tr1/unordered_map>
+
 typedef std::tr1::unordered_map<int, bool> reporterId_2_val;
 typedef std::tr1::unordered_map<int, reporterId_2_val*> msgId_2_reporterId2val;
 class vehStats {
@@ -15,7 +16,5 @@ public:
 	int msgCount = 0;      		//messages received from veh
 	int trueMsgCount = 0; //messages received from veh which were evaluated to true by self
 };
-class reportDumpClass {
-public:
-	std::tr1::unordered_map<int, msgId_2_reporterId2val*> vehicle;
-};
+typedef std::tr1::unordered_map<int, vehStats*> int2vehStats;
+

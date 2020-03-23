@@ -36,4 +36,8 @@ simple MyVeinsApp extends DemoBaseApplLayer
     	double messageIntervalVarianceLimit = default(2000ms) @unit(ms);
     	double reportGenTime = default(7s) @unit(s);
     	double reportGenTimeVarianceLimit	= default(5000ms) @unit(ms);
+    	double requestResponseDelay = default(1s) @unit(s);
+		double requestResponseDelayVarianceLimit = default(500ms) @unit(ms);
+		double requestDelay = default(1s) @unit(s);
+		double requestDelayVarianceLimit  = default(500ms) @unit(ms);
 }

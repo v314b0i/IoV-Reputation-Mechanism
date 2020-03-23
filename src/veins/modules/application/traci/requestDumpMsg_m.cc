@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 5.6 from veins/modules/application/traci/reportDump.msg.
+// Generated file, do not edit! Created by nedtool 5.6 from veins/modules/application/traci/requestDumpMsg.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -26,7 +26,7 @@
 
 #include <iostream>
 #include <sstream>
-#include "reportDump_m.h"
+#include "requestDumpMsg_m.h"
 
 namespace omnetpp {
 
@@ -178,26 +178,24 @@ inline std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec)
     return out;
 }
 
-Register_Class(infoMsg)
+Register_Class(requestDumpMsg)
 
-infoMsg::infoMsg(const char *name, short kind) : ::veins::BaseFrame1609_4(name,kind)
+requestDumpMsg::requestDumpMsg(const char *name, short kind) : ::veins::BaseFrame1609_4(name,kind)
 {
     this->senderAddress = -1;
-    take(&(this->dump));
+    this->requestedReporteeAddress = -1;
 }
 
-infoMsg::infoMsg(const infoMsg& other) : ::veins::BaseFrame1609_4(other)
+requestDumpMsg::requestDumpMsg(const requestDumpMsg& other) : ::veins::BaseFrame1609_4(other)
 {
-    take(&(this->dump));
     copy(other);
 }
 
-infoMsg::~infoMsg()
+requestDumpMsg::~requestDumpMsg()
 {
-    drop(&(this->dump));
 }
 
-infoMsg& infoMsg::operator=(const infoMsg& other)
+requestDumpMsg& requestDumpMsg::operator=(const requestDumpMsg& other)
 {
     if (this==&other) return *this;
     ::veins::BaseFrame1609_4::operator=(other);
@@ -205,54 +203,53 @@ infoMsg& infoMsg::operator=(const infoMsg& other)
     return *this;
 }
 
-void infoMsg::copy(const infoMsg& other)
+void requestDumpMsg::copy(const requestDumpMsg& other)
 {
     this->senderAddress = other.senderAddress;
-    this->dump = other.dump;
-    this->dump.setName(other.dump.getName());
+    this->requestedReporteeAddress = other.requestedReporteeAddress;
 }
 
-void infoMsg::parsimPack(omnetpp::cCommBuffer *b) const
+void requestDumpMsg::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::veins::BaseFrame1609_4::parsimPack(b);
     doParsimPacking(b,this->senderAddress);
-    doParsimPacking(b,this->dump);
+    doParsimPacking(b,this->requestedReporteeAddress);
 }
 
-void infoMsg::parsimUnpack(omnetpp::cCommBuffer *b)
+void requestDumpMsg::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::veins::BaseFrame1609_4::parsimUnpack(b);
     doParsimUnpacking(b,this->senderAddress);
-    doParsimUnpacking(b,this->dump);
+    doParsimUnpacking(b,this->requestedReporteeAddress);
 }
 
-LAddress::L2Type& infoMsg::getSenderAddress()
+LAddress::L2Type& requestDumpMsg::getSenderAddress()
 {
     return this->senderAddress;
 }
 
-void infoMsg::setSenderAddress(const LAddress::L2Type& senderAddress)
+void requestDumpMsg::setSenderAddress(const LAddress::L2Type& senderAddress)
 {
     this->senderAddress = senderAddress;
 }
 
-reportDumpClass& infoMsg::getDump()
+LAddress::L2Type& requestDumpMsg::getRequestedReporteeAddress()
 {
-    return this->dump;
+    return this->requestedReporteeAddress;
 }
 
-void infoMsg::setDump(const reportDumpClass& dump)
+void requestDumpMsg::setRequestedReporteeAddress(const LAddress::L2Type& requestedReporteeAddress)
 {
-    this->dump = dump;
+    this->requestedReporteeAddress = requestedReporteeAddress;
 }
 
-class infoMsgDescriptor : public omnetpp::cClassDescriptor
+class requestDumpMsgDescriptor : public omnetpp::cClassDescriptor
 {
   private:
     mutable const char **propertynames;
   public:
-    infoMsgDescriptor();
-    virtual ~infoMsgDescriptor();
+    requestDumpMsgDescriptor();
+    virtual ~requestDumpMsgDescriptor();
 
     virtual bool doesSupport(omnetpp::cObject *obj) const override;
     virtual const char **getPropertyNames() const override;
@@ -274,24 +271,24 @@ class infoMsgDescriptor : public omnetpp::cClassDescriptor
     virtual void *getFieldStructValuePointer(void *object, int field, int i) const override;
 };
 
-Register_ClassDescriptor(infoMsgDescriptor)
+Register_ClassDescriptor(requestDumpMsgDescriptor)
 
-infoMsgDescriptor::infoMsgDescriptor() : omnetpp::cClassDescriptor("veins::infoMsg", "veins::BaseFrame1609_4")
+requestDumpMsgDescriptor::requestDumpMsgDescriptor() : omnetpp::cClassDescriptor("veins::requestDumpMsg", "veins::BaseFrame1609_4")
 {
     propertynames = nullptr;
 }
 
-infoMsgDescriptor::~infoMsgDescriptor()
+requestDumpMsgDescriptor::~requestDumpMsgDescriptor()
 {
     delete[] propertynames;
 }
 
-bool infoMsgDescriptor::doesSupport(omnetpp::cObject *obj) const
+bool requestDumpMsgDescriptor::doesSupport(omnetpp::cObject *obj) const
 {
-    return dynamic_cast<infoMsg *>(obj)!=nullptr;
+    return dynamic_cast<requestDumpMsg *>(obj)!=nullptr;
 }
 
-const char **infoMsgDescriptor::getPropertyNames() const
+const char **requestDumpMsgDescriptor::getPropertyNames() const
 {
     if (!propertynames) {
         static const char *names[] = {  nullptr };
@@ -302,19 +299,19 @@ const char **infoMsgDescriptor::getPropertyNames() const
     return propertynames;
 }
 
-const char *infoMsgDescriptor::getProperty(const char *propertyname) const
+const char *requestDumpMsgDescriptor::getProperty(const char *propertyname) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     return basedesc ? basedesc->getProperty(propertyname) : nullptr;
 }
 
-int infoMsgDescriptor::getFieldCount() const
+int requestDumpMsgDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     return basedesc ? 2+basedesc->getFieldCount() : 2;
 }
 
-unsigned int infoMsgDescriptor::getFieldTypeFlags(int field) const
+unsigned int requestDumpMsgDescriptor::getFieldTypeFlags(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -324,12 +321,12 @@ unsigned int infoMsgDescriptor::getFieldTypeFlags(int field) const
     }
     static unsigned int fieldTypeFlags[] = {
         FD_ISCOMPOUND,
-        FD_ISCOMPOUND | FD_ISCOBJECT | FD_ISCOWNEDOBJECT,
+        FD_ISCOMPOUND,
     };
     return (field>=0 && field<2) ? fieldTypeFlags[field] : 0;
 }
 
-const char *infoMsgDescriptor::getFieldName(int field) const
+const char *requestDumpMsgDescriptor::getFieldName(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -339,21 +336,21 @@ const char *infoMsgDescriptor::getFieldName(int field) const
     }
     static const char *fieldNames[] = {
         "senderAddress",
-        "dump",
+        "requestedReporteeAddress",
     };
     return (field>=0 && field<2) ? fieldNames[field] : nullptr;
 }
 
-int infoMsgDescriptor::findField(const char *fieldName) const
+int requestDumpMsgDescriptor::findField(const char *fieldName) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     int base = basedesc ? basedesc->getFieldCount() : 0;
     if (fieldName[0]=='s' && strcmp(fieldName, "senderAddress")==0) return base+0;
-    if (fieldName[0]=='d' && strcmp(fieldName, "dump")==0) return base+1;
+    if (fieldName[0]=='r' && strcmp(fieldName, "requestedReporteeAddress")==0) return base+1;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
-const char *infoMsgDescriptor::getFieldTypeString(int field) const
+const char *requestDumpMsgDescriptor::getFieldTypeString(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -363,12 +360,12 @@ const char *infoMsgDescriptor::getFieldTypeString(int field) const
     }
     static const char *fieldTypeStrings[] = {
         "LAddress::L2Type",
-        "reportDumpClass",
+        "LAddress::L2Type",
     };
     return (field>=0 && field<2) ? fieldTypeStrings[field] : nullptr;
 }
 
-const char **infoMsgDescriptor::getFieldPropertyNames(int field) const
+const char **requestDumpMsgDescriptor::getFieldPropertyNames(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -381,7 +378,7 @@ const char **infoMsgDescriptor::getFieldPropertyNames(int field) const
     }
 }
 
-const char *infoMsgDescriptor::getFieldProperty(int field, const char *propertyname) const
+const char *requestDumpMsgDescriptor::getFieldProperty(int field, const char *propertyname) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -394,7 +391,7 @@ const char *infoMsgDescriptor::getFieldProperty(int field, const char *propertyn
     }
 }
 
-int infoMsgDescriptor::getFieldArraySize(void *object, int field) const
+int requestDumpMsgDescriptor::getFieldArraySize(void *object, int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -402,13 +399,13 @@ int infoMsgDescriptor::getFieldArraySize(void *object, int field) const
             return basedesc->getFieldArraySize(object, field);
         field -= basedesc->getFieldCount();
     }
-    infoMsg *pp = (infoMsg *)object; (void)pp;
+    requestDumpMsg *pp = (requestDumpMsg *)object; (void)pp;
     switch (field) {
         default: return 0;
     }
 }
 
-const char *infoMsgDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
+const char *requestDumpMsgDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -416,13 +413,13 @@ const char *infoMsgDescriptor::getFieldDynamicTypeString(void *object, int field
             return basedesc->getFieldDynamicTypeString(object,field,i);
         field -= basedesc->getFieldCount();
     }
-    infoMsg *pp = (infoMsg *)object; (void)pp;
+    requestDumpMsg *pp = (requestDumpMsg *)object; (void)pp;
     switch (field) {
         default: return nullptr;
     }
 }
 
-std::string infoMsgDescriptor::getFieldValueAsString(void *object, int field, int i) const
+std::string requestDumpMsgDescriptor::getFieldValueAsString(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -430,15 +427,15 @@ std::string infoMsgDescriptor::getFieldValueAsString(void *object, int field, in
             return basedesc->getFieldValueAsString(object,field,i);
         field -= basedesc->getFieldCount();
     }
-    infoMsg *pp = (infoMsg *)object; (void)pp;
+    requestDumpMsg *pp = (requestDumpMsg *)object; (void)pp;
     switch (field) {
         case 0: {std::stringstream out; out << pp->getSenderAddress(); return out.str();}
-        case 1: {std::stringstream out; out << pp->getDump(); return out.str();}
+        case 1: {std::stringstream out; out << pp->getRequestedReporteeAddress(); return out.str();}
         default: return "";
     }
 }
 
-bool infoMsgDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
+bool requestDumpMsgDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -446,13 +443,13 @@ bool infoMsgDescriptor::setFieldValueAsString(void *object, int field, int i, co
             return basedesc->setFieldValueAsString(object,field,i,value);
         field -= basedesc->getFieldCount();
     }
-    infoMsg *pp = (infoMsg *)object; (void)pp;
+    requestDumpMsg *pp = (requestDumpMsg *)object; (void)pp;
     switch (field) {
         default: return false;
     }
 }
 
-const char *infoMsgDescriptor::getFieldStructName(int field) const
+const char *requestDumpMsgDescriptor::getFieldStructName(int field) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -462,12 +459,12 @@ const char *infoMsgDescriptor::getFieldStructName(int field) const
     }
     switch (field) {
         case 0: return omnetpp::opp_typename(typeid(LAddress::L2Type));
-        case 1: return omnetpp::opp_typename(typeid(reportDumpClass));
+        case 1: return omnetpp::opp_typename(typeid(LAddress::L2Type));
         default: return nullptr;
     };
 }
 
-void *infoMsgDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
+void *requestDumpMsgDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     if (basedesc) {
@@ -475,10 +472,10 @@ void *infoMsgDescriptor::getFieldStructValuePointer(void *object, int field, int
             return basedesc->getFieldStructValuePointer(object, field, i);
         field -= basedesc->getFieldCount();
     }
-    infoMsg *pp = (infoMsg *)object; (void)pp;
+    requestDumpMsg *pp = (requestDumpMsg *)object; (void)pp;
     switch (field) {
         case 0: return (void *)(&pp->getSenderAddress()); break;
-        case 1: return (void *)static_cast<omnetpp::cObject *>(&pp->getDump()); break;
+        case 1: return (void *)(&pp->getRequestedReporteeAddress()); break;
         default: return nullptr;
     }
 }
