@@ -28,7 +28,7 @@ protected:
 	bool inaccurateBoolCheck(bool val, float accuracy = 0.9); //used for simulating errors while evaluating and generating information.
 	float scoreCalculator(float old, int trueCount, int count);
 	float setSendingAccuracy();
-	void initVehicle(int id); //to create new entry in vehicles map and stats collection maps
+	void initVehicle(int id, bool dontRequestDump=false); //to create new entry in vehicles map and stats collection maps
 	//int currentSubscribedServiceId;
 	int2vehStats vehicles;
 	int sent;
@@ -65,6 +65,8 @@ protected:
 	std::tr1::unordered_map<int, cOutVector*> reportedTrueVector;
 	std::tr1::unordered_map<int, cOutVector*> reportComparisonVector;
 	std::tr1::unordered_map<int, cOutVector*> msgVector;
+	//--For Sim type
+	bool withoutReportDumpSharing;
 };
 
 }

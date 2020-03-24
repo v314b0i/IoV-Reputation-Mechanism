@@ -46,6 +46,8 @@ void MyVeinsApp::initialize(int stage) {
 	DemoBaseApplLayer::initialize(stage);
 	if (stage == 0) {
 		EV << "Initializing " << par("appName").stringValue() << std::endl;
+		withoutReportDumpSharing=par("withoutReportDumpSharing");
+
 		sent = 0;
 		sentCorrect = 0;
 		recMsg = 0;
@@ -254,7 +256,8 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			}
 
 		}
-	} else if (requestDumpMsg *wsm = dynamic_cast<requestDumpMsg*>(frame)) {
+	} else if(withoutReportDumpSharing) return;
+    else if (requestDumpMsg *wsm = dynamic_cast<requestDumpMsg*>(frame)) {
 		receivedDumpRequestsVector.record(++receivedDumpRequests);
 		int senderId = wsm->getSenderAddress();
 		int requestedReporteeId = wsm->getRequestedReporteeAddress();
@@ -291,19 +294,43 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		receivedDumpsVector.record(++receivedDumps);
 		int reporteeId = wsm->getReporteeAddress();
 		int senderId = wsm->getSenderAddress();
+		//TODO should i init sender too?
 		if (vehicles.find(reporteeId) == vehicles.end())
-			initVehicle(reporteeId);
-		vehStats &veh = *(vehicles[senderId]);
+			initVehicle(reporteeId, true);
+		vehStats &veh = *(vehicles[reporteeId]);
 		std::stringstream tss(wsm->getTrueMsgs());
-		std::stringstream fss(wsm->getTrueMsgs());
+		std::stringstream fss(wsm->getFalseMsgs());
 		std::string word;
-		while (getline(tss, word, ','))
-			(*(veh.messages[std::stoi(word)]))[senderId] = true;
-		while (getline(fss, word, ','))
-			(*(veh.messages[std::stoi(word)]))[senderId] = false;
+		//TODO reduce redundant code by: x=true; ss=strstrm(trueMsgs);  while(1){if(getline(ss..)) xyz=x; elif(x){ss=strstrm(falseMsgs); x=false;} else exit;}
+		while (getline(tss, word, ',')) {
+			int msgId = std::stoi(word);
+			if (veh.messages.find(msgId) == veh.messages.end())
+				veh.messages[msgId] = new reporterId_2_val;
+			reporterId_2_val &reports = *(veh.messages[msgId]);
+			if(reports.find(senderId)==reports.end()){
+				reports[senderId] = true;
+				veh.reportedCount++;
+				veh.reportedTrueCount++; //!!
+			}
+		}
+		while (getline(fss, word, ',')) {
+			int msgId = std::stoi(word);
+			if (veh.messages.find(msgId) == veh.messages.end())
+				veh.messages[msgId] = new reporterId_2_val;
+			reporterId_2_val &reports = *(veh.messages[msgId]);
+			if(reports.find(senderId)==reports.end()){
+				reports[senderId] = false;
+				veh.reportedCount++;
+			}
+		}
+		veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount, veh.reportedCount);
+		repScoreVector[reporteeId]->record(veh.rep); //for simulation stats collection only
+		repScoreStats[reporteeId]->collect(veh.rep); //for simulation stats collection only
+		reportedVector[reporteeId]->record(veh.reportedCount);
+		reportedTrueVector[reporteeId]->record(veh.reportedTrueCount);
 	}
 }
-void MyVeinsApp::initVehicle(int id) {
+void MyVeinsApp::initVehicle(int id, bool dontRequestDump) {
 	vehicles[id] = new vehStats();
 	//vehicles[id]->messages = new reporterId_2_val;
 	//reportsArchive[id] = new msgId_2_reporterId2val();
@@ -325,15 +352,19 @@ void MyVeinsApp::initVehicle(int id) {
 	reportComparisonVector[id]->setName(name);
 	sprintf(name, "msgVector-%d", (id - 15) / 6);
 	msgVector[id]->setName(name);
-	requestDumpMsg *req = new requestDumpMsg();
-	populateWSM(req);
-	req->setName("Dump Request Message");
-	req->setSenderAddress(myId);
-	req->setRequestedReporteeAddress(id);
-	srand((int) simTime().raw() + myId + id);
-	simtime_t variance = requestDelayVarianceLimit
-			* ((float) (rand() % 1000) / (float) 500 - 1);
-	scheduleAt(simTime() + requestDelay + variance, req);
+	if (!(dontRequestDump||withoutReportDumpSharing)) {
+		requestDumpMsg *req = new requestDumpMsg();
+		populateWSM(req);
+		std::string str="Dump Request Message.(";
+		str=str.append(std::to_string(myId).append(std::string(",").append(std::to_string(id).append(")")))); //append() is "faster" than '+'
+		req->setName("Dump Request Message");
+		req->setSenderAddress(myId);
+		req->setRequestedReporteeAddress(id);
+		srand((int) simTime().raw() + myId + id);
+		simtime_t variance = requestDelayVarianceLimit
+				* ((float) (rand() % 1000) / (float) 500 - 1);
+		scheduleAt(simTime() + requestDelay + variance, req);
+	}
 }
 
 /*void MyVeinsApp::onWSA(DemoServiceAdvertisment *wsa) {

@@ -1,5 +1,7 @@
 #TODO:
 -update routes file to meaningful traffic (same pool of vehicles)
--reports aren't being used... something's broken? recieved messages=recieved reports for each node. fix it. maybe nned to write own int pair hash since its not.
+-add setRecipientAddress() in repDump Generation and track how many dumps were intended for self (omnet stats vector), 
+  for comparison with the sent requests vector to see how much are the request being obliged to in the network
+  or dropped due to overwhelming the network. 
 -some day improve the p2p system itself..not suitable for long gap betwee rsu pull-pushm, see notebook
 -implement the RSU applns

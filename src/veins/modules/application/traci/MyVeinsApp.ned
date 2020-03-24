@@ -40,4 +40,5 @@ simple MyVeinsApp extends DemoBaseApplLayer
 		double requestResponseDelayVarianceLimit = default(500ms) @unit(ms);
 		double requestDelay = default(1s) @unit(s);
 		double requestDelayVarianceLimit  = default(500ms) @unit(ms);
+		bool withoutReportDumpSharing = default(false);
 }
