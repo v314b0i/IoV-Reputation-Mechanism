@@ -4,4 +4,8 @@
   for comparison with the sent requests vector to see how much are the request being obliged to in the network
   or dropped due to overwhelming the network. 
 -some day improve the p2p system itself..not suitable for long gap betwee rsu pull-pushm, see notebook
+--try to implement the calculate concensus on each message idea. can use counters etc to recuce complexity. spicy algorithm time.
+  if done, can use these counters to basically trigger a request dump on nodes with low report count. (incase the request at init didn't yeild a good response)
+  !! would also need to store the last time a request on this node was made and set a minimum gap to avoid overwhelming the channel unnecesarially.
+  ! would need to code in ->dont respond to requests on a node that one has itself requested info on recently, among other possible modifications, see whole flow.
 -implement the RSU applns

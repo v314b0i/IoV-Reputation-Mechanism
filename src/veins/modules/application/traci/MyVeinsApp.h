@@ -50,6 +50,7 @@ protected:
 	int sentRprt;
 	int sentDumpRequests;
 	int sentDumps;
+	int receivedResponseDumps;
 	int receivedDumpRequests;
 	int receivedDumps;
 	cOutVector sentVector;
@@ -57,6 +58,7 @@ protected:
 	cOutVector sentReportsVector;
 	cOutVector sentDumpsVector;
 	cOutVector sentDumpRequestsVector;
+	cOutVector receivedResponseDumpsVector;
 	cOutVector receivedDumpsVector;
 	cOutVector receivedDumpRequestsVector;
 	std::tr1::unordered_map<int, cOutVector*> repScoreVector;

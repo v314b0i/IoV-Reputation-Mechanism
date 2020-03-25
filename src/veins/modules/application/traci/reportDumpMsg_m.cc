@@ -184,6 +184,7 @@ reportDumpMsg::reportDumpMsg(const char *name, short kind) : ::veins::BaseFrame1
 {
     this->senderAddress = -1;
     this->reporteeAddress = -1;
+    this->primaryRecipientAddress = -1;
 }
 
 reportDumpMsg::reportDumpMsg(const reportDumpMsg& other) : ::veins::BaseFrame1609_4(other)
@@ -207,6 +208,7 @@ void reportDumpMsg::copy(const reportDumpMsg& other)
 {
     this->senderAddress = other.senderAddress;
     this->reporteeAddress = other.reporteeAddress;
+    this->primaryRecipientAddress = other.primaryRecipientAddress;
     this->trueMsgs = other.trueMsgs;
     this->falseMsgs = other.falseMsgs;
 }
@@ -216,6 +218,7 @@ void reportDumpMsg::parsimPack(omnetpp::cCommBuffer *b) const
     ::veins::BaseFrame1609_4::parsimPack(b);
     doParsimPacking(b,this->senderAddress);
     doParsimPacking(b,this->reporteeAddress);
+    doParsimPacking(b,this->primaryRecipientAddress);
     doParsimPacking(b,this->trueMsgs);
     doParsimPacking(b,this->falseMsgs);
 }
@@ -225,6 +228,7 @@ void reportDumpMsg::parsimUnpack(omnetpp::cCommBuffer *b)
     ::veins::BaseFrame1609_4::parsimUnpack(b);
     doParsimUnpacking(b,this->senderAddress);
     doParsimUnpacking(b,this->reporteeAddress);
+    doParsimUnpacking(b,this->primaryRecipientAddress);
     doParsimUnpacking(b,this->trueMsgs);
     doParsimUnpacking(b,this->falseMsgs);
 }
@@ -247,6 +251,16 @@ LAddress::L2Type& reportDumpMsg::getReporteeAddress()
 void reportDumpMsg::setReporteeAddress(const LAddress::L2Type& reporteeAddress)
 {
     this->reporteeAddress = reporteeAddress;
+}
+
+LAddress::L2Type& reportDumpMsg::getPrimaryRecipientAddress()
+{
+    return this->primaryRecipientAddress;
+}
+
+void reportDumpMsg::setPrimaryRecipientAddress(const LAddress::L2Type& primaryRecipientAddress)
+{
+    this->primaryRecipientAddress = primaryRecipientAddress;
 }
 
 const char * reportDumpMsg::getTrueMsgs() const
@@ -334,7 +348,7 @@ const char *reportDumpMsgDescriptor::getProperty(const char *propertyname) const
 int reportDumpMsgDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 4+basedesc->getFieldCount() : 4;
+    return basedesc ? 5+basedesc->getFieldCount() : 5;
 }
 
 unsigned int reportDumpMsgDescriptor::getFieldTypeFlags(int field) const
@@ -348,10 +362,11 @@ unsigned int reportDumpMsgDescriptor::getFieldTypeFlags(int field) const
     static unsigned int fieldTypeFlags[] = {
         FD_ISCOMPOUND,
         FD_ISCOMPOUND,
+        FD_ISCOMPOUND,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
     };
-    return (field>=0 && field<4) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<5) ? fieldTypeFlags[field] : 0;
 }
 
 const char *reportDumpMsgDescriptor::getFieldName(int field) const
@@ -365,10 +380,11 @@ const char *reportDumpMsgDescriptor::getFieldName(int field) const
     static const char *fieldNames[] = {
         "senderAddress",
         "reporteeAddress",
+        "primaryRecipientAddress",
         "trueMsgs",
         "falseMsgs",
     };
-    return (field>=0 && field<4) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<5) ? fieldNames[field] : nullptr;
 }
 
 int reportDumpMsgDescriptor::findField(const char *fieldName) const
@@ -377,8 +393,9 @@ int reportDumpMsgDescriptor::findField(const char *fieldName) const
     int base = basedesc ? basedesc->getFieldCount() : 0;
     if (fieldName[0]=='s' && strcmp(fieldName, "senderAddress")==0) return base+0;
     if (fieldName[0]=='r' && strcmp(fieldName, "reporteeAddress")==0) return base+1;
-    if (fieldName[0]=='t' && strcmp(fieldName, "trueMsgs")==0) return base+2;
-    if (fieldName[0]=='f' && strcmp(fieldName, "falseMsgs")==0) return base+3;
+    if (fieldName[0]=='p' && strcmp(fieldName, "primaryRecipientAddress")==0) return base+2;
+    if (fieldName[0]=='t' && strcmp(fieldName, "trueMsgs")==0) return base+3;
+    if (fieldName[0]=='f' && strcmp(fieldName, "falseMsgs")==0) return base+4;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -393,10 +410,11 @@ const char *reportDumpMsgDescriptor::getFieldTypeString(int field) const
     static const char *fieldTypeStrings[] = {
         "LAddress::L2Type",
         "LAddress::L2Type",
+        "LAddress::L2Type",
         "string",
         "string",
     };
-    return (field>=0 && field<4) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<5) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **reportDumpMsgDescriptor::getFieldPropertyNames(int field) const
@@ -465,8 +483,9 @@ std::string reportDumpMsgDescriptor::getFieldValueAsString(void *object, int fie
     switch (field) {
         case 0: {std::stringstream out; out << pp->getSenderAddress(); return out.str();}
         case 1: {std::stringstream out; out << pp->getReporteeAddress(); return out.str();}
-        case 2: return oppstring2string(pp->getTrueMsgs());
-        case 3: return oppstring2string(pp->getFalseMsgs());
+        case 2: {std::stringstream out; out << pp->getPrimaryRecipientAddress(); return out.str();}
+        case 3: return oppstring2string(pp->getTrueMsgs());
+        case 4: return oppstring2string(pp->getFalseMsgs());
         default: return "";
     }
 }
@@ -481,8 +500,8 @@ bool reportDumpMsgDescriptor::setFieldValueAsString(void *object, int field, int
     }
     reportDumpMsg *pp = (reportDumpMsg *)object; (void)pp;
     switch (field) {
-        case 2: pp->setTrueMsgs((value)); return true;
-        case 3: pp->setFalseMsgs((value)); return true;
+        case 3: pp->setTrueMsgs((value)); return true;
+        case 4: pp->setFalseMsgs((value)); return true;
         default: return false;
     }
 }
@@ -498,6 +517,7 @@ const char *reportDumpMsgDescriptor::getFieldStructName(int field) const
     switch (field) {
         case 0: return omnetpp::opp_typename(typeid(LAddress::L2Type));
         case 1: return omnetpp::opp_typename(typeid(LAddress::L2Type));
+        case 2: return omnetpp::opp_typename(typeid(LAddress::L2Type));
         default: return nullptr;
     };
 }
@@ -514,6 +534,7 @@ void *reportDumpMsgDescriptor::getFieldStructValuePointer(void *object, int fiel
     switch (field) {
         case 0: return (void *)(&pp->getSenderAddress()); break;
         case 1: return (void *)(&pp->getReporteeAddress()); break;
+        case 2: return (void *)(&pp->getPrimaryRecipientAddress()); break;
         default: return nullptr;
     }
 }

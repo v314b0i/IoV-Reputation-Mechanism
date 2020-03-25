@@ -46,8 +46,9 @@ void MyVeinsApp::initialize(int stage) {
 	DemoBaseApplLayer::initialize(stage);
 	if (stage == 0) {
 		EV << "Initializing " << par("appName").stringValue() << std::endl;
-		withoutReportDumpSharing=par("withoutReportDumpSharing");
+		withoutReportDumpSharing = par("withoutReportDumpSharing").boolValue();
 
+		//mostly stats collection objects and counters and some simulation parameters.
 		sent = 0;
 		sentCorrect = 0;
 		recMsg = 0;
@@ -55,6 +56,7 @@ void MyVeinsApp::initialize(int stage) {
 		sentRprt = 0;
 		sentDumpRequests = 0;
 		sentDumps = 0;
+		receivedResponseDumps = 0;
 		receivedDumpRequests = 0;
 		receivedDumps = 0;
 		messageInterval = par("messageInterval");
@@ -85,6 +87,7 @@ void MyVeinsApp::initialize(int stage) {
 		sentReportsVector.setName("sentReportsVector");
 		sentDumpsVector.setName("sentDumpsVector");
 		sentDumpRequestsVector.setName("sentDumpRequestsVector");
+		receivedResponseDumpsVector.setName("receivedResponseDumpsVector");
 		receivedDumpsVector.setName("receivedDumpsVector");
 		receivedDumpRequestsVector.setName("receivedDumpRequestsVector");
 	} else if (stage == 1) {
@@ -118,7 +121,7 @@ float MyVeinsApp::setSendingAccuracy() {
 void MyVeinsApp::finish() {
 	recordScalar("#sent", sent);
 	recordScalar("#sentReports", sentRprt);
-	int recievedMessages = 0;
+	int recievedMessages = 0; //recalculating to tally, just to check my code, all messages and reports are being processed correctly.
 	int recievedReports = 0;
 	for (auto x : vehicles) {
 		recievedMessages += x.second->msgCount;
@@ -130,7 +133,7 @@ void MyVeinsApp::finish() {
 	recordScalar("#recievedReports", recRprt);
 
 	recordScalar("mySendingAccuracy", sendingAccuracy);
-	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent); //if set sending accuracy is fuzzy the actual accuracy will wary while #sent is not large.
+	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent); //if set sending accuracy is not 0or1 the actual accuracy will wary while #sent is not large.
 
 	char name[25];
 	for (auto it = repScoreStats.begin(); it != repScoreStats.end(); ++it) {
@@ -163,7 +166,6 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 	//TODO deal with reports on self, or maybe not
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) { //TODO
 		recMsg++;
-		EV_WARN << INFO_MSG;
 		int senderId = wsm->getSenderAddress();
 		int msgId = wsm->getMsgId();
 		if (vehicles.find(senderId) == vehicles.end()) //if neither a message from this sender not a report on this sender has been recieved before
@@ -207,9 +209,9 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		}
 	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
 		recRprt++;
-		EV_WARN << REPORT_MSG;
 		int reporteeId = wsm->getReporteeAddress();
 		int reporterId = wsm->getReporterAddress();
+		if(reporterId==reporteeId) return; //not going to happen but failsafe for modification in report gen block.
 		int msgId = wsm->getReportedMsgId();
 		bool foundValid = wsm->getFoundValid();
 		if (vehicles.find(reporterId) == vehicles.end())
@@ -256,8 +258,9 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			}
 
 		}
-	} else if(withoutReportDumpSharing) return;
-    else if (requestDumpMsg *wsm = dynamic_cast<requestDumpMsg*>(frame)) {
+	} else if (withoutReportDumpSharing)
+		return;
+	else if (requestDumpMsg *wsm = dynamic_cast<requestDumpMsg*>(frame)) {
 		receivedDumpRequestsVector.record(++receivedDumpRequests);
 		int senderId = wsm->getSenderAddress();
 		int requestedReporteeId = wsm->getRequestedReporteeAddress();
@@ -265,7 +268,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			return;
 		if (vehicles.find(senderId) == vehicles.end())
 			initVehicle(senderId);
-		vehStats &veh = *(vehicles[senderId]);
+		vehStats &veh = *(vehicles[requestedReporteeId]);
 		std::string trueMsgs = "", falseMsgs = "", mId;
 		for (auto it = veh.messages.begin(); it != veh.messages.end(); ++it) {
 			reporterId_2_val &reports = *(veh.messages[it->first]);
@@ -277,12 +280,13 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 					falseMsgs = falseMsgs.append(mId);
 			}
 		}
-		if (trueMsgs.length() > 2 || falseMsgs.length() > 2) {
+		if (trueMsgs.length() > 2 || falseMsgs.length() > 2) { //TODO more defined cutoff
 			reportDumpMsg *dump = new reportDumpMsg();
 			populateWSM(dump);
 			dump->setName("Report Dump Message");
 			dump->setSenderAddress(myId);
 			dump->setReporteeAddress(requestedReporteeId);
+			dump->setPrimaryRecipientAddress(senderId); // for stats collection at "sender"'s side on how many own requests were obliged.
 			dump->setTrueMsgs(trueMsgs.c_str());
 			dump->setFalseMsgs(falseMsgs.c_str());
 			srand((int) simTime().raw() + myId);
@@ -292,38 +296,43 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		}
 	} else if (reportDumpMsg *wsm = dynamic_cast<reportDumpMsg*>(frame)) {
 		receivedDumpsVector.record(++receivedDumps);
+		if ((int) wsm->getPrimaryRecipientAddress() == myId)
+			receivedResponseDumpsVector.record(++receivedResponseDumps);
 		int reporteeId = wsm->getReporteeAddress();
 		int senderId = wsm->getSenderAddress();
+		if (senderId == reporteeId)
+			return;
 		//TODO should i init sender too?
 		if (vehicles.find(reporteeId) == vehicles.end())
 			initVehicle(reporteeId, true);
 		vehStats &veh = *(vehicles[reporteeId]);
-		std::stringstream tss(wsm->getTrueMsgs());
-		std::stringstream fss(wsm->getFalseMsgs());
+
+		std::stringstream *ss = new std::stringstream(wsm->getTrueMsgs());
+		bool msgClassification = true;
 		std::string word;
-		//TODO reduce redundant code by: x=true; ss=strstrm(trueMsgs);  while(1){if(getline(ss..)) xyz=x; elif(x){ss=strstrm(falseMsgs); x=false;} else exit;}
-		while (getline(tss, word, ',')) {
-			int msgId = std::stoi(word);
-			if (veh.messages.find(msgId) == veh.messages.end())
-				veh.messages[msgId] = new reporterId_2_val;
-			reporterId_2_val &reports = *(veh.messages[msgId]);
-			if(reports.find(senderId)==reports.end()){
-				reports[senderId] = true;
-				veh.reportedCount++;
-				veh.reportedTrueCount++; //!!
+		int msgId;
+		while (1) {
+			if (getline(*ss, word, ',')) {
+				msgId = std::stoi(word);
+				if (veh.messages.find(msgId) == veh.messages.end())
+					veh.messages[msgId] = new reporterId_2_val;
+				reporterId_2_val &reports = *(veh.messages[msgId]);
+				if (reports.find(senderId) == reports.end()) {
+					reports[senderId] = msgClassification;
+					veh.reportedCount++;
+					if (msgClassification)
+						veh.reportedTrueCount++;
+				}
+			} else {
+				delete ss;
+				if (!(msgClassification = !msgClassification)){ //if msgClass is true, change to false and..
+					ss = new std::stringstream(wsm->getFalseMsgs()); msgClassification=false;}//switch ss to false messages and continue the loop
+				else
+					break;
 			}
 		}
-		while (getline(fss, word, ',')) {
-			int msgId = std::stoi(word);
-			if (veh.messages.find(msgId) == veh.messages.end())
-				veh.messages[msgId] = new reporterId_2_val;
-			reporterId_2_val &reports = *(veh.messages[msgId]);
-			if(reports.find(senderId)==reports.end()){
-				reports[senderId] = false;
-				veh.reportedCount++;
-			}
-		}
-		veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount, veh.reportedCount);
+		veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount,
+				veh.reportedCount);
 		repScoreVector[reporteeId]->record(veh.rep); //for simulation stats collection only
 		repScoreStats[reporteeId]->collect(veh.rep); //for simulation stats collection only
 		reportedVector[reporteeId]->record(veh.reportedCount);
@@ -332,9 +341,6 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 }
 void MyVeinsApp::initVehicle(int id, bool dontRequestDump) {
 	vehicles[id] = new vehStats();
-	//vehicles[id]->messages = new reporterId_2_val;
-	//reportsArchive[id] = new msgId_2_reporterId2val();
-
 	repScoreStats[id] = new cHistogram; //for simulation stats collection only
 	repScoreVector[id] = new cOutVector; //for simulation stats collection only
 	reportedVector[id] = new cOutVector;
@@ -352,11 +358,14 @@ void MyVeinsApp::initVehicle(int id, bool dontRequestDump) {
 	reportComparisonVector[id]->setName(name);
 	sprintf(name, "msgVector-%d", (id - 15) / 6);
 	msgVector[id]->setName(name);
-	if (!(dontRequestDump||withoutReportDumpSharing)) {
+	if (!(dontRequestDump || withoutReportDumpSharing)) {
 		requestDumpMsg *req = new requestDumpMsg();
 		populateWSM(req);
-		std::string str="Dump Request Message.(";
-		str=str.append(std::to_string(myId).append(std::string(",").append(std::to_string(id).append(")")))); //append() is "faster" than '+'
+		std::string str = "Dump Request Message.(";
+		str = str.append(
+				std::to_string(myId).append(
+						std::string(",").append(
+								std::to_string(id).append(")")))); //append() is "faster" than '+'
 		req->setName("Dump Request Message");
 		req->setSenderAddress(myId);
 		req->setRequestedReporteeAddress(id);

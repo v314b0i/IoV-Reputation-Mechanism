@@ -28,6 +28,7 @@ class LAddress::L2Type extends void;
 packet reportDumpMsg extends BaseFrame1609_4 {
     LAddress::L2Type senderAddress = -1;
 	LAddress::L2Type reporteeAddress = -1;
+	LAddress::L2Type primaryRecipientAddress = -1; //for stats collection only. DO NOT USE recipientAddress (from parent class) or messages will be dropped by others.
 	string trueMsgs; //commaseperated list of messages from reportee found to be true by sender
 	string falseMsgs;//commaseperated list of messages from reportee found to be false by sender
 }

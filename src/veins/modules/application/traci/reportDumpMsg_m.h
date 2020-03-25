@@ -44,6 +44,7 @@ namespace veins {
  * {
  *     LAddress::L2Type senderAddress = -1;
  *     LAddress::L2Type reporteeAddress = -1;
+ *     LAddress::L2Type primaryRecipientAddress = -1; //for stats collection only. DO NOT USE recipientAddress (from parent class) or messages will be dropped by others.
  *     string trueMsgs; //commaseperated list of messages from reportee found to be true by sender
  *     string falseMsgs;//commaseperated list of messages from reportee found to be false by sender
  * }
@@ -54,6 +55,7 @@ class VEINS_API reportDumpMsg : public ::veins::BaseFrame1609_4
   protected:
     LAddress::L2Type senderAddress;
     LAddress::L2Type reporteeAddress;
+    LAddress::L2Type primaryRecipientAddress;
     ::omnetpp::opp_string trueMsgs;
     ::omnetpp::opp_string falseMsgs;
 
@@ -80,6 +82,9 @@ class VEINS_API reportDumpMsg : public ::veins::BaseFrame1609_4
     virtual LAddress::L2Type& getReporteeAddress();
     virtual const LAddress::L2Type& getReporteeAddress() const {return const_cast<reportDumpMsg*>(this)->getReporteeAddress();}
     virtual void setReporteeAddress(const LAddress::L2Type& reporteeAddress);
+    virtual LAddress::L2Type& getPrimaryRecipientAddress();
+    virtual const LAddress::L2Type& getPrimaryRecipientAddress() const {return const_cast<reportDumpMsg*>(this)->getPrimaryRecipientAddress();}
+    virtual void setPrimaryRecipientAddress(const LAddress::L2Type& primaryRecipientAddress);
     virtual const char * getTrueMsgs() const;
     virtual void setTrueMsgs(const char * trueMsgs);
     virtual const char * getFalseMsgs() const;
