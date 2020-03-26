@@ -1,9 +1,574 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
+<scave:Analysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:scave="http://www.omnetpp.org/omnetpp/scave">
   <inputs>
     <inputs name="/veins/examples/myProj1/results/Default-*.vec"/>
     <inputs name="/veins/examples/myProj1/results/Default-*.sca"/>
   </inputs>
-  <datasets/>
-  <chartSheets/>
+  <datasets>
+    <datasets name="rep2">
+      <items xsi:type="scave:Add" filterPattern="name(RepScoreVector-2) " type="VECTOR"/>
+      <items xsi:type="scave:Apply" operation="merger"/>
+      <items xsi:type="scave:Apply" operation="timewinavg">
+        <params name="windowSize" value="10"/>
+      </items>
+      <items xsi:type="scave:Add" filterPattern="name(RepScoreVector-2) " type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Rep Score of Node 2 - With Report Dump Sharing Enabled - Time Window Avg(10s)" lineNameFormat="">
+        <properties name="Graph.Title" value="Rep Score of Node 2 - With Report Dump Sharing Enabled - Time Window Avg(10s)"/>
+        <properties name="X.Axis.Title" value="time"/>
+        <properties name="Y.Axis.Title" value="score"/>
+        <properties name="Y.Axis.Min" value="0.05"/>
+        <properties name="Y.Axis.Max" value="0.95"/>
+        <properties name="Legend.Border" value="true"/>
+        <properties name="Legend.Position" value="Inside"/>
+        <properties name="Legend.Anchoring" value="South"/>
+        <properties name="X.Axis.Min" value="40.0"/>
+        <properties name="X.Axis.Max" value="300.0"/>
+        <properties name="Symbols.Type//home/rohan/veins-5.0/.computed/computed12447310702586756178.vec myScenario.node[13].appl timewinavg(merger(RepScoreVector-2))" value="None"/>
+        <properties name="Line.Type//home/rohan/veins-5.0/.computed/computed12447310702586756178.vec myScenario.node[13].appl timewinavg(merger(RepScoreVector-2))" value="Linear"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[0].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[0].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[0].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[1].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[1].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[1].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[2].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[2].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[2].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[3].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[3].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[3].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[6].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[6].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[6].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[7].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[7].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[7].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[8].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[8].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[8].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[9].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[9].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[9].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[11].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[11].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[11].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[12].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[12].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[12].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[13].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[13].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[13].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[14].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[14].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[14].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[15].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[15].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[15].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[16].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[16].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[16].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[17].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[17].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[17].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[18].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[18].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[18].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[19].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[19].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[19].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[20].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[20].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[20].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[21].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[21].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[21].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[22].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[22].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[22].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[23].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[23].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[23].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[24].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[24].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[24].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[25].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[25].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[25].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[26].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[26].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[26].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[27].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[27].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[27].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[28].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[28].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[28].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[29].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[29].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[29].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[31].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[31].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[31].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[32].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[32].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[32].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[33].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[33].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[33].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[34].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[34].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[34].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[35].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[35].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[35].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[36].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[36].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[36].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[37].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[37].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[37].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[38].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[38].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[38].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[39].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[39].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[39].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[41].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[41].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[41].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[42].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[42].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[42].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[43].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[43].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[43].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[44].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[44].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[44].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[45].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[45].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[45].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[46].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[46].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[46].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[47].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[47].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[47].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[49].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[49].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[49].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[50].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[50].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[50].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[52].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[52].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[52].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[53].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[53].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[53].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[54].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[54].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[54].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[56].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[56].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[56].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[57].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[57].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[57].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[58].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[58].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[58].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[59].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[59].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[59].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[60].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[60].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[60].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[61].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[61].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[61].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[62].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[62].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[62].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[63].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[63].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[63].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[66].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[66].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[66].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[67].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[67].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[67].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[68].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[68].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[68].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[71].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[71].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[71].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[72].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[72].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[72].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[73].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[73].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[73].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[74].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[74].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[74].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[75].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[75].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[75].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[77].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[77].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[77].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[78].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[78].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[78].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[80].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[80].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[80].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[81].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[81].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[81].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[82].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[82].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[82].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[85].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[85].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[85].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[90].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[90].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[90].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[96].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[96].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[96].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[97].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[97].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[97].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.rsu[0].appl RepScoreVector-2" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.rsu[0].appl RepScoreVector-2" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.rsu[0].appl RepScoreVector-2" value="Dots"/>
+        <properties name="Symbols.Type//home/rohan/veins-5.0/.computed/computed14850409103564709980.vec myScenario.node[13].appl timewinavg(merger(RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;...))" value="None"/>
+        <properties name="Line.Color//home/rohan/veins-5.0/.computed/computed14850409103564709980.vec myScenario.node[13].appl timewinavg(merger(RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;...))" value="black"/>
+        <properties name="Line.Name//home/rohan/veins-5.0/.computed/computed14850409103564709980.vec myScenario.node[13].appl timewinavg(merger(RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;...))" value="Time Window Avg(10s)"/>
+        <properties name="Line.Name//veins/examples/myProj1/results/Default-#0.vec myScenario.node[0].appl RepScoreVector-2" value="/veins/examples/myProj1/results/Default-#0.vec myScenario.node[0].appl "/>
+      </items>
+      <items xsi:type="scave:LineChart" name="Rep Score of Node 2 - With Report Dump Sharing Enabled" lineNameFormat="">
+        <properties name="Graph.Title" value="Rep Score of Node 2 - With Report Dump Sharing Enabled"/>
+        <properties name="Y.Axis.Min" value="0.05"/>
+        <properties name="Y.Axis.Max" value="0.95"/>
+        <properties name="X.Axis.Min" value="40.0"/>
+        <properties name="X.Axis.Max" value="300.0"/>
+        <properties name="Symbols.Type" value="None"/>
+        <properties name="Line.Type" value="Linear"/>
+        <properties name="Symbols.Type//home/rohan/veins-5.0/.computed/computed14850409103564709980.vec myScenario.node[13].appl timewinavg(merger(RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;...))" value="None"/>
+        <properties name="Line.Type//home/rohan/veins-5.0/.computed/computed14850409103564709980.vec myScenario.node[13].appl timewinavg(merger(RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;...))" value="Linear"/>
+        <properties name="Line.Display//home/rohan/veins-5.0/.computed/computed14850409103564709980.vec myScenario.node[13].appl timewinavg(merger(RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;RepScoreVector-2;...))" value="false"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-2" value="None"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-2" value="Linear"/>
+      </items>
+    </datasets>
+    <datasets name="rep3">
+      <items xsi:type="scave:Add" filterPattern="name(RepScoreVector-3) " type="VECTOR"/>
+      <items xsi:type="scave:Apply" operation="merger"/>
+      <items xsi:type="scave:Apply" operation="timewinavg">
+        <params name="windowSize" value="10"/>
+      </items>
+      <items xsi:type="scave:Add" filterPattern="name(RepScoreVector-3) " type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Rep Score of Node 3 - With Report Dump Sharing Enabled - Time Window Avg(10s)" lineNameFormat="">
+        <properties name="Graph.Title" value="Rep Score of Node 3 - With Report Dump Sharing Enabled - Time Window Avg(10s)"/>
+        <properties name="Y.Axis.Min" value="0.05"/>
+        <properties name="Y.Axis.Max" value="0.95"/>
+        <properties name="X.Axis.Min" value="40.0"/>
+        <properties name="X.Axis.Max" value="300.0"/>
+        <properties name="Symbols.Type//home/rohan/veins-5.0/.computed/computed6233611292131883613.vec myScenario.node[15].appl timewinavg(merger(RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;...))" value="None"/>
+        <properties name="Line.Color//home/rohan/veins-5.0/.computed/computed6233611292131883613.vec myScenario.node[15].appl timewinavg(merger(RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;...))" value="black"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[0].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[0].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[0].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[1].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[1].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[1].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[2].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[2].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[2].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[3].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[3].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[3].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[4].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[4].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[4].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[6].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[6].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[6].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[7].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[7].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[7].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[8].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[8].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[8].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[11].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[11].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[11].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[12].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[12].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[12].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[15].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[15].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[15].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[16].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[16].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[16].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[17].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[17].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[17].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[18].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[18].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[18].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[19].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[19].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[19].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[20].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[20].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[20].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[21].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[21].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[21].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[22].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[22].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[22].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[23].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[23].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[23].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[24].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[24].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[24].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[25].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[25].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[25].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[26].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[26].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[26].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[27].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[27].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[27].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[28].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[28].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[28].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[29].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[29].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[29].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[30].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[30].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[30].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[31].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[31].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[31].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[32].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[32].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[32].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[34].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[34].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[34].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[35].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[35].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[35].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[36].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[36].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[36].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[38].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[38].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[38].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[39].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[39].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[39].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[41].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[41].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[41].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[42].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[42].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[42].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[43].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[43].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[43].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[44].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[44].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[44].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[45].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[45].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[45].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[46].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[46].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[46].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[47].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[47].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[47].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[48].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[48].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[48].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[49].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[49].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[49].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[50].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[50].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[50].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[52].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[52].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[52].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[53].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[53].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[53].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[54].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[54].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[54].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[55].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[55].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[55].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[56].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[56].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[56].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[58].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[58].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[58].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[59].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[59].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[59].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[60].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[60].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[60].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[61].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[61].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[61].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[62].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[62].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[62].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[63].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[63].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[63].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[65].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[65].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[65].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[66].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[66].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[66].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[67].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[67].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[67].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[68].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[68].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[68].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[70].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[70].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[70].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[71].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[71].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[71].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[72].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[72].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[72].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[73].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[73].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[73].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[74].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[74].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[74].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[75].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[75].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[75].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[76].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[76].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[76].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[77].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[77].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[77].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[78].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[78].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[78].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[79].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[79].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[79].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[80].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[80].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[80].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[81].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[81].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[81].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[82].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[82].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[82].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[83].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[83].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[83].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[84].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[84].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[84].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[85].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[85].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[85].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[86].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[86].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[86].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[87].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[87].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[87].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[89].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[89].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[89].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[90].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[90].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[90].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[92].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[92].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[92].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[93].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[93].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[93].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[94].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[94].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[94].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[98].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[98].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[98].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[100].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[100].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[100].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[102].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.node[102].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[102].appl RepScoreVector-3" value="Dots"/>
+        <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.rsu[0].appl RepScoreVector-3" value="Plus"/>
+        <properties name="Symbols.Size//veins/examples/myProj1/results/Default-#0.vec myScenario.rsu[0].appl RepScoreVector-3" value="3"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.rsu[0].appl RepScoreVector-3" value="Dots"/>
+      </items>
+      <items xsi:type="scave:LineChart" name="Rep Score of Node 3 - With Report Dump Sharing Enabled" lineNameFormat="">
+        <properties name="Graph.Title" value="Rep Score of Node 2 - With Report Dump Sharing Enabled"/>
+        <properties name="Y.Axis.Min" value="0.05"/>
+        <properties name="Y.Axis.Max" value="0.95"/>
+        <properties name="X.Axis.Min" value="40.0"/>
+        <properties name="X.Axis.Max" value="300.0"/>
+        <properties name="Line.Display//home/rohan/veins-5.0/.computed/computed6233611292131883613.vec myScenario.node[15].appl timewinavg(merger(RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;RepScoreVector-3;...))" value="false"/>
+        <properties name="Symbols.Type" value="None"/>
+        <properties name="Line.Type" value="Linear"/>
+      </items>
+    </datasets>
+  </datasets>
+  <chartSheets>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.4 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.5"/>
+  </chartSheets>
 </scave:Analysis>
