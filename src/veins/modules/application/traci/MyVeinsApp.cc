@@ -172,8 +172,8 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			initVehicle(senderId);
 		vehStats &veh = *(vehicles[senderId]);
 		if (veh.messages.find(msgId) == veh.messages.end()) //if neither a report of this message has been received earlier nor this message
-			veh.messages[msgId] = new reporterId_2_val;
-		reporterId_2_val &reports = *(veh.messages[msgId]);
+			veh.messages[msgId] = new int_2_bool;
+		int_2_bool &reports = *(veh.messages[msgId]);
 		if (reports.find(myId) == reports.end()) { //if this message has been received for the first time by SELF..
 			bool msgVal = inaccurateBoolCheck(wsm->getCorrect(),
 					evaluatingAccuracy);
@@ -193,7 +193,6 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			reportedVector[senderId]->record(veh.reportedCount);
 			reportedTrueVector[senderId]->record(veh.reportedTrueCount);
 			msgVector[senderId]->record(veh.msgCount);
-
 			reportMsg *rep = new reportMsg();
 			populateWSM(rep);
 			rep->setName("Report Message");
@@ -221,8 +220,8 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			initVehicle(reporteeId);
 		vehStats &reportee = *(vehicles[reporteeId]);
 		if (reportee.messages.find(msgId) == reportee.messages.end()) //if neither a report of this message has been received earlier nor this message
-			reportee.messages[msgId] = new reporterId_2_val;
-		reporterId_2_val &reports = *(reportee.messages[msgId]);
+			reportee.messages[msgId] = new int_2_bool;
+		int_2_bool &reports = *(reportee.messages[msgId]);
 		if (reports.find(reporterId) == reports.end()) { //if this report has not been recieved before
 				//sendDown(wsm->dup());
 			if (reports.find(myId) == reports.end()) { // if the message being reported HAS NOT been recieved by self (we update the reporteE's score as per report)
@@ -271,7 +270,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		vehStats &veh = *(vehicles[requestedReporteeId]);
 		std::string trueMsgs = "", falseMsgs = "", mId;
 		for (auto it = veh.messages.begin(); it != veh.messages.end(); ++it) {
-			reporterId_2_val &reports = *(veh.messages[it->first]);
+			int_2_bool &reports = *(veh.messages[it->first]);
 			mId = std::to_string(it->first).append(",");
 			if (reports.find(myId) != reports.end()) {
 				if (reports[myId])
@@ -315,8 +314,8 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			if (getline(*ss, word, ',')) {
 				msgId = std::stoi(word);
 				if (veh.messages.find(msgId) == veh.messages.end())
-					veh.messages[msgId] = new reporterId_2_val;
-				reporterId_2_val &reports = *(veh.messages[msgId]);
+					veh.messages[msgId] = new int_2_bool;
+				int_2_bool &reports = *(veh.messages[msgId]);
 				if (reports.find(senderId) == reports.end()) {
 					reports[senderId] = msgClassification;
 					veh.reportedCount++;
