@@ -66,20 +66,12 @@ void MyVeinsApp::initialize(int stage) {
 		requestDelay = par("requestDelay");
 		requestDelayVarianceLimit = par("requestDelayVarianceLimit");
 		requestResponseDelay = par("requestResponseDelay");
-		requestResponseDelayVarianceLimit = par(
-				"requestResponseDelayVarianceLimit");
-		messageIntervalVarianceLimit = SimTime(
-				messageIntervalVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
-		reportGenTimeVarianceLimit = SimTime(
-				reportGenTimeVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
-		requestDelayVarianceLimit = SimTime(
-				requestDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
-		requestResponseDelayVarianceLimit = SimTime(
-				requestResponseDelayVarianceLimit.inUnit(SIMTIME_S),
-				SIMTIME_MS);
-		evaluatingAccuracy =
-				(float) par("evaluatingAccuracyPercentage").intValue()
-						/ (float) 100;
+		requestResponseDelayVarianceLimit = par("requestResponseDelayVarianceLimit");
+		messageIntervalVarianceLimit = SimTime(messageIntervalVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		reportGenTimeVarianceLimit = SimTime(reportGenTimeVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		requestDelayVarianceLimit = SimTime(requestDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		requestResponseDelayVarianceLimit = SimTime(requestResponseDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		evaluatingAccuracy = (float) par("evaluatingAccuracyPercentage").intValue() / (float) 100;
 		sendingAccuracy = setSendingAccuracy();
 		sendMsgEvt = new cMessage("Send Message Event", SEND_INFOMSG_EVT);
 		sentVector.setName("sentVector");
@@ -93,17 +85,12 @@ void MyVeinsApp::initialize(int stage) {
 	} else if (stage == 1) {
 		//manually setting nodes 1,3 as bad and 0,2 as good.
 		if ((int) myId == 21 || (int) myId == 33) {
-			sendingAccuracy =
-					(float) par("badSendingAccuracyPercentage").intValue()
-							/ (float) 100;
+			sendingAccuracy = (float) par("badSendingAccuracyPercentage").intValue() / (float) 100;
 		} else if ((int) myId == 15 || (int) myId == 27) {
-			sendingAccuracy =
-					(float) par("goodSendingAccuracyPercentage").intValue()
-							/ (float) 100;
+			sendingAccuracy = (float) par("goodSendingAccuracyPercentage").intValue() / (float) 100;
 		}
 		srand(myId);
-		simtime_t variance = messageIntervalVarianceLimit
-				* (((float) (rand() % 1000) / (float) 500) - 1); //variance=(-limit to +limit)uniformly
+		simtime_t variance = messageIntervalVarianceLimit * (((float) (rand() % 1000) / (float) 500) - 1); //variance=(-limit to +limit)uniformly
 		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);
 	}
 }
@@ -113,8 +100,7 @@ float MyVeinsApp::setSendingAccuracy() {
 	int a = (rand() % 1000);
 	return (float) (
 			a < (par("percentageWithBadSendingAccuracy").intValue() * 10) ?
-					par("badSendingAccuracyPercentage").intValue() :
-					par("goodSendingAccuracyPercentage").intValue())
+					par("badSendingAccuracyPercentage").intValue() : par("goodSendingAccuracyPercentage").intValue())
 			/ (float) 100;
 }
 
@@ -144,18 +130,15 @@ void MyVeinsApp::finish() {
 	for (auto it = repScoreVector.begin(); it != repScoreVector.end(); ++it)
 		delete it->second;
 	for (auto it = vehicles.begin(); it != vehicles.end(); ++it) {
-		for (auto it2 = it->second->messages.begin();
-				it2 != it->second->messages.end(); ++it2)
+		for (auto it2 = it->second->messages.begin(); it2 != it->second->messages.end(); ++it2)
 			delete it2->second;
 		delete it->second;
 	}
 	for (auto it = reportedVector.begin(); it != reportedVector.end(); ++it)
 		delete it->second;
-	for (auto it = reportedTrueVector.begin(); it != reportedTrueVector.end();
-			++it)
+	for (auto it = reportedTrueVector.begin(); it != reportedTrueVector.end(); ++it)
 		delete it->second;
-	for (auto it = reportComparisonVector.begin();
-			it != reportComparisonVector.end(); ++it)
+	for (auto it = reportComparisonVector.begin(); it != reportComparisonVector.end(); ++it)
 		delete it->second;
 	for (auto it = msgVector.begin(); it != msgVector.end(); ++it)
 		delete it->second;
@@ -175,8 +158,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			veh.messages[msgId] = new int_2_bool;
 		int_2_bool &reports = *(veh.messages[msgId]);
 		if (reports.find(myId) == reports.end()) { //if this message has been received for the first time by SELF..
-			bool msgVal = inaccurateBoolCheck(wsm->getCorrect(),
-					evaluatingAccuracy);
+			bool msgVal = inaccurateBoolCheck(wsm->getCorrect(), evaluatingAccuracy);
 			reports[myId] = msgVal;
 			//can instead here just do wsm = rep at the end and let the report handling happen in the next if block itself
 			veh.msgCount++;
@@ -185,8 +167,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 				veh.trueMsgCount++;
 				veh.reportedTrueCount++;
 			}
-			veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount,
-					veh.reportedCount);
+			veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount, veh.reportedCount);
 
 			repScoreVector[senderId]->record(veh.rep); //for simulation stats collection only
 			repScoreStats[senderId]->collect(veh.rep); //for simulation stats collection only
@@ -202,15 +183,15 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			rep->setFoundValid(msgVal);
 			rep->setKind(REPORT_MSG);
 			srand((int) simTime().raw() + myId);
-			simtime_t variance = reportGenTimeVarianceLimit
-					* ((float) (rand() % 1000) / (float) 500 - 1);
+			simtime_t variance = reportGenTimeVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
 			scheduleAt(simTime() + reportGenTime + variance, rep);
 		}
 	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
 		recRprt++;
 		int reporteeId = wsm->getReporteeAddress();
 		int reporterId = wsm->getReporterAddress();
-		if(reporterId==reporteeId) return; //not going to happen but failsafe for modification in report gen block.
+		if (reporterId == reporteeId)
+			return; //not going to happen but failsafe for modification in report gen block.
 		int msgId = wsm->getReportedMsgId();
 		bool foundValid = wsm->getFoundValid();
 		if (vehicles.find(reporterId) == vehicles.end())
@@ -229,14 +210,12 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 				reportee.reportedCount++;
 				if (foundValid)
 					reportee.reportedTrueCount++;
-				reportee.rep = scoreCalculator(reportee.repOrignal,
-						reportee.reportedTrueCount, reportee.reportedCount);
+				reportee.rep = scoreCalculator(reportee.repOrignal, reportee.reportedTrueCount, reportee.reportedCount);
 
 				repScoreVector[reporteeId]->record(reportee.rep); //for simulation stats collection only
 				repScoreStats[reporteeId]->collect(reportee.rep); //for simulation stats collection only
 				reportedVector[reporteeId]->record(reportee.reportedCount);
-				reportedTrueVector[reporteeId]->record(
-						reportee.reportedTrueCount);
+				reportedTrueVector[reporteeId]->record(reportee.reportedTrueCount);
 
 			} else { // if the message being reported HAS been recieved by self (we update the reporteR's score as per its consistency with self's report)
 				/*reporter.reportedCount++;
@@ -275,8 +254,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			if (reports.find(myId) != reports.end()) {
 				if (reports[myId])
 					trueMsgs = trueMsgs.append(mId);
-				else
-					falseMsgs = falseMsgs.append(mId);
+				else falseMsgs = falseMsgs.append(mId);
 			}
 		}
 		if (trueMsgs.length() > 2 || falseMsgs.length() > 2) { //TODO more defined cutoff
@@ -289,8 +267,7 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			dump->setTrueMsgs(trueMsgs.c_str());
 			dump->setFalseMsgs(falseMsgs.c_str());
 			srand((int) simTime().raw() + myId);
-			simtime_t variance = requestResponseDelayVarianceLimit
-					* ((float) (rand() % 1000) / (float) 500 - 1);
+			simtime_t variance = requestResponseDelayVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
 			scheduleAt(simTime() + requestResponseDelay + variance, dump);
 		}
 	} else if (reportDumpMsg *wsm = dynamic_cast<reportDumpMsg*>(frame)) {
@@ -324,14 +301,14 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 				}
 			} else {
 				delete ss;
-				if (!(msgClassification = !msgClassification)){ //if msgClass is true, change to false and..
-					ss = new std::stringstream(wsm->getFalseMsgs()); msgClassification=false;}//switch ss to false messages and continue the loop
-				else
-					break;
+				if (!(msgClassification = !msgClassification)) { //if msgClass is true, change to false and..
+					ss = new std::stringstream(wsm->getFalseMsgs());
+					msgClassification = false;
+				} //switch ss to false messages and continue the loop
+				else break;
 			}
 		}
-		veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount,
-				veh.reportedCount);
+		veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount, veh.reportedCount);
 		repScoreVector[reporteeId]->record(veh.rep); //for simulation stats collection only
 		repScoreStats[reporteeId]->collect(veh.rep); //for simulation stats collection only
 		reportedVector[reporteeId]->record(veh.reportedCount);
@@ -361,16 +338,12 @@ void MyVeinsApp::initVehicle(int id, bool dontRequestDump) {
 		requestDumpMsg *req = new requestDumpMsg();
 		populateWSM(req);
 		std::string str = "Dump Request Message.(";
-		str = str.append(
-				std::to_string(myId).append(
-						std::string(",").append(
-								std::to_string(id).append(")")))); //append() is "faster" than '+'
+		str = str.append(std::to_string(myId).append(std::string(",").append(std::to_string(id).append(")")))); //append() is "faster" than '+'
 		req->setName("Dump Request Message");
 		req->setSenderAddress(myId);
 		req->setRequestedReporteeAddress(id);
 		srand((int) simTime().raw() + myId + id);
-		simtime_t variance = requestDelayVarianceLimit
-				* ((float) (rand() % 1000) / (float) 500 - 1);
+		simtime_t variance = requestDelayVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
 		scheduleAt(simTime() + requestDelay + variance, req);
 	}
 }
@@ -414,11 +387,9 @@ void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 		wsm->setKind(INFO_MSG);
 		sendDown(wsm);
 		srand((int) simTime().raw() + myId);
-		simtime_t variance = messageIntervalVarianceLimit
-				* (((float) (rand() % 1000) / (float) 500) - 1);
+		simtime_t variance = messageIntervalVarianceLimit * (((float) (rand() % 1000) / (float) 500) - 1);
 		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);
-	} else
-		DemoBaseApplLayer::handleSelfMsg(msg);
+	} else DemoBaseApplLayer::handleSelfMsg(msg);
 }
 
 void MyVeinsApp::handlePositionUpdate(cObject *obj) {

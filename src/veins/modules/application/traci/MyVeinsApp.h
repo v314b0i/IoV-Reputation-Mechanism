@@ -6,6 +6,7 @@
 #include "veins/modules/application/traci/infoMsg_m.h"
 #include "veins/modules/application/traci/reportMsg_m.h"
 #include "veins/modules/application/traci/myClasses.h"
+#include "veins/modules/application/traci/myMiscFunctions.h"
 
 namespace veins {
 
@@ -13,12 +14,6 @@ class VEINS_API MyVeinsApp: public DemoBaseApplLayer {
 public:
 	void initialize(int stage) override;
 	void finish() override;
-	enum MyApplMessageKinds {
-		SEND_INFOMSG_EVT,
-		//SEND_REPORTMSG_EVT,
-		INFO_MSG,
-		REPORT_MSG
-	};
 protected:
 	void onWSM(BaseFrame1609_4 *wsm) override;
 	//void onWSA(DemoServiceAdvertisment *wsa) override;

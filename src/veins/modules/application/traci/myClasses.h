@@ -1,9 +1,17 @@
+#pragma once
+
 #include <tr1/unordered_map>
 #include <tr1/unordered_set>
+#include <math.h>
+
 //TODO create initialisers to dyn alloc new objs to ptrs and remove code from various initVeh funcs
 //TODO create separate structs for stats collection counters, keep app functionality and ststs collection differentiated.
-
+enum MyApplMessageKinds {
+	SEND_INFOMSG_EVT, STAGE_SHIFT_EVT, INFO_MSG, REPORT_MSG
+};
 typedef std::tr1::unordered_map<int, bool> int_2_bool;
+typedef std::tr1::unordered_map<int, float> int_2_float;
+typedef std::tr1::unordered_map<int, int> int_2_int;
 typedef std::tr1::unordered_map<int, int_2_bool*> int_2_int2bool;
 class vehStats {		//	{senderId : (rep, rep0, total#, true#, { msgId: { reporterId : val } }) }
 public:
@@ -21,24 +29,32 @@ public:
 };
 typedef std::tr1::unordered_map<int, vehStats*> int2vehStats;
 
-struct reportsGist{
+struct reportsGist {
 	int reportedTrueCount = 0;
-	int reportedCount=0;
+	int reportedCount = 0;
 	int_2_bool messages;
 };
 typedef std::tr1::unordered_map<int, reportsGist*> int2reportsGist;
 
-class vehStatsEntityCentric {  // { vehId : (true#, total#, { reporterId : (true#, total#, { msgId : val }) }) }
+struct vehStatsEntityCentric {  // { vehId : (true#, total#, { reporterId : (true#, total#, { msgId : val }) }) }
 	int reportedTrueCount = 0;
 	int reportedCount = 0;
 	int2reportsGist reporters; // { reporterId : (true#, total#, { msgId : val }) }
 };
 
+
 typedef std::tr1::unordered_map<int, vehStatsEntityCentric*> int2vehStatsEntityCentric;
 typedef std::tr1::unordered_set<int> intSet;
 typedef std::tr1::unordered_map<int, intSet*> int_2_intSet;
 
-class reportsBasket{
+struct reportsBasket {
 	int_2_intSet scope;
 	int2vehStatsEntityCentric vehicles;
+	inline bool contains(int veh, int msg) {
+		return scope.count(veh) != 0 && scope[veh] != nullptr && scope[veh]->count(msg) != 0;
+	}
+	inline bool contains(int veh) {
+		return scope.count(veh) != 0;
+	}
 };
+

@@ -6,6 +6,7 @@
 #include "veins/modules/application/traci/infoMsg_m.h"
 #include "veins/modules/application/traci/reportMsg_m.h"
 #include "veins/modules/application/traci/myClasses.h"
+#include "veins/modules/application/traci/myMiscFunctions.h"
 
 namespace veins {
 
@@ -13,12 +14,6 @@ class VEINS_API MyVeinsRSUApp: public DemoBaseApplLayer {
 public:
 	void initialize(int stage) override;
 	void finish() override;
-	enum MyApplMessageKinds {
-		SEND_INFOMSG_EVT,
-		//SEND_REPORTMSG_EVT,
-		INFO_MSG,
-		REPORT_MSG
-	};
 protected:
 	void onWSM(BaseFrame1609_4 *wsm) override;
 	//void onWSA(DemoServiceAdvertisment *wsa) override;
@@ -26,13 +21,23 @@ protected:
 	void handleSelfMsg(cMessage *msg) override;
 	void handlePositionUpdate(cObject *obj) override;
 	void initVehicle(int vehId);
+	void stageShift();
 	void deleteBasket(reportsBasket *basket);
-	void genarateSecondaryScores();
-	float calcSecondaryScore(int vehId);
+	int_2_float genarateSecondaryScores(reportsBasket *basket);
+	void populateBlacklistedReportersList(int_2_float secondaryScores, std::tr1::unordered_set<int> &blacklist);
+	int_2_float genaratePrimaryScores_ReportsBased(reportsBasket *basket, int_2_float secondaryScores,
+			std::tr1::unordered_set<int> blacklist);
+	int_2_float genaratePrimaryScores_MessagesBased_MajorityAbsolutist(reportsBasket *basket,
+			int_2_float secondaryScores, std::tr1::unordered_set<int> blacklist);
+	int_2_float genaratePrimaryScores_MessagesBased(reportsBasket *basket, int_2_float secondaryScores,
+			std::tr1::unordered_set<int> blacklist);
+
+	cMessage *stageShiftEvt;
 	reportsBasket *currentBasket;
 	reportsBasket *stagedBasket;
 	int_2_intSet archivedScope; //  { senderId : { msgId : val } }
 
+	simtime_t stageShiftInterval;
 };
 
 }

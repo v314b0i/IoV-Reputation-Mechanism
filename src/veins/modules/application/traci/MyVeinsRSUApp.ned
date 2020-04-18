@@ -28,16 +28,5 @@ simple MyVeinsRSUApp extends DemoBaseApplLayer
     parameters:
     	@class(veins::MyVeinsRSUApp);
     	string appName = default("MyVeinsRSUApp");
-    	int percentageWithBadSendingAccuracy;
-    	int badSendingAccuracyPercentage;
-    	int goodSendingAccuracyPercentage;
-    	int evaluatingAccuracyPercentage;
-    	double messageInterval = default(5s) @unit(s);
-    	double messageIntervalVarianceLimit = default(2000ms) @unit(ms);
-    	double reportGenTime = default(7s) @unit(s);
-    	double reportGenTimeVarianceLimit	= default(5000ms) @unit(ms);
-    	double requestResponseDelay = default(1s) @unit(s);
-		double requestResponseDelayVarianceLimit = default(500ms) @unit(ms);
-		double requestDelay = default(1s) @unit(s);
-		double requestDelayVarianceLimit  = default(500ms) @unit(ms);
+    	double stageShiftInterval = default(10s) @unit(s);
 }
