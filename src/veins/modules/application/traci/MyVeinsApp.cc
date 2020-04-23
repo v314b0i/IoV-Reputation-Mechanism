@@ -48,7 +48,7 @@ void MyVeinsApp::initialize(int stage) {
 		EV << "Initializing " << par("appName").stringValue() << std::endl;
 		withoutReportDumpSharing = par("withoutReportDumpSharing").boolValue();
 
-		//mostly stats collection objects and counters and some simulation parameters.
+		//STATS
 		sent = 0;
 		sentCorrect = 0;
 		recMsg = 0;
@@ -142,6 +142,7 @@ void MyVeinsApp::finish() {
 		delete it->second;
 	for (auto it = msgVector.begin(); it != msgVector.end(); ++it)
 		delete it->second;
+	//delete sendMsgEvt;
 	DemoBaseApplLayer::finish();
 }
 
@@ -168,7 +169,6 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 				veh.reportedTrueCount++;
 			}
 			veh.rep = scoreCalculator(veh.repOrignal, veh.reportedTrueCount, veh.reportedCount);
-
 			repScoreVector[senderId]->record(veh.rep); //for simulation stats collection only
 			repScoreStats[senderId]->collect(veh.rep); //for simulation stats collection only
 			reportedVector[senderId]->record(veh.reportedCount);
@@ -365,8 +365,8 @@ void MyVeinsApp::initVehicle(int id, bool dontRequestDump) {
 void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(msg)) {
 		if (wsm->getCorrect())
-			sentCorrectVector.record(++sentCorrect);
-		sentVector.record(wsm->getMsgId());
+			sentCorrectVector.record(sentCorrect);
+		sentVector.record(sent);
 		sendDown(wsm);
 	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(msg)) {
 		sentReportsVector.record(++sentRprt);
@@ -386,6 +386,11 @@ void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 		wsm->setCorrect(inaccurateBoolCheck(true, sendingAccuracy));
 		wsm->setKind(INFO_MSG);
 		sendDown(wsm);
+		//STATS
+		if (wsm->getCorrect())
+				sentCorrectVector.record(++sentCorrect);
+		sentVector.record(sent);
+		//-----
 		srand((int) simTime().raw() + myId);
 		simtime_t variance = messageIntervalVarianceLimit * (((float) (rand() % 1000) / (float) 500) - 1);
 		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);

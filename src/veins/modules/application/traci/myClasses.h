@@ -51,10 +51,9 @@ struct reportsBasket {
 	int_2_intSet scope;
 	int2vehStatsEntityCentric vehicles;
 	inline bool contains(int veh, int msg) {
-		return scope.count(veh) != 0 && scope[veh] != nullptr && scope[veh]->count(msg) != 0;
+		return (scope.count(veh) && scope[veh]->count(msg));
 	}
 	inline bool contains(int veh) {
-		return scope.count(veh) != 0;
+		return scope.count(veh);
 	}
 };
-

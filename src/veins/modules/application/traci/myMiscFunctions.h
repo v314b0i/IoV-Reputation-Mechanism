@@ -18,16 +18,22 @@ template<typename keytype, typename valtype, typename objtype> objtype mapValues
 	return obj;
 }
 template<typename type> inline float vectorMedian(std::vector<type> vec) {
+	if (vec.size() == 0)
+		return -1;
 	sort(vec.begin(), vec.end());
 	return vec.at((int) (vec.size() / 2));
 }
 template<typename type> inline float vectorMean(std::vector<type> vec) {
+	if (vec.size() == 0)
+		return -1;
 	float acc = 0;
 	for (auto i : vec)
 		acc += i;
 	return acc / (float) vec.size();
 }
 template<typename type> inline float vectorMode(std::vector<type> vec) {
+	if (vec.size() == 0)
+		return -1;
 	//appx algo written by me. may need to be replaced if the isMultimodal func's temporary logic isn't replaced or this is used elsewhere
 	int hist[10] = { 0 }, hist2[9] = { 0 }, hmax = 0; //hist[i]=bin(10*i% to 10*(i+1)%) and hist2[i]=bin(5+10*i% to 5+10*(i+1)%)
 	float hmaxi = 0;
@@ -62,7 +68,7 @@ template<typename container> float inline standardDeviation(container obj, float
 		diff = it - centre;
 		acc += diff * diff;
 	}
-	return sqrt(acc / (obj.size() - 1));
+	return sqrt(acc / (float) obj.size());
 }
 template<typename container> float inline medianAbsoluteDeviation(container obj, float centre) {
 	std::vector<float> vec;
@@ -82,4 +88,39 @@ template<typename type> bool ismultimodal(std::vector<type> vec, float median) {
 template<typename type> bool ismultimodal(std::vector<type> vec) {
 	float median = vectorMedian(vec);
 	return ismultimodal(vec, median);
+}
+intSet csvToIntSet(const char *csvstr) {
+	intSet set;
+	std::string word;
+	std::stringstream SS(csvstr);
+	while (getline(SS, word, ','))
+		set.insert(std::stoi(word));
+	return set;
+}
+inline int vehiclesInScope(int_2_intSet scope) {
+	return scope.size();
+}
+inline int messagesInScope(int_2_intSet scope) {
+	int count = 0;
+	for (auto i : scope)
+		count += i.second->size();
+	return count;
+}
+inline int uniqueReportersInBasket(reportsBasket basket) {
+	intSet reporters;
+	for (auto veh : basket.vehicles) {
+		for (auto reporter : veh.second->reporters) {
+			reporters.insert(reporter.first);
+		}
+	}
+	return reporters.size();
+}
+inline int reportsInBasket(reportsBasket basket) {
+	int reports = 0;
+	for (auto veh : basket.vehicles) {
+		for (auto reporter : veh.second->reporters) {
+			reports += reporter.second->reportedCount;
+		}
+	}
+	return reports;
 }

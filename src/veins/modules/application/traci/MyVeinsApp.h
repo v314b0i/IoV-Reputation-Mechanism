@@ -6,7 +6,7 @@
 #include "veins/modules/application/traci/infoMsg_m.h"
 #include "veins/modules/application/traci/reportMsg_m.h"
 #include "veins/modules/application/traci/myClasses.h"
-#include "veins/modules/application/traci/myMiscFunctions.h"
+//#include "veins/modules/application/traci/myMiscFunctions.h"
 
 namespace veins {
 

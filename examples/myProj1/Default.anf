@@ -5,7 +5,7 @@
     <inputs name="/veins/examples/myProj1/results/Default-*.sca"/>
   </inputs>
   <datasets>
-    <datasets name="rep2">
+    <datasets name="NodeAppn: rep Score of node 2 ">
       <items xsi:type="scave:Add" filterPattern="name(RepScoreVector-2) " type="VECTOR"/>
       <items xsi:type="scave:Apply" operation="merger"/>
       <items xsi:type="scave:Apply" operation="timewinavg">
@@ -276,7 +276,7 @@
         <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[10].appl RepScoreVector-2" value="Linear"/>
       </items>
     </datasets>
-    <datasets name="rep3">
+    <datasets name="NodeAppn: rep Score of node 3 ">
       <items xsi:type="scave:Add" filterPattern="name(RepScoreVector-3) " type="VECTOR"/>
       <items xsi:type="scave:Apply" operation="merger"/>
       <items xsi:type="scave:Apply" operation="timewinavg">
@@ -567,8 +567,161 @@
         <properties name="Line.Type" value="Linear"/>
       </items>
     </datasets>
+    <datasets name="RSUAppn: Secondary Scores">
+      <items xsi:type="scave:Add" filterPattern="name(sec*)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Secondary Scores" lineNameFormat="">
+        <properties name="Graph.Title" value="Secondary Scores"/>
+        <properties name="Y.Axis.Min" value="-0.01"/>
+        <properties name="X.Axis.Min" value="350.0"/>
+        <properties name="Symbols.Type/secondaryScoreThreshhold" value="Square"/>
+        <properties name="Symbols.Type/secondaryScoreVector-1" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-3" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-7" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-9" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-11" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-12" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-13" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-14" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-15" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-17" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-19" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-20" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-21" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-23" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-27" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-28" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-29" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-31" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-32" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-33" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-34" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-35" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-39" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-40" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-43" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-44" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-45" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-46" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-48" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-52" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-53" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-55" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-56" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-59" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-62" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-63" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-65" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-66" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-70" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-72" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-73" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-75" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-81" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-83" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-84" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-86" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-87" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-88" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-91" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-92" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-97" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-98" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-99" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-100" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-102" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-103" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-104" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-105" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-106" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-108" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-109" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-110" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-111" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-112" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-115" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-116" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-118" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-119" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-120" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-123" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-127" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-128" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-129" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-130" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-133" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-139" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-141" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-151" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-154" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-161" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-165" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-166" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-168" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-169" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-171" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-174" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-180" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-184" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-185" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-193" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-194" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-196" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-197" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-202" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-203" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-206" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-213" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-214" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-217" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-218" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-221" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-222" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-228" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-229" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-231" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-234" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-242" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-246" value="Cross"/>
+        <properties name="Symbols.Size" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreThreshhold" value="8"/>
+        <properties name="Line.Color/secondaryScoreThreshhold" value="black"/>
+      </items>
+    </datasets>
+    <datasets name="RSUAppn: Blacklisted Nodes">
+      <items xsi:type="scave:Add" filterPattern="name(blacklistedReportersInStagedBasket) OR name(reportersInStagedBasket) " type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Total/Blacklisted Reporters in Staged Basket" lineNameFormat="">
+        <properties name="Graph.Title" value="Total/Blacklisted Reporters in Staged Basket"/>
+      </items>
+    </datasets>
+    <datasets name="RSUAppn: Primary Scores - Reports Based">
+      <items xsi:type="scave:Add" filterPattern="name(primaryScore_ReportsBasedVector-*)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Primary Scores - Reports Based" lineNameFormat="">
+        <properties name="Graph.Title" value="Primary Scores - Reports Based"/>
+        <properties name="Y.Axis.Min" value="-0.01"/>
+        <properties name="Y.Axis.Max" value="1.01"/>
+        <properties name="X.Axis.Min" value="355.0"/>
+      </items>
+    </datasets>
+    <datasets name="RSUAppn: Primary Scores - Messages Based - Majorty Absolutist">
+      <items xsi:type="scave:Add" filterPattern="name(primaryScore_MessagesBased_MajorityAbsolutistVector-*)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Primary Scores - Messages Based - Majorty Absolutist" lineNameFormat="">
+        <properties name="Graph.Title" value="Primary Scores - Messages Based - Majorty Absolutist"/>
+        <properties name="Y.Axis.Min" value="-0.01"/>
+        <properties name="Y.Axis.Max" value="1.01"/>
+        <properties name="X.Axis.Min" value="355.0"/>
+      </items>
+    </datasets>
+    <datasets name="RSUAppn: Primary Scores - Messages Based">
+      <items xsi:type="scave:Add" filterPattern="name(primaryScore_MessagesBasedVector-*)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Primary Scores - Messages Based" lineNameFormat="">
+        <properties name="Graph.Title" value="Primary Scores - Messages Based"/>
+        <properties name="Y.Axis.Min" value="-0.01"/>
+        <properties name="Y.Axis.Max" value="1.01"/>
+        <properties name="X.Axis.Min" value="355.0"/>
+      </items>
+    </datasets>
   </datasets>
   <chartSheets>
-    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.4 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.5"/>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.4 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.5 //@datasets/@datasets.2/@items.1 //@datasets/@datasets.3/@items.1 //@datasets/@datasets.4/@items.1 //@datasets/@datasets.5/@items.1 //@datasets/@datasets.6/@items.1"/>
   </chartSheets>
 </scave:Analysis>
