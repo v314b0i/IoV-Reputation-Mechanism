@@ -29,4 +29,6 @@ simple MyVeinsRSUApp extends DemoBaseApplLayer
     	@class(veins::MyVeinsRSUApp);
     	string appName = default("MyVeinsRSUApp");
     	double stageShiftInterval = default(10s) @unit(s);
+    	int logSplitFactor = default(5);
+		int logSplitLevel = default(4);
 }

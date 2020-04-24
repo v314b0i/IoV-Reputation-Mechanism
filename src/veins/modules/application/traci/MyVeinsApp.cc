@@ -21,10 +21,6 @@
 //
 
 #include "veins/modules/application/traci/MyVeinsApp.h"
-#include "veins/modules/application/traci/infoMsg_m.h"
-#include "veins/modules/application/traci/reportMsg_m.h"
-#include "veins/modules/application/traci/requestDumpMsg_m.h"
-#include "veins/modules/application/traci/reportDumpMsg_m.h"
 #include <stdlib.h>
 #include <string.h>
 #include <string>

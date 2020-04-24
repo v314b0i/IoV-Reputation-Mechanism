@@ -1,12 +1,10 @@
 #pragma once
 
 #include "veins/veins.h"
-#include <tr1/unordered_map>
 #include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
-#include "veins/modules/application/traci/infoMsg_m.h"
 #include "veins/modules/application/traci/reportMsg_m.h"
-#include "veins/modules/application/traci/myClasses.h"
-#include "veins/modules/application/traci/myMiscFunctions.h"
+#include "veins/modules/application/traci/reportDumpMsg_m.h"
+#include "veins/modules/application/traci/auxiliaryClassesAndFunctions.h"
 
 namespace veins {
 
@@ -25,17 +23,19 @@ protected:
 	void deleteBasket(reportsBasket *basket);
 	int_2_float genarateSecondaryScores(reportsBasket *basket);
 	void populateBlacklistedReportersList(int_2_float secondaryScores, intSet &blacklist);
-	int_2_float genaratePrimaryScores_ReportsBased(reportsBasket *basket, int_2_float secondaryScores,
-			intSet blacklist);
-	int_2_float genaratePrimaryScores_MessagesBased_MajorityAbsolutist(reportsBasket *basket,
-			int_2_float secondaryScores, intSet blacklist);
-	int_2_float genaratePrimaryScores_MessagesBased(reportsBasket *basket, int_2_float secondaryScores,
-			intSet blacklist);
+	int_2_float genaratePrimaryScores_ReportsBased(reportsBasket *basket, intSet blacklist);
+	int_2_float genaratePrimaryScores_MessagesBased_MajorityAbsolutist(reportsBasket *basket, intSet blacklist);
+	int_2_int2float genaratePrimaryScores_MessagesBased(reportsBasket *basket, intSet blacklist);
 	cMessage *stageShiftEvt;
 	reportsBasket *currentBasket;
 	reportsBasket *stagedBasket;
 	int_2_intSet archivedScope; //  { senderId : { msgId : val } }
+	int2VehMsgHistory logs;
+
+
 	simtime_t stageShiftInterval;
+	int logSplitFactor;
+	int logSplitLevel;
 
 	//FOR STATS
 	int stageCounter;
@@ -45,7 +45,7 @@ protected:
 	std::tr1::unordered_map<int, cOutVector*> secondaryScoreVector;
 	std::tr1::unordered_map<int, cOutVector*> primaryScore_ReportsBasedVector;
 	std::tr1::unordered_map<int, cOutVector*> primaryScore_MessagesBased_MajorityAbsolutistVector;
-	std::tr1::unordered_map<int, cOutVector*> primaryScore_MessagesBasedVector;
+	std::tr1::unordered_map<int, std::tr1::unordered_map<int,cOutVector*>> primaryScore_MessagesBasedVector;
 	std::tr1::unordered_map<int, cOutVector*> primaryScore_RAW_Vector;
 	cOutVector secondaryScoreThreshhold;
 
