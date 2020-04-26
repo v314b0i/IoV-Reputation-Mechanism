@@ -31,6 +31,7 @@ simple MyVeinsApp extends DemoBaseApplLayer
     	int percentageWithBadSendingAccuracy;
     	int badSendingAccuracyPercentage;
     	int goodSendingAccuracyPercentage;
+    	int percentageOfInfoEvaluatable;
     	int evaluatingAccuracyPercentage;
     	double messageInterval = default(5s) @unit(s);
     	double messageIntervalVarianceLimit = default(2000ms) @unit(ms);

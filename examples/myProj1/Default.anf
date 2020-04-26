@@ -711,10 +711,28 @@
         <properties name="X.Axis.Min" value="355.0"/>
       </items>
     </datasets>
-    <datasets name="RSUAppn: Primary Scores - Messages Based">
-      <items xsi:type="scave:Add" filterPattern="name(primaryScore_MessagesBasedVector-*)" type="VECTOR"/>
-      <items xsi:type="scave:LineChart" name="Primary Scores - Messages Based" lineNameFormat="">
-        <properties name="Graph.Title" value="Primary Scores - Messages Based"/>
+    <datasets name="RSUAppn: Primary Scores - Messages Based - SLICESIZE: 5">
+      <items xsi:type="scave:Add" filterPattern="name(primaryScore_MessageBased_SLICE5-*)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Primary Scores - Messages Based - SLICESIZE: 5" lineNameFormat="">
+        <properties name="Graph.Title" value="Primary Scores - Messages Based - SLICESIZE: 5"/>
+        <properties name="Y.Axis.Min" value="-0.01"/>
+        <properties name="Y.Axis.Max" value="1.01"/>
+        <properties name="X.Axis.Min" value="355.0"/>
+      </items>
+    </datasets>
+    <datasets name="RSUAppn: Primary Scores - Messages Based - SLICESIZE: 25">
+      <items xsi:type="scave:Add" filterPattern="name(primaryScore_MessageBased_SLICE25-*)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Primary Scores - Messages Based - SLICESIZE: 25" lineNameFormat="">
+        <properties name="Graph.Title" value="Primary Scores - Messages Based - SLICESIZE: 25"/>
+        <properties name="Y.Axis.Min" value="-0.01"/>
+        <properties name="Y.Axis.Max" value="1.01"/>
+        <properties name="X.Axis.Min" value="355.0"/>
+      </items>
+    </datasets>
+    <datasets name="RSUAppn: Primary Scores - Messages Based - SLICESIZE: 125">
+      <items xsi:type="scave:Add" filterPattern="name(primaryScore_MessageBased_SLICE5-125*)" type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="Primary Scores - Messages Based - SLICESIZE: 125" lineNameFormat="">
+        <properties name="Graph.Title" value="Primary Scores - Messages Based - SLICESIZE: 125"/>
         <properties name="Y.Axis.Min" value="-0.01"/>
         <properties name="Y.Axis.Max" value="1.01"/>
         <properties name="X.Axis.Min" value="355.0"/>
@@ -722,6 +740,6 @@
     </datasets>
   </datasets>
   <chartSheets>
-    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.4 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.5 //@datasets/@datasets.2/@items.1 //@datasets/@datasets.3/@items.1 //@datasets/@datasets.4/@items.1 //@datasets/@datasets.5/@items.1 //@datasets/@datasets.6/@items.1"/>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.4 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.5 //@datasets/@datasets.2/@items.1 //@datasets/@datasets.3/@items.1 //@datasets/@datasets.4/@items.1 //@datasets/@datasets.5/@items.1 //@datasets/@datasets.6/@items.1 //@datasets/@datasets.7/@items.1 //@datasets/@datasets.8/@items.1"/>
   </chartSheets>
 </scave:Analysis>

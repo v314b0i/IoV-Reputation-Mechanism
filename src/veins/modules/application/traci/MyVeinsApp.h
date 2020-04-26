@@ -29,6 +29,7 @@ protected:
 	int sent;
 	float sendingAccuracy;  // to control behaviour of node.
 	float evaluatingAccuracy;
+	float evaluatableMessages;
 	cMessage *sendMsgEvt;
 	simtime_t messageInterval;
 	simtime_t messageIntervalVarianceLimit;

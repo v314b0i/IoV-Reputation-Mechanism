@@ -286,13 +286,14 @@ int_2_int2float MyVeinsRSUApp::genaratePrimaryScores_MessagesBased(reportsBasket
 		}
 	}
 	int_2_int2float primaryScores;
-	intSet vehs = getKeySet(logs);
+	intSet vehs = getMapKeys<intSet>(logs);
 	for (auto vehId : vehs) {
 		int_2_float splitAvgs = logs[vehId]->getSplitAvgs();
 		if (splitAvgs.size()) {
 			primaryScores[vehId] = splitAvgs;
 			//STATS
-
+			for (auto splitAvg:splitAvgs)
+				primaryScore_MessagesBasedVector[vehId][splitAvg.first]->record(splitAvg.second);
 		}
 
 	}
@@ -300,8 +301,7 @@ int_2_int2float MyVeinsRSUApp::genaratePrimaryScores_MessagesBased(reportsBasket
 }
 
 void MyVeinsRSUApp::populateBlacklistedReportersList(int_2_float secondaryScores, intSet &blacklist) {
-	std::vector<float> secScoresVec;
-	mapValuestoContainer(secondaryScores, secScoresVec);
+	std::vector<float> secScoresVec=getMapValues<std::vector<float>>(secondaryScores);
 	float medianofSecScores = vectorMedian(secScoresVec);
 //float SDofSecScores = standardDeviation(secScoresVec,medianofSecScores);
 //float deviationThreshholdVal = SDofSecScores; //TODO get suggestion from Dr. Frank

@@ -1,29 +1,25 @@
-#include "veins/modules/application/traci/auxiliaryClassesAndFunctions.h"
-template<typename keytype, typename valtype, typename objtype> objtype mapValuestoContainer(
-		std::tr1::unordered_map<keytype, valtype> map, objtype &obj) {
-	for (auto it : map)
-		obj.insert(obj.end(), it.second);
-	return obj;
+#include "veins/modules/application/traci/auxiliaryClassesAndFunctions.h"/*
+template<typename containertype, typename keytype, typename valtype> containertype getMapValues(
+		std::tr1::unordered_map<keytype, valtype> m) {
+	containertype x;
+	for (auto i : m)
+		x.insert(x.end(), i.second);
+	return x;
 }
-template<typename keytype, typename valtype, typename objtype> objtype mapKeystoContainer(
-		std::tr1::unordered_map<keytype, valtype> map, objtype &obj) {
-	for (auto it : map)
-		obj.insert(obj.end(), it.first);
-	return obj;
+template<typename containertype, typename keytype, typename valtype> containertype getMapKeys(
+		std::tr1::unordered_map<keytype, valtype> m) {
+	containertype x;
+	for (auto i : m)
+		x.insert(x.end(), i.first);
+	return x;
 }
-template<typename keytype, typename valtype> std::tr1::unordered_set<keytype> getKeySet(std::tr1::unordered_map<keytype, valtype> map) {
-	std::tr1::unordered_set<keytype> keySet;
-	for (auto it : map)
-		keySet.insert(it.first);
-	return keySet;
-}
-template<typename type> inline float vectorMedian(std::vector<type> vec) {
+template<typename type> float vectorMedian(std::vector<type> vec) {
 	if (vec.size() == 0)
 		return -1;
 	sort(vec.begin(), vec.end());
 	return vec.at((int) (vec.size() / 2));
 }
-template<typename type> inline float vectorMean(std::vector<type> vec) {
+template<typename type> float vectorMean(std::vector<type> vec) {
 	if (vec.size() == 0)
 		return -1;
 	float acc = 0;
@@ -31,7 +27,7 @@ template<typename type> inline float vectorMean(std::vector<type> vec) {
 		acc += i;
 	return acc / (float) vec.size();
 }
-template<typename type> inline float vectorMode(std::vector<type> vec) {
+template<typename type> float vectorMode(std::vector<type> vec) {
 	if (vec.size() == 0)
 		return -1;
 	//appx algo written by me. may need to be replaced if the isMultimodal func's temporary logic isn't replaced or this is used elsewhere
@@ -61,18 +57,18 @@ template<typename type> inline float vectorMode(std::vector<type> vec) {
 	}
 	return hmaxi;
 }
-template<typename container> float inline standardDeviation(container obj, float centre) {
+template<typename type> float standardDeviation(std::vector<type> v, float centre) {
 	float acc = 0;
 	float diff;
-	for (auto it : obj) {
+	for (auto it : v) {
 		diff = it - centre;
 		acc += diff * diff;
 	}
-	return sqrt(acc / (float) obj.size());
+	return sqrt(acc / (float) v.size());
 }
-template<typename container> float inline medianAbsoluteDeviation(container obj, float centre) {
+template<typename type> float medianAbsoluteDeviation(std::vector<type> v, float centre) {
 	std::vector<float> vec;
-	for (auto it : obj)
+	for (auto it : v)
 		vec.insert(vec.end(), it > centre ? it - centre : centre - it);
 	return vectorMedian(vec);
 }
@@ -97,16 +93,15 @@ intSet csvToIntSet(std::string csvstr) {
 		set.insert(std::stoi(word));
 	return set;
 }
-inline int uniqueReportersInBasket(reportsBasket basket) {
+int uniqueReportersInBasket(reportsBasket basket) {
 	intSet reporters;
 	for (auto veh : basket.vehicles) {
-		for (auto reporter : veh.second->reporters) {
-			reporters.insert(reporter.first);
-		}
+		intSet vehsReporters = getMapKeys<intSet>(veh.second->reporters);
+		reporters.insert(vehsReporters.begin(), vehsReporters.end());
 	}
 	return reporters.size();
 }
-inline int reportsInBasket(reportsBasket basket) {
+int reportsInBasket(reportsBasket basket) {
 	int reports = 0;
 	for (auto veh : basket.vehicles) {
 		for (auto reporter : veh.second->reporters) {
@@ -115,12 +110,12 @@ inline int reportsInBasket(reportsBasket basket) {
 	}
 	return reports;
 }
-inline int vehiclesInScope(int_2_intSet scope) {
+int vehiclesInScope(int_2_intSet scope) {
 	return scope.size();
 }
-inline int messagesInScope(int_2_intSet scope) {
+int messagesInScope(int_2_intSet scope) {
 	int count = 0;
 	for (auto i : scope)
 		count += i.second->size();
 	return count;
-}
+}*/

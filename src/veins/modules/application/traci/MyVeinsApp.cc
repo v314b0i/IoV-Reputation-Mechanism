@@ -30,7 +30,7 @@ using namespace veins;
 Define_Module(veins::MyVeinsApp);
 
 bool MyVeinsApp::inaccurateBoolCheck(bool val, float accuracy) {
-	srand((int) simTime().raw() + myId);
+	srand((int) simTime().raw() + myId + (int) val + (int) (accuracy * 100));
 	return ((rand() % 1000) < (accuracy * 1000)) ? val : !val;
 }
 float MyVeinsApp::scoreCalculator(float old, int trueCount, int count) {
@@ -69,6 +69,7 @@ void MyVeinsApp::initialize(int stage) {
 		requestResponseDelayVarianceLimit = SimTime(requestResponseDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
 		evaluatingAccuracy = (float) par("evaluatingAccuracyPercentage").intValue() / (float) 100;
 		sendingAccuracy = setSendingAccuracy();
+		evaluatableMessages = (float) par("percentageOfInfoEvaluatable").intValue() / (float) 100;
 		sendMsgEvt = new cMessage("Send Message Event", SEND_INFOMSG_EVT);
 		sentVector.setName("sentVector");
 		sentCorrectVector.setName("sentCorrectVector");
@@ -170,17 +171,19 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			reportedVector[senderId]->record(veh.reportedCount);
 			reportedTrueVector[senderId]->record(veh.reportedTrueCount);
 			msgVector[senderId]->record(veh.msgCount);
-			reportMsg *rep = new reportMsg();
-			populateWSM(rep);
-			rep->setName("Report Message");
-			rep->setReporterAddress(myId);
-			rep->setReporteeAddress(senderId);
-			rep->setReportedMsgId(msgId);
-			rep->setFoundValid(msgVal);
-			rep->setKind(REPORT_MSG);
-			srand((int) simTime().raw() + myId);
-			simtime_t variance = reportGenTimeVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
-			scheduleAt(simTime() + reportGenTime + variance, rep);
+			if (inaccurateBoolCheck(true, evaluatableMessages)) {
+				reportMsg *rep = new reportMsg();
+				populateWSM(rep);
+				rep->setName("Report Message");
+				rep->setReporterAddress(myId);
+				rep->setReporteeAddress(senderId);
+				rep->setReportedMsgId(msgId);
+				rep->setFoundValid(msgVal);
+				rep->setKind(REPORT_MSG);
+				srand((int) simTime().raw() + myId);
+				simtime_t variance = reportGenTimeVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
+				scheduleAt(simTime() + reportGenTime + variance, rep);
+			}
 		}
 	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
 		recRprt++;
@@ -384,7 +387,7 @@ void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 		sendDown(wsm);
 		//STATS
 		if (wsm->getCorrect())
-				sentCorrectVector.record(++sentCorrect);
+			sentCorrectVector.record(++sentCorrect);
 		sentVector.record(sent);
 		//-----
 		srand((int) simTime().raw() + myId);
