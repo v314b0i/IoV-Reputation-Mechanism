@@ -32,7 +32,9 @@ simple MyVeinsApp extends DemoBaseApplLayer
     	int badSendingAccuracyPercentage;
     	int goodSendingAccuracyPercentage;
     	int percentageOfInfoEvaluatable;
-    	int evaluatingAccuracyPercentage;
+    	int percentageWithBadEvaluatingAccuracy;
+    	int badEvaluatingAccuracyPercentage;
+    	int goodEvaluatingAccuracyPercentage;
     	double messageInterval = default(5s) @unit(s);
     	double messageIntervalVarianceLimit = default(2000ms) @unit(ms);
     	double reportGenTime = default(7s) @unit(s);
@@ -42,4 +44,5 @@ simple MyVeinsApp extends DemoBaseApplLayer
 		double requestDelay = default(1s) @unit(s);
 		double requestDelayVarianceLimit  = default(500ms) @unit(ms);
 		bool withoutReportDumpSharing = default(false);
+		bool isNode0 = default(false);
 }

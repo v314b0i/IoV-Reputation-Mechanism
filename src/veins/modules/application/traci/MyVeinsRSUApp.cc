@@ -29,63 +29,93 @@ using namespace veins;
 //TODO stage and archive messages by shifting them from one basket to another instead of shifting whole baskets if approach changes to data centric.
 Define_Module(veins::MyVeinsRSUApp);
 
+//Static Variables (Common for all RSUs, workaround for inter-RSU communication.....not used for the vehicles of-course.)
+std::mutex MyVeinsRSUApp::staticMemberAccessLock;
+reportsBasket *MyVeinsRSUApp::currentBasket;
+reportsBasket *MyVeinsRSUApp::stagedBasket;
+int_2_intSet MyVeinsRSUApp::archivedScope; //  { senderId : { msgId : val } }
+//STATS
+int MyVeinsRSUApp::stageCounter;
+int MyVeinsRSUApp::recievedReports;
+intSet MyVeinsRSUApp::statsInitialisedVehicles;
+intSet MyVeinsRSUApp::partialStatsInitialisedVehicles;
+int_2_int MyVeinsRSUApp::reportsOn;
+int_2_int MyVeinsRSUApp::reportsFrom;
+
 void MyVeinsRSUApp::initialize(int stage) {
 	DemoBaseApplLayer::initialize(stage);
 	if (stage == 0) {
-		currentBasket = new reportsBasket();
-		stagedBasket = new reportsBasket();
-		stageShiftEvt = new cMessage("Stage Shift Event", STAGE_SHIFT_EVT);
-		stageShiftInterval = par("stageShiftInterval");
-		logSplitFactor = par("logSplitFactor");
-		logSplitLevel = par("logSplitLevel");
-
-		//STATS
-		stageCounter = 0;
-		recievedReports = 0;
-		recievedReportsVector.setName("recievedReportsVector");
-		secondaryScoreThreshhold.setName("secondaryScoreThreshhold");
-
-		vehiclesInArchivedScope.setName("vehiclesInArchivedScope");
-		messagesInArchivedScope.setName("messagesInArchivedScope");
-
-		vehiclesInStagedScope.setName("vehiclesInStagedScope");
-		messagesInStagedScope.setName("messagesInStagedScope");
-		reportsInStagedBasket.setName("reportsInStagedBasket");
-		reportersInStagedBasket.setName("reportersInStagedBasket");
-		blacklistedReportersInStagedBasket.setName("blacklistedReportersInStagedBasket");
-
-		vehiclesInCurrentScope.setName("vehiclesInCurrentScope");
-		messagesInCurrentScope.setName("messagesInCurrentScope");
-		reportsInCurrentBasket.setName("reportsInCurrentBasket");
-		reportersInCurrentBasket.setName("reportersInCurrentBasket");
 	} else if (stage == 1) {
-		scheduleAt(simTime() + stageShiftInterval, stageShiftEvt);
+		if (par("isMaster").boolValue())
+			isMaster = true;
+		else isMaster = false;
+		recordScalar("my myId is:", myId);
+		recordScalar("am I Master", (double) (isMaster ? 1 : -1));
+		logSplitFactor = par("logSplitFactor").intValue();
+		logSplitLevel = par("logSplitLevel").intValue();
+		logSplitSmallest = par("logSplitSmallest").intValue();
+		logSplitSizes = calculatePowersAscending<std::vector<int>>(logSplitSmallest, logSplitFactor, logSplitLevel);
+		if (isMaster) {
+			currentBasket = new reportsBasket();
+			stagedBasket = new reportsBasket();
+			stageShiftEvt = new cMessage("Stage Shift Event", STAGE_SHIFT_EVT);
+			stageShiftInterval = par("stageShiftInterval");
+			//STATS
+			stageCounter = 0;
+			recievedReports = 0;
+			recievedReportsVector.setName("recievedReportsVector");
+			secondaryScoreThreshhold.setName("secondaryScoreThreshhold");
+
+			vehiclesInArchivedScope.setName("vehiclesInArchivedScope");
+			messagesInArchivedScope.setName("messagesInArchivedScope");
+
+			vehiclesInStagedScope.setName("vehiclesInStagedScope");
+			messagesInStagedScope.setName("messagesInStagedScope");
+			reportsInStagedBasket.setName("reportsInStagedBasket");
+			reportersInStagedBasket.setName("reportersInStagedBasket");
+			blacklistedReportersInStagedBasket.setName("blacklistedReportersInStagedBasket");
+
+			vehiclesInCurrentScope.setName("vehiclesInCurrentScope");
+			messagesInCurrentScope.setName("messagesInCurrentScope");
+			reportsInCurrentBasket.setName("reportsInCurrentBasket");
+			reportersInCurrentBasket.setName("reportersInCurrentBasket");
+			scheduleAt(simTime() + stageShiftInterval, stageShiftEvt);
+		}
 	}
 }
 
 void MyVeinsRSUApp::finish() {
-	stageShift();
-	deleteBasket(currentBasket);
-	deleteBasket(stagedBasket);
-	//delete stageShiftEvt;
-	//delete stageShiftEvt;
-	for (auto id : statsInitialisedVehicles) {
-		delete secondaryScoreVector[id];
-		delete primaryScore_ReportsBasedVector[id];
-		delete primaryScore_MessagesBased_MajorityAbsolutistVector[id];
-		for(auto i=primaryScore_MessagesBasedVector[id].begin();i!=primaryScore_MessagesBasedVector[id].end(); ++i)
-			delete i->second;
-		delete primaryScore_RAW_Vector[id];
-		std::string idStr = std::to_string((id - 15) / 6);
-		recordScalar(std::string("reportsFrom").append(idStr).c_str(), reportsFrom[id]);
-		recordScalar(std::string("reportsOn").append(idStr).c_str(), reportsOn[id]);
+	if (isMaster) {
+		stageShift();
+		deleteBasket(currentBasket);
+		deleteBasket(stagedBasket);
+		//delete stageShiftEvt;
+		//delete stageShiftEvt;
+		for (auto id : statsInitialisedVehicles) {
+			delete secondaryScoreVector[id];
+			delete primaryScore_ReportsBasedVector[id];
+			delete primaryScore_RAW_Vector[id];
+			for (auto &i : primaryScore_MessagesBasedVector[id])
+				delete i.second;
+			for (auto &i : primaryScore_MessagesBased_MajorityAbsolutistVector[id])
+				delete i.second;
+			for (auto &i : primaryScore_MessagesBasedVector_WOBL[id])
+				delete i.second;
+			for (auto &i : primaryScore_MessagesBased_MajorityAbsolutistVector_WOBL[id])
+				delete i.second;
+			std::string idStr = std::to_string((id));
+			recordScalar(std::string("reportsFrom").append(idStr).c_str(), reportsFrom[id]);
+			recordScalar(std::string("reportsOn").append(idStr).c_str(), reportsOn[id]);
+		}
+		for (auto &log : logs)
+			delete log.second;
+		for (auto &log : logs_MA)
+			delete log.second;
+
 	}
 }
 
 void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
-	//if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) {
-	//	return;
-	//}
 	if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
 		int reporteeId = wsm->getReporteeAddress();
 		int reporterId = wsm->getReporterAddress();
@@ -105,10 +135,24 @@ void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
 	}
 }
 void MyVeinsRSUApp::ingestReport(int reporterId, int reporteeId, int msgId, bool foundValid) {
-	if (statsInitialisedVehicles.count(reporteeId) == 0)
-		initVehicleStats(reporteeId);
-	if (statsInitialisedVehicles.count(reporterId) == 0)
-		initVehicleStats(reporterId);
+	std::lock_guard<std::mutex> lock(staticMemberAccessLock);
+	if (isMaster) {
+		for (auto id : partialStatsInitialisedVehicles)
+			initVehicleStats(id);//workaround for omnet vector ownership issues. only master rsu node creates omnetpp stats vectors.
+		//static variables and difference between master and non master rsu is due to the workaround to avoid inter RSU communication programming
+		if (statsInitialisedVehicles.count(reporteeId) == 0)
+			initVehicleStats(reporteeId);
+		if (statsInitialisedVehicles.count(reporterId) == 0)
+			initVehicleStats(reporterId);
+	} else {
+		if ((statsInitialisedVehicles.count(reporteeId) == 0)
+				&& (partialStatsInitialisedVehicles.count(reporteeId) == 0))
+			initVehicleStats(reporteeId);
+		if ((statsInitialisedVehicles.count(reporterId) == 0)
+				&& (partialStatsInitialisedVehicles.count(reporterId) == 0))
+			initVehicleStats(reporterId);
+	}
+
 	if (reporterId == reporteeId)
 		return; //not going to happen but failsafe for modification in veh app
 
@@ -116,7 +160,8 @@ void MyVeinsRSUApp::ingestReport(int reporterId, int reporteeId, int msgId, bool
 	++recievedReports;
 	++reportsOn[reporteeId];
 	++reportsFrom[reporterId];
-	recievedReportsVector.record(recievedReports);
+	if (isMaster)
+		recievedReportsVector.record(recievedReports);
 	//----------------------------------------------------
 
 	if ((archivedScope.count(reporteeId) != 0) && (archivedScope[reporteeId]->count(msgId) != 0))
@@ -146,29 +191,47 @@ void MyVeinsRSUApp::addVehicletoCurrentBasket(int vehId) {
 	currentBasket->vehicles[vehId] = new vehStatsEntityCentric();
 }
 void MyVeinsRSUApp::initVehicleStats(int id) {
-	statsInitialisedVehicles.insert(id);
-
-	secondaryScoreVector[id] = new cOutVector(
-			std::string("secondaryScoreVector-").append(std::to_string((id - 15) / 6)).c_str());
-	primaryScore_ReportsBasedVector[id] = new cOutVector(
-			std::string("primaryScore_ReportsBasedVector-").append(std::to_string((id - 15) / 6)).c_str());
-	primaryScore_MessagesBased_MajorityAbsolutistVector[id] =
-			new cOutVector(
-					std::string("primaryScore_MessagesBased_MajorityAbsolutistVector-").append(
-							std::to_string((id - 15) / 6)).c_str());
-	//primaryScore_MessagesBasedVector[id] = new cOutVector(
-	//		std::string("primaryScore_MessagesBasedVector-").append(std::to_string((id - 15) / 6)).c_str());
-	std::tr1::unordered_map<int, cOutVector*> primaryScoresVectors;
-	vehMsgHistory vmh(logSplitFactor, logSplitLevel);
-	for (auto size : vmh.splitSizes)
-		primaryScoresVectors[size] = new cOutVector(
-				std::string("primaryScore_MessageBased_SLICE").append(std::to_string(size)).append(
-						std::string("-")).append(std::to_string((id - 15) / 6)).c_str());
-	primaryScore_MessagesBasedVector[id]=primaryScoresVectors;
-	primaryScore_RAW_Vector[id] = new cOutVector(
-			std::string("primaryScore_RAW_Vector-").append(std::to_string((id - 15) / 6)).c_str());
-	reportsOn[id] = 0;
-	reportsFrom[id] = 0;
+	if (isMaster) {
+		if (statsInitialisedVehicles.count(id))
+			return;
+		secondaryScoreVector[id] = new cOutVector(
+				std::string("secondaryScoreVector-").append(std::to_string((id))).c_str());
+		primaryScore_ReportsBasedVector[id] = new cOutVector(
+				std::string("primaryScore_ReportsBasedVector-").append(std::to_string((id))).c_str());
+		std::tr1::unordered_map<int, cOutVector*> primaryScoresVectors;
+		for (auto size : logSplitSizes)
+			primaryScoresVectors[size] =
+					new cOutVector(
+							std::string("primaryScore_MessageBased_SLICE").append(std::to_string(size)).append(
+									std::string("-")).append(std::to_string((id))).c_str());
+		primaryScore_MessagesBasedVector[id] = primaryScoresVectors;
+		for (auto size : logSplitSizes)
+			primaryScoresVectors[size] = new cOutVector(
+					std::string("primaryScore_MessagesBased_MajorityAbsolutistVector_SLICE").append(
+							std::to_string(size)).append(std::string("-")).append(std::to_string((id))).c_str());
+		primaryScore_MessagesBased_MajorityAbsolutistVector[id] = primaryScoresVectors;
+		for (auto size : logSplitSizes)
+			primaryScoresVectors[size] = new cOutVector(
+					std::string("primaryScore_MessagesBasedVector_WOBL_SLICE").append(std::to_string(size)).append(
+							std::string("-")).append(std::to_string((id))).c_str());
+		primaryScore_MessagesBasedVector_WOBL[id] = primaryScoresVectors;
+		for (auto size : logSplitSizes)
+			primaryScoresVectors[size] = new cOutVector(
+					std::string("primaryScore_MessagesBased_MajorityAbsolutistVector_WOBL_SLICE").append(
+							std::to_string(size)).append(std::string("-")).append(std::to_string((id))).c_str());
+		primaryScore_MessagesBased_MajorityAbsolutistVector_WOBL[id] = primaryScoresVectors;
+		primaryScore_RAW_Vector[id] = new cOutVector(
+				std::string("primaryScore_RAW_Vector-").append(std::to_string((id))).c_str());
+		if (partialStatsInitialisedVehicles.erase(id) == 0) {
+			reportsOn[id] = 0;
+			reportsFrom[id] = 0;
+		}
+		statsInitialisedVehicles.insert(id);
+	} else {
+		reportsOn[id] = 0;
+		reportsFrom[id] = 0;
+		partialStatsInitialisedVehicles.insert(id);
+	}
 }
 
 void MyVeinsRSUApp::stageShift() {
@@ -193,75 +256,113 @@ void MyVeinsRSUApp::stageShift() {
 			archivedScope[stagedScopeIt->first] = new intSet();
 		archivedScope[stagedScopeIt->first]->insert(stagedScopeIt->second->begin(), stagedScopeIt->second->end());
 	}
-	//TODO implement Mutex
 	reportsBasket *archivedBasket = stagedBasket;
 	stagedBasket = currentBasket;
 	currentBasket = new reportsBasket();
 	if (archivedBasket->scope.size()) { //first stage shift, nothing gets archived.
 		int_2_float secondaryScores = genarateSecondaryScores(archivedBasket);
-		intSet blacklistedReporters;
-		populateBlacklistedReportersList(secondaryScores, blacklistedReporters);
+		intSet blacklistedReporters = generateBlacklistedReportersList(secondaryScores);
 		//genaratePrimaryScores_ReportsBased(archivedBasket, blacklistedReporters);
 		//genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket, blacklistedReporters);
-		genaratePrimaryScores_MessagesBased(archivedBasket, blacklistedReporters);
+		int_2_int2float primaryScores_WOBL = genaratePrimaryScores_MessagesBased(archivedBasket, intSet(), logs_WOBL);
+		int_2_int2float primaryScores = genaratePrimaryScores_MessagesBased(archivedBasket, blacklistedReporters, logs);
+		int_2_int2float primaryScores_MA_WOBL = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
+				intSet(), logs_MA_WOBL);
+		int_2_int2float primaryScores_MA = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
+				blacklistedReporters, logs_MA);
+		//BroadcastResults(primaryScores, blacklistedReporters);
 		//STATS
+		recordPrimaryScores(logs, primaryScore_MessagesBasedVector);
+		recordPrimaryScores(logs_WOBL, primaryScore_MessagesBasedVector_WOBL);
+		recordPrimaryScores(logs_MA, primaryScore_MessagesBased_MajorityAbsolutistVector);
+		recordPrimaryScores(logs_MA_WOBL, primaryScore_MessagesBased_MajorityAbsolutistVector_WOBL);
+		static std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> primaryScore_MessagesBased_MajorityAbsolutistVector;
+		static std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> primaryScore_MessagesBased_MajorityAbsolutistVector_WOBL;
+		static std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> primaryScore_MessagesBasedVector;
+		static std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> primaryScore_MessagesBasedVector_WOBL;
 		blacklistedReportersInStagedBasket.record(blacklistedReporters.size());
 	}
 	deleteBasket(archivedBasket);
 }
-
-int_2_float MyVeinsRSUApp::genaratePrimaryScores_ReportsBased(reportsBasket *basket, intSet blacklist) {
+void MyVeinsRSUApp::recordPrimaryScores(int2VehMsgHistory &lgs,
+		std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> scoresVector) {
+	intSet vehs = getMapKeys<intSet>(lgs);
+	for (auto vehId : vehs) {
+		int_2_float splitAvgs = lgs[vehId]->getSplitAvgs();
+		if (splitAvgs.size()) {
+			splitAvgs[logSplitSizes.at(logSplitSizes.size() - 1)] = lgs[vehId]->getOverallAvg();
+			for (auto splitAvg : splitAvgs)
+				scoresVector[vehId][splitAvg.first]->record(splitAvg.second);
+		}
+	}
+}
+int_2_float MyVeinsRSUApp::genaratePrimaryScores_ReportsBased(reportsBasket *basket, intSet blacklist,std::tr1::unordered_map<int, std::pair<int, int>> &logs) {
 	int_2_float rawScores;
 	for (auto basketIt = basket->vehicles.begin(); basketIt != basket->vehicles.end(); ++basketIt) {
+		/*
+		 int vehId = basketIt->first;
+		 vehStatsEntityCentric &veh = *(basketIt->second);
+		 int totalReports = 0;
+		 int trueReports = 0;
+		 for (auto reporterIt = veh.reporters.begin(); reporterIt != veh.reporters.end(); ++reporterIt) {
+		 if (blacklist.count(reporterIt->first) == 0) {
+		 trueReports += reporterIt->second->reportedTrueCount;
+		 totalReports += reporterIt->second->reportedCount;
+		 }
+		 }
+		 if (totalReports)
+		 rawScores[vehId] = (float) trueReports / (float) totalReports;*/
 		int vehId = basketIt->first;
+		if (logs.count(vehId))
+			logs[vehId] = std::pair<int, int>(0, 0);
 		vehStatsEntityCentric &veh = *(basketIt->second);
-		int totalReports = 0;
-		int trueReports = 0;
 		for (auto reporterIt = veh.reporters.begin(); reporterIt != veh.reporters.end(); ++reporterIt) {
 			if (blacklist.count(reporterIt->first) == 0) {
-				trueReports += reporterIt->second->reportedTrueCount;
-				totalReports += reporterIt->second->reportedCount;
+				logs[vehId].first += reporterIt->second->reportedTrueCount;
+				logs[vehId].second += reporterIt->second->reportedCount;
 			}
 		}
-		if (totalReports)
-			rawScores[vehId] = (float) trueReports / (float) totalReports;
+		rawScores[vehId] = (float) logs[vehId].first / (float) logs[vehId].second;
+		primaryScore_ReportsBasedVector[vehId]->record(rawScores[vehId]);
 	}
-	for (auto i : rawScores)
-		primaryScore_ReportsBasedVector[i.first]->record(i.second);
 	return rawScores;
 }
-int_2_float MyVeinsRSUApp::genaratePrimaryScores_MessagesBased_MajorityAbsolutist(reportsBasket *basket,
-		intSet blacklist) {
-	int_2_float rawScores;
+int_2_int2float MyVeinsRSUApp::genaratePrimaryScores_MessagesBased_MajorityAbsolutist(reportsBasket *basket,
+		intSet blacklist, int2VehMsgHistory &logs) {
 	for (auto basketIt = basket->vehicles.begin(); basketIt != basket->vehicles.end(); ++basketIt) {
 		int vehId = basketIt->first;
 		vehStatsEntityCentric &veh = *(basketIt->second);
-		int trueMsgs = 0;
-		int totalMsgs = 0;   //some messages may not have any reporter thats not blacklisted.
+		int_2_float messageScores;
 		for (auto msgId : *(basket->scope[vehId])) {
-			int falseReports = 0;
 			int trueReports = 0;
+			int totalReports = 0;
 			for (auto reporterIt = veh.reporters.begin(); reporterIt != veh.reporters.end(); ++reporterIt) {
 				if (blacklist.count(reporterIt->first) == 0 and reporterIt->second->messages.count(msgId) != 0) {
 					if (reporterIt->second->messages[msgId])
 						++trueReports;
-					else ++falseReports;
+					++totalReports;
 				}
 			}
-			if (falseReports or trueReports) {
-				++totalMsgs;
-				if (trueReports > falseReports)
-					++trueMsgs;
-			}
+			if (totalReports)
+				messageScores[msgId] = ((float) trueReports / (float) totalReports) > 0.5 ? 1 : 0;
 		}
-		if (totalMsgs)
-			rawScores[vehId] = (float) trueMsgs / (float) totalMsgs;
+		if (messageScores.size()) {
+			if (logs.count(vehId) == 0)
+				logs[vehId] = new vehMsgHistory(logSplitSmallest, logSplitFactor, logSplitLevel);
+			logs[vehId]->insert(messageScores);
+		}
 	}
-	for (auto i : rawScores)
-		primaryScore_MessagesBased_MajorityAbsolutistVector[i.first]->record(i.second);
-	return rawScores;
+	int_2_int2float primaryScores;
+	intSet vehs = getMapKeys<intSet>(logs_MA);
+	for (auto vehId : vehs) {
+		int_2_float splitAvgs = logs_MA[vehId]->getSplitAvgs();
+		if (splitAvgs.size())
+			primaryScores[vehId] = splitAvgs;
+	}
+	return primaryScores;
 }
-int_2_int2float MyVeinsRSUApp::genaratePrimaryScores_MessagesBased(reportsBasket *basket, intSet blacklist) {
+int_2_int2float MyVeinsRSUApp::genaratePrimaryScores_MessagesBased(reportsBasket *basket, intSet blacklist,
+		int2VehMsgHistory &logs) {
 	for (auto basketIt = basket->vehicles.begin(); basketIt != basket->vehicles.end(); ++basketIt) {
 		int vehId = basketIt->first;
 		vehStatsEntityCentric &veh = *(basketIt->second);
@@ -281,7 +382,7 @@ int_2_int2float MyVeinsRSUApp::genaratePrimaryScores_MessagesBased(reportsBasket
 		}
 		if (messageScores.size()) {
 			if (logs.count(vehId) == 0)
-				logs[vehId] = new vehMsgHistory(logSplitFactor, logSplitLevel);
+				logs[vehId] = new vehMsgHistory(logSplitSmallest, logSplitFactor, logSplitLevel);
 			logs[vehId]->insert(messageScores);
 		}
 	}
@@ -289,19 +390,14 @@ int_2_int2float MyVeinsRSUApp::genaratePrimaryScores_MessagesBased(reportsBasket
 	intSet vehs = getMapKeys<intSet>(logs);
 	for (auto vehId : vehs) {
 		int_2_float splitAvgs = logs[vehId]->getSplitAvgs();
-		if (splitAvgs.size()) {
+		if (splitAvgs.size())
 			primaryScores[vehId] = splitAvgs;
-			//STATS
-			for (auto splitAvg:splitAvgs)
-				primaryScore_MessagesBasedVector[vehId][splitAvg.first]->record(splitAvg.second);
-		}
-
 	}
 	return primaryScores;
 }
 
-void MyVeinsRSUApp::populateBlacklistedReportersList(int_2_float secondaryScores, intSet &blacklist) {
-	std::vector<float> secScoresVec=getMapValues<std::vector<float>>(secondaryScores);
+intSet MyVeinsRSUApp::generateBlacklistedReportersList(int_2_float secondaryScores) {
+	std::vector<float> secScoresVec = getMapValues<std::vector<float>>(secondaryScores);
 	float medianofSecScores = vectorMedian(secScoresVec);
 //float SDofSecScores = standardDeviation(secScoresVec,medianofSecScores);
 //float deviationThreshholdVal = SDofSecScores; //TODO get suggestion from Dr. Frank
@@ -311,12 +407,14 @@ void MyVeinsRSUApp::populateBlacklistedReportersList(int_2_float secondaryScores
 	float threshhold = medianofSecScores + 2 * (medianAbsoluteDeviationfromMedian);
 //TODO get suggestion from Dr.Frank and/or Dr.Doss or VIT Statisitcs Professor
 //alternative solution is to not create a blacklist and to scale the effect of a reporter on the primary score with the deviation of their sc score from 0.
+	intSet blacklist;
 	for (auto i : secondaryScores)
 		if (i.second > threshhold)
 			blacklist.insert(i.first);
-
 	//STATS
 	secondaryScoreThreshhold.record(threshhold);
+
+	return blacklist;
 }
 
 int_2_float MyVeinsRSUApp::genarateSecondaryScores(reportsBasket *basket) {
@@ -381,9 +479,33 @@ void MyVeinsRSUApp::deleteBasket(reportsBasket *basket) { // put in destructor
 	}
 	delete basket;
 }
-
+void MyVeinsRSUApp::BroadcastResults(int_2_int2float scores, intSet blacklist) {
+	std::string vIdAndScoresCSV = "", vId, score;
+	for (auto veh : scores) {
+		if (veh.second.size()) {
+			vIdAndScoresCSV.append(std::to_string(veh.first).append(","));
+			for (int i = 0; i < logSplitSizes.size(); ++i) {
+				if (veh.second.count(logSplitSizes.at(i)))
+					vIdAndScoresCSV.append(std::to_string(veh.second[logSplitSizes.at(i)]).append(","));
+				else vIdAndScoresCSV.append(std::to_string((float) -1).append(","));
+			}
+		}
+	}
+	std::string blacklistCSV = "";
+	for (auto i : blacklist)
+		blacklistCSV.append(std::to_string(i).append(","));
+	if (vIdAndScoresCSV.length() > 2) {
+		RSUBroadcast *rsucast = new RSUBroadcast();
+		populateWSM(rsucast);
+		rsucast->setName("RSU Broadcast");
+		rsucast->setVehIdAndScoresCSV(vIdAndScoresCSV.c_str());
+		rsucast->setBlacklistCSV(blacklistCSV.c_str());
+		sendDown(rsucast);
+	}
+}
 void MyVeinsRSUApp::handleSelfMsg(cMessage *msg) {
 	if (msg->getKind() == STAGE_SHIFT_EVT) {
+		std::lock_guard<std::mutex> lock(staticMemberAccessLock);
 		stageShift();
 		scheduleAt(simTime() + stageShiftInterval, stageShiftEvt);
 	} else DemoBaseApplLayer::handleSelfMsg(msg);

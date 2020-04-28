@@ -6,6 +6,7 @@
 #include "veins/modules/application/traci/reportMsg_m.h"
 #include "veins/modules/application/traci/requestDumpMsg_m.h"
 #include "veins/modules/application/traci/reportDumpMsg_m.h"
+#include "veins/modules/application/traci/RSUBroadcast_m.h"
 #include "veins/modules/application/traci/auxiliaryClassesAndFunctions.h"
 
 namespace veins {
@@ -23,6 +24,7 @@ protected:
 	bool inaccurateBoolCheck(bool val, float accuracy = 0.9); //used for simulating errors while evaluating and generating information.
 	float scoreCalculator(float old, int trueCount, int count);
 	float setSendingAccuracy();
+	float setEvaluatingAccuracy();
 	void initVehicle(int id, bool dontRequestDump=false); //to create new entry in vehicles map and stats collection maps
 	//int currentSubscribedServiceId;
 	int2vehStats vehicles;
@@ -39,6 +41,8 @@ protected:
 	simtime_t requestResponseDelayVarianceLimit;
 	simtime_t requestDelay;
 	simtime_t requestDelayVarianceLimit;
+
+	static int node0id;
 	//--FOR STATS--
 	int sentCorrect;
 	int recMsg;

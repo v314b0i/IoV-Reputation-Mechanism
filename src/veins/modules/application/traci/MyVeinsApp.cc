@@ -28,6 +28,7 @@
 using namespace veins;
 
 Define_Module(veins::MyVeinsApp);
+int MyVeinsApp::node0id=100; // for naming vehicles correctly.
 
 bool MyVeinsApp::inaccurateBoolCheck(bool val, float accuracy) {
 	srand((int) simTime().raw() + myId + (int) val + (int) (accuracy * 100));
@@ -43,18 +44,6 @@ void MyVeinsApp::initialize(int stage) {
 	if (stage == 0) {
 		EV << "Initializing " << par("appName").stringValue() << std::endl;
 		withoutReportDumpSharing = par("withoutReportDumpSharing").boolValue();
-
-		//STATS
-		sent = 0;
-		sentCorrect = 0;
-		recMsg = 0;
-		recRprt = 0;
-		sentRprt = 0;
-		sentDumpRequests = 0;
-		sentDumps = 0;
-		receivedResponseDumps = 0;
-		receivedDumpRequests = 0;
-		receivedDumps = 0;
 		messageInterval = par("messageInterval");
 		messageIntervalVarianceLimit = par("messageIntervalVarianceLimit");
 		reportGenTime = par("reportGenTime");
@@ -67,10 +56,21 @@ void MyVeinsApp::initialize(int stage) {
 		reportGenTimeVarianceLimit = SimTime(reportGenTimeVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
 		requestDelayVarianceLimit = SimTime(requestDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
 		requestResponseDelayVarianceLimit = SimTime(requestResponseDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
-		evaluatingAccuracy = (float) par("evaluatingAccuracyPercentage").intValue() / (float) 100;
+		evaluatingAccuracy = setEvaluatingAccuracy();
 		sendingAccuracy = setSendingAccuracy();
 		evaluatableMessages = (float) par("percentageOfInfoEvaluatable").intValue() / (float) 100;
 		sendMsgEvt = new cMessage("Send Message Event", SEND_INFOMSG_EVT);
+		//STATS
+		sent = 0;
+		sentCorrect = 0;
+		recMsg = 0;
+		recRprt = 0;
+		sentRprt = 0;
+		sentDumpRequests = 0;
+		sentDumps = 0;
+		receivedResponseDumps = 0;
+		receivedDumpRequests = 0;
+		receivedDumps = 0;
 		sentVector.setName("sentVector");
 		sentCorrectVector.setName("sentCorrectVector");
 		sentReportsVector.setName("sentReportsVector");
@@ -81,24 +81,35 @@ void MyVeinsApp::initialize(int stage) {
 		receivedDumpRequestsVector.setName("receivedDumpRequestsVector");
 	} else if (stage == 1) {
 		//manually setting nodes 1,3 as bad and 0,2 as good.
-		if ((int) myId == 21 || (int) myId == 33) {
+
+		if(par("isNode0").boolValue())
+			node0id=myId;
+		if ((int) myId == num2id(1,node0id) || (int) myId == num2id(3,node0id)) {
 			sendingAccuracy = (float) par("badSendingAccuracyPercentage").intValue() / (float) 100;
-		} else if ((int) myId == 15 || (int) myId == 27) {
+		} else if ((int) myId == num2id(2,node0id) || (int) myId == num2id(4,node0id)) {
 			sendingAccuracy = (float) par("goodSendingAccuracyPercentage").intValue() / (float) 100;
 		}
 		srand(myId);
-		simtime_t variance = messageIntervalVarianceLimit * (((float) (rand() % 1000) / (float) 500) - 1); //variance=(-limit to +limit)uniformly
+		simtime_t variance = messageIntervalVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1); //variance=(-limit to +limit)uniformly
 		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);
 	}
 }
 
 float MyVeinsApp::setSendingAccuracy() {
-	srand(myId + (int) simTime().raw());
+	srand(myId + (int) simTime().raw() + 13);
 	int a = (rand() % 1000);
 	return (float) (
 			a < (par("percentageWithBadSendingAccuracy").intValue() * 10) ?
 					par("badSendingAccuracyPercentage").intValue() : par("goodSendingAccuracyPercentage").intValue())
 			/ (float) 100;
+}
+float MyVeinsApp::setEvaluatingAccuracy() {
+	srand(myId + (int) simTime().raw() + 37);
+	int a = (rand() % 1000);
+	return (float) (
+			a < (par("percentageWithBadEvaluatingAccuracy").intValue() * 10) ?
+					par("badEvaluatingAccuracyPercentage").intValue() :
+					par("goodEvaluatingAccuracyPercentage").intValue()) / (float) 100;
 }
 
 void MyVeinsApp::finish() {
@@ -120,7 +131,7 @@ void MyVeinsApp::finish() {
 
 	char name[25];
 	for (auto it = repScoreStats.begin(); it != repScoreStats.end(); ++it) {
-		sprintf(name, "RepScoreStats-%d", (it->first - 15) / 6);
+		sprintf(name, "RepScoreStats-%d", id2num(it->first, node0id));
 		it->second->recordAs(name);
 		delete it->second;
 	}
@@ -180,8 +191,8 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 				rep->setReportedMsgId(msgId);
 				rep->setFoundValid(msgVal);
 				rep->setKind(REPORT_MSG);
-				srand((int) simTime().raw() + myId);
-				simtime_t variance = reportGenTimeVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
+				srand((int) simTime().raw() + myId + msgId + senderId + 3851);
+				simtime_t variance = reportGenTimeVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1);
 				scheduleAt(simTime() + reportGenTime + variance, rep);
 			}
 		}
@@ -265,8 +276,8 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 			dump->setPrimaryRecipientAddress(senderId); // for stats collection at "sender"'s side on how many own requests were obliged.
 			dump->setTrueMsgs(trueMsgs.c_str());
 			dump->setFalseMsgs(falseMsgs.c_str());
-			srand((int) simTime().raw() + myId);
-			simtime_t variance = requestResponseDelayVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
+			srand((int) simTime().raw() + myId + requestedReporteeId + senderId + 108);
+			simtime_t variance = requestResponseDelayVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1);
 			scheduleAt(simTime() + requestResponseDelay + variance, dump);
 		}
 	} else if (reportDumpMsg *wsm = dynamic_cast<reportDumpMsg*>(frame)) {
@@ -312,7 +323,10 @@ void MyVeinsApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove re
 		repScoreStats[reporteeId]->collect(veh.rep); //for simulation stats collection only
 		reportedVector[reporteeId]->record(veh.reportedCount);
 		reportedTrueVector[reporteeId]->record(veh.reportedTrueCount);
+	} else if (RSUBroadcast *wsm = dynamic_cast<RSUBroadcast*>(frame)) {
+
 	}
+
 }
 void MyVeinsApp::initVehicle(int id, bool dontRequestDump) {
 	vehicles[id] = new vehStats();
@@ -323,15 +337,15 @@ void MyVeinsApp::initVehicle(int id, bool dontRequestDump) {
 	reportComparisonVector[id] = new cOutVector;
 	msgVector[id] = new cOutVector;
 	char name[40];
-	sprintf(name, "RepScoreVector-%d", (id - 15) / 6); // node i's "id" is i*6+15
+	sprintf(name, "RepScoreVector-%d", id2num(id,node0id)); // node i's "id" is i*6+15
 	repScoreVector[id]->setName(name); //for simulation stats collection only
-	sprintf(name, "reportedVector-%d", (id - 15) / 6);
+	sprintf(name, "reportedVector-%d", id2num(id,node0id));
 	reportedVector[id]->setName(name);
-	sprintf(name, "reportedTrueVector-%d", (id - 15) / 6);
+	sprintf(name, "reportedTrueVector-%d", id2num(id,node0id));
 	reportedTrueVector[id]->setName(name);
-	sprintf(name, "reportComparisonVector-%d", (id - 15) / 6);
+	sprintf(name, "reportComparisonVector-%d", id2num(id,node0id));
 	reportComparisonVector[id]->setName(name);
-	sprintf(name, "msgVector-%d", (id - 15) / 6);
+	sprintf(name, "msgVector-%d", id2num(id,node0id));
 	msgVector[id]->setName(name);
 	if (!(dontRequestDump || withoutReportDumpSharing)) {
 		requestDumpMsg *req = new requestDumpMsg();
@@ -341,8 +355,8 @@ void MyVeinsApp::initVehicle(int id, bool dontRequestDump) {
 		req->setName("Dump Request Message");
 		req->setSenderAddress(myId);
 		req->setRequestedReporteeAddress(id);
-		srand((int) simTime().raw() + myId + id);
-		simtime_t variance = requestDelayVarianceLimit * ((float) (rand() % 1000) / (float) 500 - 1);
+		srand((int) simTime().raw() + myId + id + sent + 667);
+		simtime_t variance = requestDelayVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1);
 		scheduleAt(simTime() + requestDelay + variance, req);
 	}
 }
@@ -390,8 +404,8 @@ void MyVeinsApp::handleSelfMsg(cMessage *msg) {
 			sentCorrectVector.record(++sentCorrect);
 		sentVector.record(sent);
 		//-----
-		srand((int) simTime().raw() + myId);
-		simtime_t variance = messageIntervalVarianceLimit * (((float) (rand() % 1000) / (float) 500) - 1);
+		srand((int) simTime().raw() + myId + sent + 5643);
+		simtime_t variance = messageIntervalVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1);
 		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);
 	} else DemoBaseApplLayer::handleSelfMsg(msg);
 }

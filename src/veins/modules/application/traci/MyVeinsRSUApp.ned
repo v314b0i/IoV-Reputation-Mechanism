@@ -31,4 +31,6 @@ simple MyVeinsRSUApp extends DemoBaseApplLayer
     	double stageShiftInterval = default(10s) @unit(s);
     	int logSplitFactor = default(5);
 		int logSplitLevel = default(4);
+		int logSplitSmallest = default(10);
+		bool isMaster = default(false);
 }

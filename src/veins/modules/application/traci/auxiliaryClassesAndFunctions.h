@@ -13,6 +13,13 @@
 enum MyApplMessageKinds {
 	SEND_INFOMSG_EVT, STAGE_SHIFT_EVT, INFO_MSG, REPORT_MSG
 };
+
+inline int id2num(int id, int node0id){
+	return (id-node0id)/6;
+}
+inline int num2id(int id, int node0id){
+	return (id*6) + node0id;
+}
 typedef std::tr1::unordered_map<int, bool> int_2_bool;
 typedef std::tr1::unordered_map<int, float> int_2_float;
 typedef std::tr1::unordered_map<int, int> int_2_int;
@@ -20,6 +27,7 @@ typedef std::tr1::unordered_set<int> intSet;
 typedef std::tr1::unordered_map<int, int_2_float> int_2_int2float;
 typedef std::tr1::unordered_map<int, int_2_bool*> int_2_int2bool;
 typedef std::tr1::unordered_map<int, intSet*> int_2_intSet;
+typedef std::tr1::unordered_map<int, std::vector<float>> int_2_floatVec;
 /*
  template<typename containertype, typename keytype, typename valtype> containertype getMapValues(
  std::tr1::unordered_map<keytype, valtype> m);
@@ -54,7 +62,7 @@ template<typename type> inline float vectorMedian(std::vector<type> vec) {
 	sort(vec.begin(), vec.end());
 	return vec.at((int) (vec.size() / 2));
 }
-template<typename type>inline float vectorMean(std::vector<type> vec) {
+template<typename type> inline float vectorMean(std::vector<type> vec) {
 	if (vec.size() == 0)
 		return -1;
 	float acc = 0;
@@ -62,7 +70,7 @@ template<typename type>inline float vectorMean(std::vector<type> vec) {
 		acc += i;
 	return acc / (float) vec.size();
 }
-template<typename type>inline float vectorMode(std::vector<type> vec) {
+template<typename type> inline float vectorMode(std::vector<type> vec) {
 	if (vec.size() == 0)
 		return -1;
 	//appx algo written by me. may need to be replaced if the isMultimodal func's temporary logic isn't replaced or this is used elsewhere
@@ -92,7 +100,7 @@ template<typename type>inline float vectorMode(std::vector<type> vec) {
 	}
 	return hmaxi;
 }
-template<typename type>inline float standardDeviation(std::vector<type> v, float centre) {
+template<typename type> inline float standardDeviation(std::vector<type> v, float centre) {
 	float acc = 0;
 	float diff;
 	for (auto it : v) {
@@ -101,14 +109,14 @@ template<typename type>inline float standardDeviation(std::vector<type> v, float
 	}
 	return sqrt(acc / (float) v.size());
 }
-template<typename type>inline float medianAbsoluteDeviation(std::vector<type> v, float centre) {
+template<typename type> inline float medianAbsoluteDeviation(std::vector<type> v, float centre) {
 	std::vector<float> vec;
 	for (auto it : v)
 		vec.insert(vec.end(), it > centre ? it - centre : centre - it);
 	return vectorMedian(vec);
 }
 
-template<typename type>inline bool ismultimodal(std::vector<type> vec, float median) {
+template<typename type> inline bool ismultimodal(std::vector<type> vec, float median) {
 	//FIXME currently is an approximate testing function written by me. Should instead implement a proper test such as Hartigan's dip test
 	//https://en.wikipedia.org/wiki/Multimodal_distribution#General_tests
 	float mode = vectorMode(vec);
@@ -116,7 +124,7 @@ template<typename type>inline bool ismultimodal(std::vector<type> vec, float med
 	return diffBetMedianAndMode >= 0.20; // arbitrary cut-off. Use hartigans'd dip test and set cut off=0.1 on the p value.
 	//should not consider the scores from nodes that had few total reports.
 }
-template<typename type>inline bool ismultimodal(std::vector<type> vec) {
+template<typename type> inline bool ismultimodal(std::vector<type> vec) {
 	float median = vectorMedian(vec);
 	return ismultimodal(vec, median);
 }
@@ -128,7 +136,21 @@ inline intSet csvToIntSet(std::string csvstr) {
 		set.insert(std::stoi(word));
 	return set;
 }
-
+inline int_2_floatVec csv2DFloatValsParse(std::string csvstr, int numOVals) {
+	int_2_floatVec parsedMap;
+	std::string word;
+	std::stringstream SS(csvstr.c_str());
+	while (getline(SS, word, ',')) {
+		int key = std::stoi(word);
+		std::vector<float> vals;
+		for (int i = 0; i < numOVals; ++i) {
+			getline(SS, word, ',');
+			vals.insert(vals.end(), std::stof(word));
+		}
+		parsedMap[key] = vals;
+	}
+	return parsedMap;
+}
 class vehStats {		//	{senderId : (rep, rep0, total#, true#, { msgId: { reporterId : val } }) }
 public:
 	float rep = 0.5;       		//current calculated rep of vehicle
@@ -171,11 +193,11 @@ struct reportsBasket {
 	}
 };
 /*
-int uniqueReportersInBasket(reportsBasket basket);
-int reportsInBasket(reportsBasket basket);
-int vehiclesInScope(int_2_intSet scope);
-int messagesInScope(int_2_intSet scope);
-*/
+ int uniqueReportersInBasket(reportsBasket basket);
+ int reportsInBasket(reportsBasket basket);
+ int vehiclesInScope(int_2_intSet scope);
+ int messagesInScope(int_2_intSet scope);
+ */
 inline int uniqueReportersInBasket(reportsBasket basket) {
 	intSet reporters;
 	for (auto veh : basket.vehicles) {
@@ -203,14 +225,21 @@ inline int messagesInScope(int_2_intSet scope) {
 	return count;
 }
 
-
-
 struct msgVal {
 	int id;
 	float truthValue;
 	msgVal(int i, float Val) : id(i), truthValue(Val) {
 	}
 };
+template<typename type> inline type calculatePowersAscending(int start, int factor, int level) {
+	type sizes;
+	int size = start;
+	for (int i = 0; i < level; i++) {
+		sizes.insert(sizes.end(), size);
+		size *= factor;
+	}
+	return sizes;
+}
 struct vehMsgHistory {
 	//can use ordered int->float map for messages instead of vector<{int,float}> but insertion and deletion complexity would be log(n)
 	//would have to use it if we allow for older messges to be added that were skipped earlier (highly exceptional cases) but that adds
@@ -218,20 +247,17 @@ struct vehMsgHistory {
 	int logLimit;
 	int splitFactor;
 	int splitLevel;
-	int totalMessages;
 	std::vector<msgVal> messages;
 	int_2_float splitTotals;
 	intSet splitSizes;
-	vehMsgHistory(int factor, int level) { //for f=5,l=4 : sS=<{5,-1},{25,-1},{125,-1},{625,-1}> , lL=625.
+	vehMsgHistory(int start, int factor, int level) { //for f=5,l=4 : sS=<{5,-1},{25,-1},{125,-1},{625,-1}> , lL=625.
 		splitFactor = factor;
 		splitLevel = level;
-		int size = 1;
-		for (int i = 1; i <= level; i++) {
-			size *= splitFactor;
-			splitSizes.insert(size);
+		splitSizes = calculatePowersAscending<intSet>(start, factor, level);
+		for (int size : splitSizes) {
 			splitTotals[size] = 0;
+			logLimit = size;
 		}
-		logLimit = size;
 	}
 
 	void insert(int_2_float messageValsMap) {
@@ -264,6 +290,9 @@ struct vehMsgHistory {
 			if (messages.size() >= size)
 				splitAvgs[size] = splitTotals[size] / size;
 		return splitAvgs;
+	}
+	float getOverallAvg(){
+		return splitTotals[logLimit]/ (float)messages.size();
 	}
 };
 typedef std::tr1::unordered_map<int, vehMsgHistory*> int2VehMsgHistory;
