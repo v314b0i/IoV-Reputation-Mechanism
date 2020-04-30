@@ -80,15 +80,23 @@ void MyVeinsApp::initialize(int stage) {
 		receivedDumpsVector.setName("receivedDumpsVector");
 		receivedDumpRequestsVector.setName("receivedDumpRequestsVector");
 	} else if (stage == 1) {
-		//manually setting nodes 1,3 as bad and 0,2 as good.
-
 		if(par("isNode0").boolValue())
 			node0id=myId;
+		//manually setting nodes 1,3 as bad senders and 0,2 as good senders.
 		if ((int) myId == num2id(1,node0id) || (int) myId == num2id(3,node0id)) {
 			sendingAccuracy = (float) par("badSendingAccuracyPercentage").intValue() / (float) 100;
 		} else if ((int) myId == num2id(2,node0id) || (int) myId == num2id(4,node0id)) {
 			sendingAccuracy = (float) par("goodSendingAccuracyPercentage").intValue() / (float) 100;
 		}
+
+		//manually setting nodes 0,1 as bad reporters
+		if ((int) myId == num2id(1,node0id) || (int) myId == num2id(0,node0id))
+			evaluatingAccuracy = (float) par("badEvaluatingAccuracyPercentage").intValue() / (float) 100;
+
+		//removing the message evaluatability limitation for rogue reporting nodes
+		if(evaluatingAccuracy==((float)par("badEvaluatingAccuracyPercentage").intValue()/(float)100))
+			evaluatableMessages=1;
+
 		srand(myId);
 		simtime_t variance = messageIntervalVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1); //variance=(-limit to +limit)uniformly
 		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);

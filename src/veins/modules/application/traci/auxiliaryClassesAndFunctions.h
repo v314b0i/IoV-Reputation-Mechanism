@@ -2,6 +2,7 @@
 #define MY_AUX_HEADER_FILE
 
 #include <tr1/unordered_map>
+#include <map>
 #include <tr1/unordered_set>
 #include <string>
 #include <vector>
@@ -14,11 +15,11 @@ enum MyApplMessageKinds {
 	SEND_INFOMSG_EVT, STAGE_SHIFT_EVT, INFO_MSG, REPORT_MSG
 };
 
-inline int id2num(int id, int node0id){
-	return (id-node0id)/6;
+inline int id2num(int id, int node0id) {
+	return (id - node0id) / 6;
 }
-inline int num2id(int id, int node0id){
-	return (id*6) + node0id;
+inline int num2id(int id, int node0id) {
+	return (id * 6) + node0id;
 }
 typedef std::tr1::unordered_map<int, bool> int_2_bool;
 typedef std::tr1::unordered_map<int, float> int_2_float;
@@ -261,12 +262,7 @@ struct vehMsgHistory {
 	}
 
 	void insert(int_2_float messageValsMap) {
-		//FIXME std::vector<int> keys=getMapKeys<std::vector<int>>(messageValsMap);
-		//
-		std::vector<int> keys;
-		for (auto i : messageValsMap)
-			keys.insert(keys.end(), i.first);
-		//
+		std::vector<int> keys = getMapKeys<std::vector<int>>(messageValsMap);
 		std::sort(keys.begin(), keys.end());
 		for (auto key : keys) {
 			msgVal M(key, messageValsMap[key]);
@@ -291,9 +287,156 @@ struct vehMsgHistory {
 				splitAvgs[size] = splitTotals[size] / size;
 		return splitAvgs;
 	}
-	float getOverallAvg(){
-		return splitTotals[logLimit]/ (float)messages.size();
+	float getOverallAvg() {
+		return splitTotals[logLimit] / (float) messages.size();
+	}
+};
+struct messageGistInDynVehMsgHistory {
+	intSet trueReporters;
+	intSet falseReporters;
+	bool fixed;
+	bool evaluated;
+	float avg;
+	messageGistInDynVehMsgHistory() {
+		fixed = false;
+		evaluated = false;
+		avg = 0.5;
+	}
+};
+struct vehMsgHistoryDynamic {
+	//can use ordered int->float map for messages instead of vector<{int,float}> but insertion and deletion complexity would be log(n)
+	//would have to use it if we allow for older messges to be added that were skipped earlier (highly exceptional cases) but that adds
+	//more complexity to the functions, not required for simulation.
+	int messagesRecv;
+	int reportsRecv;
+	int logLimit;
+	int splitFactor;
+	int splitLevel;
+	int lockedMaxId; //if the rsu has sent evaluations of messages upto this message Id then we ignore messages and reports on messages less then it.
+	std::tr1::unordered_map<int, std::map<int, messageGistInDynVehMsgHistory, std::greater<int>>*> messages; //ordered map
+	int_2_float splitTotals;
+	std::vector<int> splitSizes;
+	vehMsgHistoryDynamic(int start, int factor, int level) { //for f=5,l=4 : sS=<{5,-1},{25,-1},{125,-1},{625,-1}> , lL=625.
+		splitFactor = factor;
+		splitLevel = level;
+		messagesRecv = 0;
+		reportsRecv = 0;
+		lockedMaxId = 0;
+		splitSizes = calculatePowersAscending<std::vector<int>>(start, factor, level);
+		for (int size : splitSizes) {
+			messages[size] = new std::map<int, messageGistInDynVehMsgHistory, std::greater<int>>;
+			splitTotals[size] = 0;
+			logLimit = size;
+		}
+	}
+	void insertReport(int reporterId, int msgId, bool val) {
+		if (lockedMaxId >= msgId)
+			return;
+		for (int size : splitSizes)
+			if (messages[size]->count(msgId)) {
+				messageGistInDynVehMsgHistory &msg = (*messages[size])[msgId];
+				if (msg.fixed or msg.evaluated)
+					return;
+				if (val)
+					msg.trueReporters.insert(reporterId);
+				else msg.falseReporters.insert(reporterId);
+				float avg = (float) msg.trueReporters.size();
+				avg /= avg + (float) msg.falseReporters.size();
+				splitTotals[size] -= msg.avg;
+				splitTotals[size] += avg;
+				msg.avg = avg;
+				return;
+			}
+		messageGistInDynVehMsgHistory newMsgGistObj;
+		newMsgGistObj.avg = val ? 1 : 0;
+		if (val)
+			newMsgGistObj.trueReporters.insert(reporterId);
+		else newMsgGistObj.falseReporters.insert(reporterId);
+		insertMsgObj(newMsgGistObj, msgId);
+	}
+	void insertMsg(int msgId) {
+		if (lockedMaxId >= msgId)
+			return;
+		for (int size : splitSizes)
+			if (messages[size]->count(msgId))
+				return;
+		messageGistInDynVehMsgHistory newMsgGistObj;
+		insertMsgObj(newMsgGistObj, msgId);
+	}
+	void insertEvaluation(int msgId, bool val) {
+		//not used currently, can be used. currently eveluation at self is considered like any other node's report.
+		if (lockedMaxId >= msgId)
+			return;
+		for (int size : splitSizes)
+			if (messages[size]->count(msgId)) {
+				messageGistInDynVehMsgHistory &msg = (*messages[size])[msgId];
+				if (msg.fixed or msg.evaluated)
+					return;
+				splitTotals[size] -= msg.avg;
+				msg.avg = val ? 1 : 0;
+				splitTotals[size] += msg.avg;
+				msg.evaluated = true;
+				return;
+			}
+		messageGistInDynVehMsgHistory newMsgGistObj;
+		newMsgGistObj.avg = val ? 1 : 0;
+		newMsgGistObj.evaluated = true;
+		insertMsgObj(newMsgGistObj, msgId);
+	}
+	void insertMsgObj(messageGistInDynVehMsgHistory newMsgGistObj, int msgId) {
+		if (lockedMaxId >= msgId)
+			return;
+		for (int size : splitSizes) {
+			if ((--(*messages[size]).end())->first < msgId) {
+				(*messages[size])[msgId] = newMsgGistObj;
+				splitTotals[size] += newMsgGistObj.avg;
+				if ((*messages[size]).size() > size) {
+					newMsgGistObj = (--(*messages[size]).end())->second;
+					splitTotals[size] -= newMsgGistObj.avg;
+					msgId = (--(*messages[size]).end())->first;
+					(*messages[size]).erase(msgId);
+				} else break;
+			}
+		}
+	}
+	void ingestRSUScore(std::vector<float> vec) {
+		int pendingDummyMessagesToBeInserted = vec.at(0);
+		lockedMaxId = vec.at(1);
+		std::map<int, messageGistInDynVehMsgHistory, std::greater<int>> newerMsgs;
+		for (int i = splitSizes.size() - 1; i >= 0; --i)
+			for (auto it = messages[splitSizes[i]]->begin(); ((it != messages[splitSizes[i]]->end()) and (i>=0)); ++it) {
+				if (it->first < lockedMaxId)
+					break;
+				else newerMsgs[it->first] = it->second;
+			}
+		messageGistInDynVehMsgHistory dummyMsg;
+		dummyMsg.fixed = true;
+		for (int j = 0; j < splitSizes.size(); ++j) {
+			delete messages[splitSizes[j]];
+			messages[splitSizes[j]] = new std::map<int, messageGistInDynVehMsgHistory, std::greater<int>>;
+			dummyMsg.avg = vec.at(j + 2);
+			int size = splitSizes[j];
+			while (((pendingDummyMessagesToBeInserted--) > 0) and (size-- > 0))
+				(*messages[splitSizes[j]])[pendingDummyMessagesToBeInserted] = dummyMsg;
+			splitTotals[splitSizes[j]] = dummyMsg.avg * (splitSizes[j] - size); //short circuit above let's this work
+		}
+		for (auto it : newerMsgs) {
+			insertMsgObj(it.second, it.first);
+		}
+
+	}
+	int_2_float getSplitAvgs() {
+		int_2_float splitAvgs;
+		int commulative_total = 0;
+		int commulative_size = 0;
+		for (auto size : splitSizes) {
+			commulative_total += splitTotals[size];
+			commulative_size += messages[size]->size();
+			splitAvgs[size] = (float) commulative_total / (float) commulative_size;
+		}
+		return splitAvgs;
 	}
 };
 typedef std::tr1::unordered_map<int, vehMsgHistory*> int2VehMsgHistory;
+typedef std::tr1::unordered_map<int, vehMsgHistoryDynamic*> int2vehMsgHistoryDynamic;
 #endif

@@ -47,6 +47,9 @@ protected:
 	int logSplitLevel;
 	int logSplitSmallest;
 	std::vector<int> logSplitSizes; //(for convenience/less complexity)
+
+
+	static int node0id; // for naming vehicles correctly.
 	//FOR STATS
 	static int stageCounter;
 	static int recievedReports;
