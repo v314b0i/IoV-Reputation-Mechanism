@@ -1598,7 +1598,7 @@
         <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[39].appl RepScoreVector-SPLIT50 - 1" value="Dots"/>
         <properties name="Line.Color//veins/examples/myProj1/results/Default-#0.vec myScenario.node[39].appl RepScoreVector-SPLIT50 - 1" value="#3465A4"/>
         <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-SPLIT50 - 1" value="Cross"/>
-        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-SPLIT50 - 1" value="Dots"/>
+        <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-SPLIT50 - 1" value="Linear"/>
         <properties name="Line.Color//veins/examples/myProj1/results/Default-#0.vec myScenario.node[40].appl RepScoreVector-SPLIT50 - 1" value="#3465A4"/>
         <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[41].appl RepScoreVector-SPLIT50 - 1" value="Cross"/>
         <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[41].appl RepScoreVector-SPLIT50 - 1" value="Dots"/>
@@ -2729,8 +2729,12 @@
         <properties name="Line.Color//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-SPLIT50 - 0" value="#3465A4"/>
       </items>
     </datasets>
+    <datasets name="rsuEffect">
+      <items xsi:type="scave:Add" filterPattern="name(&quot;repScoreChangeDueToBroadCast *&quot;) " type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="" lineNameFormat=""/>
+    </datasets>
   </datasets>
   <chartSheets>
-    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.6 //@datasets/@datasets.1/@items.5 //@datasets/@datasets.2/@items.1 //@datasets/@datasets.3/@items.1 //@datasets/@datasets.4/@items.1 //@datasets/@datasets.5/@items.1 //@datasets/@datasets.6/@items.1 //@datasets/@datasets.7/@items.1 //@datasets/@datasets.8/@items.1 //@datasets/@datasets.9/@items.1 //@datasets/@datasets.10/@items.1 //@datasets/@datasets.11/@items.5 //@datasets/@datasets.11/@items.6 //@datasets/@datasets.12/@items.6 //@datasets/@datasets.13/@items.6 //@datasets/@datasets.14/@items.6 //@datasets/@datasets.15/@items.6"/>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.6 //@datasets/@datasets.1/@items.5 //@datasets/@datasets.2/@items.1 //@datasets/@datasets.3/@items.1 //@datasets/@datasets.4/@items.1 //@datasets/@datasets.5/@items.1 //@datasets/@datasets.6/@items.1 //@datasets/@datasets.7/@items.1 //@datasets/@datasets.8/@items.1 //@datasets/@datasets.9/@items.1 //@datasets/@datasets.10/@items.1 //@datasets/@datasets.11/@items.5 //@datasets/@datasets.11/@items.6 //@datasets/@datasets.12/@items.6 //@datasets/@datasets.13/@items.6 //@datasets/@datasets.14/@items.6 //@datasets/@datasets.15/@items.6 //@datasets/@datasets.16/@items.1"/>
   </chartSheets>
 </scave:Analysis>

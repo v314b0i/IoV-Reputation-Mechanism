@@ -52,13 +52,16 @@ protected:
 	int logSplitSmallest;
 	std::vector<int> logSplitSizes; //(for convenience/less complexity)
 
-	int myStage;
 	static int_2_int2float scores;
 	static intSet blacklist;
+	static std::string blacklistCSV;
+	static std::string broadcastDataCSV;
 	static int_2_float reportDensity;
 	static int node0id; // for naming vehicles correctly.
 	//FOR STATS
 	static int stageCounter;
+	int myStage;
+	int broadcastsSent;
 	static int recievedReports;
 	cOutVector recievedReportsVector;
 	static intSet statsInitialisedVehicles;
@@ -73,7 +76,7 @@ protected:
 			std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> scoresVector);
 	std::tr1::unordered_map<int, cOutVector*> primaryScore_RAW_Vector;
 	cOutVector secondaryScoreThreshhold;
-
+	cOutVector broadcastsSentVector;
 	cOutVector vehiclesInArchivedScope;
 	cOutVector messagesInArchivedScope;
 

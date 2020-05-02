@@ -20,22 +20,22 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "veins/modules/application/traci/MyVeinsNodeApp_Lite.h"
+#include "veins/modules/application/traci/MyVeinsNodeApp2.h"
 #include <stdlib.h>
 #include <string.h>
 #include <string>
 #include <iostream>
 using namespace veins;
 
-Define_Module(veins::MyVeinsNodeApp_Lite);
-int MyVeinsNodeApp_Lite::node0id = 100; // for naming vehicles correctly.
+Define_Module(veins::MyVeinsNodeApp2);
+int MyVeinsNodeApp2::node0id = 100; // for naming vehicles correctly.
 
-bool MyVeinsNodeApp_Lite::inaccurateBoolCheck(bool val, float accuracy) {
+bool MyVeinsNodeApp2::inaccurateBoolCheck(bool val, float accuracy) {
 	srand((int) simTime().raw() + myId + (int) val + (int) (accuracy * 100));
 	return ((rand() % 1000) < (accuracy * 1000)) ? val : !val;
 }
 
-void MyVeinsNodeApp_Lite::initialize(int stage) {
+void MyVeinsNodeApp2::initialize(int stage) {
 	try {
 		DemoBaseApplLayer::initialize(stage);
 		if (stage == 0) {
@@ -77,7 +77,7 @@ void MyVeinsNodeApp_Lite::initialize(int stage) {
 			receivedResponseDumps = 0;
 			receivedDumpRequests = 0;
 			receivedDumps = 0;
-			receivedRSUBroadcasts=0;
+			receivedRSUBroadcasts = 0;
 			sentVector.setName("sentVector");
 			sentCorrectVector.setName("sentCorrectVector");
 			sentReportsVector.setName("sentReportsVector");
@@ -115,7 +115,7 @@ void MyVeinsNodeApp_Lite::initialize(int stage) {
 	}
 }
 
-float MyVeinsNodeApp_Lite::setSendingAccuracy() {
+float MyVeinsNodeApp2::setSendingAccuracy() {
 	srand(myId + (int) simTime().raw() + 13);
 	int a = (rand() % 1000);
 	return (float) (
@@ -123,7 +123,7 @@ float MyVeinsNodeApp_Lite::setSendingAccuracy() {
 					par("badSendingAccuracyPercentage").intValue() : par("goodSendingAccuracyPercentage").intValue())
 			/ (float) 100;
 }
-float MyVeinsNodeApp_Lite::setEvaluatingAccuracy() {
+float MyVeinsNodeApp2::setEvaluatingAccuracy() {
 	srand(myId + (int) simTime().raw() + 37);
 	int a = (rand() % 1000);
 	return (float) (
@@ -132,7 +132,7 @@ float MyVeinsNodeApp_Lite::setEvaluatingAccuracy() {
 					par("goodEvaluatingAccuracyPercentage").intValue()) / (float) 100;
 }
 
-void MyVeinsNodeApp_Lite::finish() {
+void MyVeinsNodeApp2::finish() {
 	recordScalar("#sent", sent);
 	recordScalar("#sentReports", sentRprt);
 	recordScalar("#recievedMessages", recMsg);
@@ -145,11 +145,14 @@ void MyVeinsNodeApp_Lite::finish() {
 			delete a->second;
 	for (auto it = repScoreVector_MIN.begin(); it != repScoreVector_MIN.end(); ++it)
 		delete it->second;
+	for (auto it = repScoreChangeDueToBroadCast.begin(); it != repScoreChangeDueToBroadCast.end(); ++it)
+			delete it->second;
+
 	//delete sendMsgEvt;
 	DemoBaseApplLayer::finish();
 }
 
-void MyVeinsNodeApp_Lite::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
+void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
 	//TODO deal with reports on self, or maybe not
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) { //TODO
 		try {
@@ -161,7 +164,7 @@ void MyVeinsNodeApp_Lite::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to 
 			if (vehicles.find(senderId) == vehicles.end()) //if neither a message from this sender not a report on this sender has been recieved before
 				initVehicle(senderId, false);
 			mvec.record(2);
-			vehMsgHistoryDynamic_Lite &veh = *(vehicles[senderId]);
+			vehMsgHistoryDynamic2 &veh = *(vehicles[senderId]);
 			mvec.record(3);
 			if (veh.lockedMaxId >= msgId) {
 				mvec.deletefile();
@@ -211,7 +214,7 @@ void MyVeinsNodeApp_Lite::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to 
 			if (!vehicles.count(reporteeId))
 				initVehicle(reporteeId);
 			mvec.record(2);
-			vehMsgHistoryDynamic_Lite &veh = *(vehicles[reporteeId]);
+			vehMsgHistoryDynamic2 &veh = *(vehicles[reporteeId]);
 			if (veh.lockedMaxId >= msgId)
 				return;
 			mvec.record(3);
@@ -236,7 +239,7 @@ void MyVeinsNodeApp_Lite::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to 
 				rec.deletefile();
 				return;
 			}
-			vehMsgHistoryDynamic_Lite &veh = *(vehicles[requestedReporteeId]);
+			vehMsgHistoryDynamic2 &veh = *(vehicles[requestedReporteeId]);
 			std::string trueMsgs = "", falseMsgs = "", mId;
 			for (auto msg : veh.myReports) {
 				mId = std::to_string(msg.first).append(",");
@@ -270,10 +273,13 @@ void MyVeinsNodeApp_Lite::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to 
 			if ((int) wsm->getPrimaryRecipientAddress() == myId)
 				receivedResponseDumpsVector.record(++receivedResponseDumps);
 			int reporteeId = wsm->getReporteeAddress();
-			if(requestDumpMsgPointers.count(reporteeId)) {
-				cancelAndDelete(requestDumpMsgPointers[reporteeId]);
+			if (requestDumpMsgPointers.count(reporteeId)) {
+				rec.record(0.5);
+				if (requestDumpMsgPointers[reporteeId]->isScheduled())
+					//cancelEvent(requestDumpMsgPointers[reporteeId]);
 				requestDumpMsgPointers.erase(reporteeId);
 			}
+			rec.record(1);
 			int senderId = wsm->getSenderAddress();
 			if (senderId == reporteeId)
 				return;
@@ -282,7 +288,8 @@ void MyVeinsNodeApp_Lite::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to 
 				initVehicle(reporteeId, true);
 			intSet trueMsgs = csvToIntSet(std::string(wsm->getTrueMsgs()));
 			intSet falseMsgs = csvToIntSet(std::string(wsm->getFalseMsgs()));
-			vehMsgHistoryDynamic_Lite &veh = *(vehicles[reporteeId]);
+			rec.record(2);
+			vehMsgHistoryDynamic2 &veh = *(vehicles[reporteeId]);
 			for (auto msgId : trueMsgs)
 				veh.insertReport(senderId, msgId, true);
 			for (auto msgId : falseMsgs)
@@ -293,22 +300,25 @@ void MyVeinsNodeApp_Lite::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to 
 		}
 	} else if (RSUBroadcast *wsm = dynamic_cast<RSUBroadcast*>(frame)) {
 		try {
-			recorder rec(std::string("wsm=RSUBroadcast").append(std::to_string(myId)).append(".txt"));
-			rec.record(0);
+			recorder rec(std::string("wsm=RSUBroadcast").append(std::to_string(myId)).append(std::to_string(wsm->getBroadcastId())).append(".txt"));
+			rec.record(wsm->getBroadcastId());
 			receivedRSUBroadcastsVector.record(++receivedRSUBroadcasts);
 			if (lastRSUBroadcastId < wsm->getBroadcastId()) {
+				rec.record(66);
+				blacklistedReporters = csvToIntSet(std::string(wsm->getBlacklistCSV()));
 				ingestRSUBroadcast(std::string(wsm->getVehIdAndScoresCSV()));
 				rec.record(1);
-				blacklistedReporters = csvToIntSet(std::string(wsm->getBlacklistCSV()));
+				rec.recordString("\n---\n");
+				rec.recordString(std::string(wsm->getVehIdAndScoresCSV()));
 				lastRSUBroadcastId = wsm->getBroadcastId();
 			}
-			rec.deletefile();
+			//rec.deletefile();
 		} catch (...) {
 			recordScalar("onWSM:RSUBroadcast threw error", 1);
 		}
 	}
 }
-void MyVeinsNodeApp_Lite::ingestRSUBroadcast(std::string csvStr) {
+void MyVeinsNodeApp2::ingestRSUBroadcast(std::string csvStr) {
 	recorder rec(std::string("ingestRSUBroadcast").append(std::to_string(myId)).append(".txt"));
 	rec.record(0);
 	int_2_floatVec reportsCsv2DFloatValsParse = csv2DFloatValsParse(csvStr, logSplitSizes.size() + 3);
@@ -317,13 +327,16 @@ void MyVeinsNodeApp_Lite::ingestRSUBroadcast(std::string csvStr) {
 		rec.recordString(std::string("\ninloop ").append(std::to_string(i.first)));
 		if (vehicles.count(i.first) == 0)
 			initVehicle(i.first);
-		vehicles[i.first]->ingestRSUScore(i.second,blacklistedReporters);
+		auto splitavgs0 = vehicles[i.first]->getSplitAvgs();
+		vehicles[i.first]->ingestRSUScore(i.second, blacklistedReporters);
+		auto splitavgs1 = vehicles[i.first]->getSplitAvgs();
+		repScoreChangeDueToBroadCast[i.first]->record(splitavgs1[logSplitSizes.back()]-splitavgs0[logSplitSizes.back()]);
 	}
 	rec.deletefile();
 }
-void MyVeinsNodeApp_Lite::initVehicle(int id, bool dontRequestDump) {
+void MyVeinsNodeApp2::initVehicle(int id, bool dontRequestDump) {
 	try {
-		vehicles[id] = new vehMsgHistoryDynamic_Lite(logSplitSmallest, logSplitFactor, logSplitLevel);
+		vehicles[id] = new vehMsgHistoryDynamic2(logSplitSmallest, logSplitFactor, logSplitLevel, par("stagingMessagesEnabled").boolValue());
 		repScoreVector[id] = std::tr1::unordered_map<int, cOutVector*>();
 		for (auto size : logSplitSizes) {
 			repScoreVector[id][size] = new cOutVector(
@@ -332,7 +345,9 @@ void MyVeinsNodeApp_Lite::initVehicle(int id, bool dontRequestDump) {
 		}
 		repScoreVector_MIN[id] = new cOutVector(
 				std::string("RepScoreVector-MIN").append(" - ").append(std::to_string(id2num(id, node0id))).c_str());
-		if (!(dontRequestDump || withoutReportDumpSharing)) {
+		repScoreChangeDueToBroadCast[id] = new cOutVector(
+				std::string("repScoreChangeDueToBroadCast").append(" - ").append(std::to_string(id2num(id, node0id))).c_str());
+		if (!(dontRequestDump || withoutReportDumpSharing || requestDumpMsgPointers.count(id))) {
 			requestDumpMsg *req = new requestDumpMsg();
 			populateWSM(req);
 			req->setName("Dump Request Message");
@@ -341,13 +356,13 @@ void MyVeinsNodeApp_Lite::initVehicle(int id, bool dontRequestDump) {
 			srand((int) simTime().raw() + myId + id + sent + 667);
 			simtime_t variance = requestDelayVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1);
 			scheduleAt(simTime() + requestDelay + variance, req);
-			requestDumpMsgPointers[id]=req;
+			requestDumpMsgPointers[id] = req;
 		}
 	} catch (...) {
 		recordScalar("initVehicle threw error", 1);
 	}
 }
-void MyVeinsNodeApp_Lite::recordVehScores(int id) {
+void MyVeinsNodeApp2::recordVehScores(int id) {
 	auto splitavgs = vehicles[id]->getSplitAvgs();
 	for (auto score : splitavgs)
 		repScoreVector[id][score.first]->record(score.second);
@@ -355,7 +370,7 @@ void MyVeinsNodeApp_Lite::recordVehScores(int id) {
 	if (min != 2)
 		repScoreVector_MIN[id]->record(min);
 }
-void MyVeinsNodeApp_Lite::handleSelfMsg(cMessage *msg) {
+void MyVeinsNodeApp2::handleSelfMsg(cMessage *msg) {
 	try {
 		if (infoMsg *wsm = dynamic_cast<infoMsg*>(msg)) {
 			if (wsm->getCorrect())
@@ -395,7 +410,7 @@ void MyVeinsNodeApp_Lite::handleSelfMsg(cMessage *msg) {
 	}
 }
 
-void MyVeinsNodeApp_Lite::handlePositionUpdate(cObject *obj) {
+void MyVeinsNodeApp2::handlePositionUpdate(cObject *obj) {
 	DemoBaseApplLayer::handlePositionUpdate(obj);
 }
 

@@ -11,7 +11,7 @@
 
 namespace veins {
 
-class VEINS_API MyVeinsNodeApp_Lite: public DemoBaseApplLayer {
+class VEINS_API MyVeinsNodeApp2: public DemoBaseApplLayer {
 public:
 	void initialize(int stage) override;
 	void finish() override;
@@ -26,7 +26,7 @@ protected:
 	void initVehicle(int id, bool dontRequestDump=false);
 	void recordVehScores(int id);
 	std::tr1::unordered_map<int,requestDumpMsg*> requestDumpMsgPointers;
-	int2vehMsgHistoryDynamic_Lite vehicles;
+	int2vehMsgHistoryDynamic2 vehicles;
 	intSet blacklistedReporters;
 	int lastRSUBroadcastId;
 	int sent;
@@ -69,6 +69,8 @@ protected:
 	cOutVector receivedRSUBroadcastsVector;
 	cOutVector myAccuracyVector;
 	std::tr1::unordered_map<int, cOutVector*> repScoreVector_MIN;
+	std::tr1::unordered_map<int, cOutVector*> repScoreChangeDueToBroadCast;
+
 	std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> repScoreVector;
 
 	//--For Sim type

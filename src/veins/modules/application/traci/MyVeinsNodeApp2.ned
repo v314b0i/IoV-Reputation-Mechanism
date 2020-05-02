@@ -23,15 +23,30 @@
 package org.car2x.veins.modules.application.traci;
 import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
 
-simple MyVeinsRSUApp extends DemoBaseApplLayer
+simple MyVeinsNodeApp2 extends DemoBaseApplLayer
 {
     parameters:
-    	@class(veins::MyVeinsRSUApp);
-    	string appName = default("MyVeinsRSUApp");
-    	double stageShiftInterval = default(10s) @unit(s);
+    	@class(veins::MyVeinsNodeApp2);
+    	string appName = default("MyVeinsNodeApp2");
     	int logSplitFactor = default(5);
 		int logSplitLevel = default(4);
 		int logSplitSmallest = default(10);
-		bool isMaster = default(false);
-		bool liteNode = default(false);
+    	int percentageWithBadSendingAccuracy;
+    	int badSendingAccuracyPercentage;
+    	int goodSendingAccuracyPercentage;
+    	int percentageOfInfoEvaluatable;
+    	int percentageWithBadEvaluatingAccuracy;
+    	int badEvaluatingAccuracyPercentage;
+    	int goodEvaluatingAccuracyPercentage;
+    	double messageInterval = default(5s) @unit(s);
+    	double messageIntervalVarianceLimit = default(2000ms) @unit(ms);
+    	double reportGenTime = default(7s) @unit(s);
+    	double reportGenTimeVarianceLimit	= default(5000ms) @unit(ms);
+    	double requestResponseDelay = default(1s) @unit(s);
+		double requestResponseDelayVarianceLimit = default(500ms) @unit(ms);
+		double requestDelay = default(1s) @unit(s);
+		double requestDelayVarianceLimit  = default(500ms) @unit(ms);
+		bool withoutReportDumpSharing = default(false);
+		bool isNode0 = default(false);
+		bool stagingMessagesEnabled = default(true);
 }

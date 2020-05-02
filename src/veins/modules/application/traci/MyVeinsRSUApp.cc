@@ -39,6 +39,8 @@ int_2_intSet MyVeinsRSUApp::archivedScope; //  { senderId : { msgId : val } }
 int_2_int2float MyVeinsRSUApp::scores;
 intSet MyVeinsRSUApp::blacklist;
 int_2_float MyVeinsRSUApp::reportDensity;
+std::string MyVeinsRSUApp::blacklistCSV;
+std::string MyVeinsRSUApp::broadcastDataCSV;
 //STATS
 int MyVeinsRSUApp::stageCounter;
 int MyVeinsRSUApp::recievedReports;
@@ -63,6 +65,8 @@ void MyVeinsRSUApp::initialize(int stage) {
 		logSplitSmallest = par("logSplitSmallest").intValue();
 		logSplitSizes = calculatePowersAscending<std::vector<int>>(logSplitSmallest, logSplitFactor, logSplitLevel);
 		myStage = 0;
+		broadcastsSent = 0;
+		broadcastsSentVector.setName("recievedReportsVector");
 		if (isMaster) {
 			currentBasket = new reportsBasket();
 			stagedBasket = new reportsBasket();
@@ -127,7 +131,12 @@ void MyVeinsRSUApp::finish() {
 }
 
 void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
+	recorder rec(
+			std::string("RSU on WSM").append(std::to_string(myId)).append(std::to_string(simTime().raw())).append(
+					".txt"));
+	rec.record(0);
 	if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
+		rec.record(1);
 		int reporteeId = wsm->getReporteeAddress();
 		int reporterId = wsm->getReporterAddress();
 		int msgId = wsm->getReportedMsgId();
@@ -135,6 +144,7 @@ void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
 		ingestReport(reporterId, reporteeId, msgId, foundValid);
 
 	} else if (reportDumpMsg *wsm = dynamic_cast<reportDumpMsg*>(frame)) {
+		rec.record(2);
 		int reporteeId = wsm->getReporteeAddress();
 		int senderId = wsm->getSenderAddress();
 		intSet trueMsgs(csvToIntSet(std::string(wsm->getTrueMsgs())));
@@ -145,9 +155,19 @@ void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
 			ingestReport(senderId, reporteeId, msgId, false);
 	}
 	if ((!isMaster) && (myStage < stageCounter)) {
-		BroadcastResults(scores, blacklist,stageCounter, true, reportDensity);
+		rec.record(3);
+		std::lock_guard<std::mutex> lock(staticMemberAccessLock);
+		RSUBroadcast *rsucast = new RSUBroadcast();
+		populateWSM(rsucast);
+		rsucast->setName("RSU Broadcast");
+		rsucast->setVehIdAndScoresCSV(broadcastDataCSV.c_str());
+		rsucast->setBlacklistCSV(blacklistCSV.c_str());
+		rsucast->setBroadcastId(stageCounter);
+		sendDown(rsucast);
+		broadcastsSentVector.record(++broadcastsSent);
 		myStage = stageCounter;
 	}
+	rec.deletefile();
 }
 void MyVeinsRSUApp::ingestReport(int reporterId, int reporteeId, int msgId, bool foundValid) {
 	std::lock_guard<std::mutex> lock(staticMemberAccessLock);
@@ -258,6 +278,10 @@ void MyVeinsRSUApp::initVehicleStats(int id) {
 
 void MyVeinsRSUApp::stageShift() {
 	std::lock_guard<std::mutex> lock(staticMemberAccessLock);
+	recorder rec(
+			std::string("rsuStageShift recorder").append(std::to_string(myId)).append(std::to_string(myStage)).append(
+					".txt"));
+	rec.record(0);
 	//STATS--------------------------
 	vehiclesInArchivedScope.record(vehiclesInScope(archivedScope));
 	messagesInArchivedScope.record(messagesInScope(archivedScope));
@@ -280,22 +304,26 @@ void MyVeinsRSUApp::stageShift() {
 			archivedScope[stagedScopeIt->first] = new intSet();
 		archivedScope[stagedScopeIt->first]->insert(stagedScopeIt->second->begin(), stagedScopeIt->second->end());
 	}
+	rec.record(1);
 	reportsBasket *archivedBasket = stagedBasket;
 	stagedBasket = currentBasket;
 	currentBasket = new reportsBasket();
 	if (archivedBasket->scope.size()) { //first stage shift, nothing gets archived.
+		rec.record(2);
 		int_2_float secondaryScores = genarateSecondaryScores(archivedBasket);
 		intSet blacklistedReporters = generateBlacklistedReportersList(secondaryScores);
 		int_2_float primaryScores_RB = genaratePrimaryScores_ReportsBased(archivedBasket, intSet(), logs_RB);
-		int_2_int2float primaryScores_WOBL = genaratePrimaryScores_MessagesBased(archivedBasket, intSet(), logs_WOBL, reportDensity);
-		int_2_int2float primaryScores = genaratePrimaryScores_MessagesBased(archivedBasket, blacklistedReporters, logs, reportDensity);
+		int_2_int2float primaryScores_WOBL = genaratePrimaryScores_MessagesBased(archivedBasket, intSet(), logs_WOBL,
+				reportDensity);
+		int_2_int2float primaryScores = genaratePrimaryScores_MessagesBased(archivedBasket, blacklistedReporters, logs,
+				reportDensity);
 		int_2_int2float primaryScores_MA_WOBL = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
 				intSet(), logs_MA_WOBL);
 		int_2_int2float primaryScores_MA = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
 				blacklistedReporters, logs_MA);
 		scores = primaryScores;
 		blacklist = blacklistedReporters;
-		BroadcastResults(primaryScores, blacklistedReporters,stageCounter, true, reportDensity);
+		BroadcastResults(primaryScores, blacklistedReporters, stageCounter, par("liteNode").boolValue(),  reportDensity);
 		//STATS
 		recordPrimaryScores(logs, primaryScore_MessagesBasedVector);
 		recordPrimaryScores(logs_WOBL, primaryScore_MessagesBasedVector_WOBL);
@@ -303,7 +331,9 @@ void MyVeinsRSUApp::stageShift() {
 		recordPrimaryScores(logs_MA_WOBL, primaryScore_MessagesBased_MajorityAbsolutistVector_WOBL);
 		blacklistedReportersInStagedBasket.record(blacklistedReporters.size());
 	}
+	rec.record(3);
 	deleteBasket(archivedBasket);
+	rec.deletefile();
 }
 void MyVeinsRSUApp::recordPrimaryScores(int2VehMsgHistory &lgs,
 		std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> scoresVector) {
@@ -494,33 +524,47 @@ void MyVeinsRSUApp::deleteBasket(reportsBasket *basket) { // put in destructor
 }
 void MyVeinsRSUApp::BroadcastResults(int_2_int2float scores, intSet blacklist, int broadcastId, bool litenode,
 		int_2_float reportdensity) {
-	std::string vIdAndScoresCSV = "", vId, score;
+	std::string vId, score;
+	broadcastDataCSV = "";
+	recorder rec(std::string("broadcastResults").append(std::to_string(myId)).append("-").append(".txt"));
+	rec.record(0);
 	for (auto veh : scores) {
+		rec.recordString(std::string("\nin loop:").append(std::to_string(veh.first)).append("--"));
 		if (veh.second.size()) { // vehid, #messages, lastMsgId, (reportdensity), avg(splitSize0)...avg(splitSizeN)
-			vIdAndScoresCSV.append(std::to_string(veh.first).append(","));
-			vIdAndScoresCSV.append(std::to_string((float) (logs[veh.first]->messages.size())).append(","));
-			vIdAndScoresCSV.append(std::to_string((float) (logs[veh.first]->messages.at(0).id)).append(","));
+			rec.record(1);
+			broadcastDataCSV.append(std::to_string(veh.first).append(","));
+			broadcastDataCSV.append(std::to_string((float) (logs[veh.first]->messages.size())).append(","));
+			broadcastDataCSV.append(std::to_string((float) (logs[veh.first]->messages.at(0).id)).append(","));
+			rec.record(2);
 			if (litenode)
-				vIdAndScoresCSV.append(std::to_string(reportdensity[veh.first]).append(","));
+				broadcastDataCSV.append(std::to_string(reportdensity[veh.first]).append(","));
+			rec.record(3);
 			for (int i = 0; i < logSplitSizes.size(); ++i) {
+				rec.recordString(std::string("\n\tInner loop:").append(std::to_string(i)).append("--"));
 				if (veh.second.count(logSplitSizes.at(i)))
-					vIdAndScoresCSV.append(std::to_string(veh.second[logSplitSizes.at(i)]).append(","));
-				else vIdAndScoresCSV.append(std::to_string((float) -1).append(","));
+					broadcastDataCSV.append(std::to_string(veh.second[logSplitSizes.at(i)]).append(","));
+				else broadcastDataCSV.append(std::to_string((float) -1).append(","));
+				rec.record(4);
 			}
 		}
 	}
-	std::string blacklistCSV = "";
+	rec.recordString(std::string("\nout of loop\n"));
+	blacklistCSV = "";
 	for (auto i : blacklist)
 		blacklistCSV.append(std::to_string(i).append(","));
-	if (vIdAndScoresCSV.length() > 2) {
+	rec.record(5);
+	if (broadcastDataCSV.length() > 2) {
+		rec.record(6);
 		RSUBroadcast *rsucast = new RSUBroadcast();
 		populateWSM(rsucast);
 		rsucast->setName("RSU Broadcast");
-		rsucast->setVehIdAndScoresCSV(vIdAndScoresCSV.c_str());
+		rsucast->setVehIdAndScoresCSV(broadcastDataCSV.c_str());
 		rsucast->setBlacklistCSV(blacklistCSV.c_str());
 		rsucast->setBroadcastId(broadcastId);
 		sendDown(rsucast);
+		broadcastsSentVector.record(++broadcastsSent);
 	}
+	rec.deletefile();
 }
 void MyVeinsRSUApp::handleSelfMsg(cMessage *msg) {
 	try {
