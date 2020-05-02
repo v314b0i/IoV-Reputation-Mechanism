@@ -25,6 +25,7 @@ class noncobject Coord;
 class LAddress::L2Type extends void;
 
 packet RSUBroadcast extends BaseFrame1609_4 {
+    int broadcastId;
     string vehIdAndScoresCSV;
     string blacklistCSV;
 }

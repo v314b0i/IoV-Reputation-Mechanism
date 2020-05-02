@@ -41,6 +41,7 @@ namespace veins {
  * <pre>
  * packet RSUBroadcast extends BaseFrame1609_4
  * {
+ *     int broadcastId;
  *     string vehIdAndScoresCSV;
  *     string blacklistCSV;
  * }
@@ -49,6 +50,7 @@ namespace veins {
 class VEINS_API RSUBroadcast : public ::veins::BaseFrame1609_4
 {
   protected:
+    int broadcastId;
     ::omnetpp::opp_string vehIdAndScoresCSV;
     ::omnetpp::opp_string blacklistCSV;
 
@@ -69,6 +71,8 @@ class VEINS_API RSUBroadcast : public ::veins::BaseFrame1609_4
     virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
 
     // field getter/setter methods
+    virtual int getBroadcastId() const;
+    virtual void setBroadcastId(int broadcastId);
     virtual const char * getVehIdAndScoresCSV() const;
     virtual void setVehIdAndScoresCSV(const char * vehIdAndScoresCSV);
     virtual const char * getBlacklistCSV() const;

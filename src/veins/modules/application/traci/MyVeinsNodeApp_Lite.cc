@@ -20,26 +20,22 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "veins/modules/application/traci/MyVeinsNodeApp.h"
+#include "veins/modules/application/traci/MyVeinsNodeApp_Lite.h"
 #include <stdlib.h>
 #include <string.h>
 #include <string>
 #include <iostream>
 using namespace veins;
 
-Define_Module(veins::MyVeinsNodeApp);
-int MyVeinsNodeApp::node0id = 100; // for naming vehicles correctly.
+Define_Module(veins::MyVeinsNodeApp_Lite);
+int MyVeinsNodeApp_Lite::node0id = 100; // for naming vehicles correctly.
 
-bool MyVeinsNodeApp::inaccurateBoolCheck(bool val, float accuracy) {
+bool MyVeinsNodeApp_Lite::inaccurateBoolCheck(bool val, float accuracy) {
 	srand((int) simTime().raw() + myId + (int) val + (int) (accuracy * 100));
 	return ((rand() % 1000) < (accuracy * 1000)) ? val : !val;
 }
-float MyVeinsNodeApp::scoreCalculator(float old, int trueCount, int count) {
-	float fn = exp(-0.02 * count); // y= e^(-0.006*x)    y goes from 1 to 0 for x from 0 to infinity
-	return fn * old + (1 - fn) * ((float) trueCount / (float) count);
-}
 
-void MyVeinsNodeApp::initialize(int stage) {
+void MyVeinsNodeApp_Lite::initialize(int stage) {
 	try {
 		DemoBaseApplLayer::initialize(stage);
 		if (stage == 0) {
@@ -118,7 +114,7 @@ void MyVeinsNodeApp::initialize(int stage) {
 	}
 }
 
-float MyVeinsNodeApp::setSendingAccuracy() {
+float MyVeinsNodeApp_Lite::setSendingAccuracy() {
 	srand(myId + (int) simTime().raw() + 13);
 	int a = (rand() % 1000);
 	return (float) (
@@ -126,7 +122,7 @@ float MyVeinsNodeApp::setSendingAccuracy() {
 					par("badSendingAccuracyPercentage").intValue() : par("goodSendingAccuracyPercentage").intValue())
 			/ (float) 100;
 }
-float MyVeinsNodeApp::setEvaluatingAccuracy() {
+float MyVeinsNodeApp_Lite::setEvaluatingAccuracy() {
 	srand(myId + (int) simTime().raw() + 37);
 	int a = (rand() % 1000);
 	return (float) (
@@ -135,7 +131,7 @@ float MyVeinsNodeApp::setEvaluatingAccuracy() {
 					par("goodEvaluatingAccuracyPercentage").intValue()) / (float) 100;
 }
 
-void MyVeinsNodeApp::finish() {
+void MyVeinsNodeApp_Lite::finish() {
 	recordScalar("#sent", sent);
 	recordScalar("#sentReports", sentRprt);
 	recordScalar("#recievedMessages", recMsg);
@@ -148,16 +144,11 @@ void MyVeinsNodeApp::finish() {
 			delete a->second;
 	for (auto it = repScoreVector_MIN.begin(); it != repScoreVector_MIN.end(); ++it)
 		delete it->second;
-	for (auto it = vehicles.begin(); it != vehicles.end(); ++it) {
-		for (auto it2 = it->second->messages.begin(); it2 != it->second->messages.end(); ++it2)
-			delete it2->second;
-		delete it->second;
-	}
 	//delete sendMsgEvt;
 	DemoBaseApplLayer::finish();
 }
 
-void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
+void MyVeinsNodeApp_Lite::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
 	//TODO deal with reports on self, or maybe not
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) { //TODO
 		try {
@@ -169,7 +160,7 @@ void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remov
 			if (vehicles.find(senderId) == vehicles.end()) //if neither a message from this sender not a report on this sender has been recieved before
 				initVehicle(senderId, false);
 			mvec.record(2);
-			vehMsgHistoryDynamic &veh = *(vehicles[senderId]);
+			vehMsgHistoryDynamic_Lite &veh = *(vehicles[senderId]);
 			mvec.record(3);
 			if (veh.lockedMaxId >= msgId) {
 				mvec.deletefile();
@@ -181,7 +172,7 @@ void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remov
 			if (inaccurateBoolCheck(true, evaluatableMessages)) {
 				mvec.recordString(std::string("6A"));
 				bool val = inaccurateBoolCheck(wsm->getCorrect(), evaluatingAccuracy);
-				veh.insertReport(myId, msgId, val);
+				veh.insertMyReport(myId, msgId, val);
 				reportMsg *rep = new reportMsg();
 				populateWSM(rep);
 				rep->setName("Report Message");
@@ -198,7 +189,6 @@ void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remov
 				recordVehScores(senderId);
 			} else {
 				mvec.recordString(std::string("6A"));
-				veh.insertMsg(msgId);
 			}
 			mvec.deletefile();
 		} catch (...) {
@@ -220,7 +210,7 @@ void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remov
 			if (!vehicles.count(reporteeId))
 				initVehicle(reporteeId);
 			mvec.record(2);
-			vehMsgHistoryDynamic &veh = *(vehicles[reporteeId]);
+			vehMsgHistoryDynamic_Lite &veh = *(vehicles[reporteeId]);
 			if (veh.lockedMaxId >= msgId)
 				return;
 			mvec.record(3);
@@ -245,21 +235,13 @@ void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remov
 				rec.deletefile();
 				return;
 			}
-			vehMsgHistoryDynamic &veh = *(vehicles[requestedReporteeId]);
+			vehMsgHistoryDynamic_Lite &veh = *(vehicles[requestedReporteeId]);
 			std::string trueMsgs = "", falseMsgs = "", mId;
-			for (auto msgs : veh.messages) {
-				for (auto msg : *(msgs.second)) {
-					mId = std::to_string(msg.first).append(",");
-					if (msg.second.fixed or msg.second.evaluated) {
-						if (msg.second.avg == 1)
-							trueMsgs.append(mId);
-						else falseMsgs.append(mId);
-					}
-					if (msg.second.trueReporters.count(myId))
-						trueMsgs.append(mId);
-					if (msg.second.falseReporters.count(myId))
-						falseMsgs.append(mId);
-				}
+			for (auto msg : veh.myReports) {
+				mId = std::to_string(msg.first).append(",");
+				if (msg.second)
+					trueMsgs.append(mId);
+				else falseMsgs.append(mId);
 			}
 			if (trueMsgs.length() > 2 || falseMsgs.length() > 2) { //TODO more defined cutoff
 				reportDumpMsg *dump = new reportDumpMsg();
@@ -295,7 +277,7 @@ void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remov
 				initVehicle(reporteeId, true);
 			intSet trueMsgs = csvToIntSet(std::string(wsm->getTrueMsgs()));
 			intSet falseMsgs = csvToIntSet(std::string(wsm->getFalseMsgs()));
-			vehMsgHistoryDynamic &veh = *(vehicles[reporteeId]);
+			vehMsgHistoryDynamic_Lite &veh = *(vehicles[reporteeId]);
 			for (auto msgId : trueMsgs)
 				veh.insertReport(senderId, msgId, true);
 			for (auto msgId : falseMsgs)
@@ -312,7 +294,7 @@ void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remov
 				ingestRSUBroadcast(std::string(wsm->getVehIdAndScoresCSV()));
 				rec.record(1);
 				blacklistedReporters = csvToIntSet(std::string(wsm->getBlacklistCSV()));
-				lastRSUBroadcastId=wsm->getBroadcastId();
+				lastRSUBroadcastId = wsm->getBroadcastId();
 			}
 			rec.deletefile();
 		} catch (...) {
@@ -320,22 +302,22 @@ void MyVeinsNodeApp::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remov
 		}
 	}
 }
-void MyVeinsNodeApp::ingestRSUBroadcast(std::string csvStr) {
+void MyVeinsNodeApp_Lite::ingestRSUBroadcast(std::string csvStr) {
 	recorder rec(std::string("ingestRSUBroadcast").append(std::to_string(myId)).append(".txt"));
 	rec.record(0);
-	int_2_floatVec reportsCsv2DFloatValsParse = csv2DFloatValsParse(csvStr, logSplitSizes.size() + 2);
+	int_2_floatVec reportsCsv2DFloatValsParse = csv2DFloatValsParse(csvStr, logSplitSizes.size() + 3);
 	rec.record(1);
 	for (auto i : reportsCsv2DFloatValsParse) {
 		rec.recordString(std::string("\ninloop ").append(std::to_string(i.first)));
 		if (vehicles.count(i.first) == 0)
 			initVehicle(i.first);
-		vehicles[i.first]->ingestRSUScore(i.second);
+		vehicles[i.first]->ingestRSUScore(i.second,blacklistedReporters);
 	}
 	rec.deletefile();
 }
-void MyVeinsNodeApp::initVehicle(int id, bool dontRequestDump) {
+void MyVeinsNodeApp_Lite::initVehicle(int id, bool dontRequestDump) {
 	try {
-		vehicles[id] = new vehMsgHistoryDynamic(logSplitSmallest, logSplitFactor, logSplitLevel, false, 5);
+		vehicles[id] = new vehMsgHistoryDynamic_Lite(logSplitSmallest, logSplitFactor, logSplitLevel);
 		repScoreVector[id] = std::tr1::unordered_map<int, cOutVector*>();
 		for (auto size : logSplitSizes) {
 			repScoreVector[id][size] = new cOutVector(
@@ -358,7 +340,7 @@ void MyVeinsNodeApp::initVehicle(int id, bool dontRequestDump) {
 		recordScalar("initVehicle threw error", 1);
 	}
 }
-void MyVeinsNodeApp::recordVehScores(int id) {
+void MyVeinsNodeApp_Lite::recordVehScores(int id) {
 	auto splitavgs = vehicles[id]->getSplitAvgs();
 	for (auto score : splitavgs)
 		repScoreVector[id][score.first]->record(score.second);
@@ -366,7 +348,7 @@ void MyVeinsNodeApp::recordVehScores(int id) {
 	if (min != 2)
 		repScoreVector_MIN[id]->record(min);
 }
-void MyVeinsNodeApp::handleSelfMsg(cMessage *msg) {
+void MyVeinsNodeApp_Lite::handleSelfMsg(cMessage *msg) {
 	try {
 		if (infoMsg *wsm = dynamic_cast<infoMsg*>(msg)) {
 			if (wsm->getCorrect())
@@ -406,7 +388,7 @@ void MyVeinsNodeApp::handleSelfMsg(cMessage *msg) {
 	}
 }
 
-void MyVeinsNodeApp::handlePositionUpdate(cObject *obj) {
+void MyVeinsNodeApp_Lite::handlePositionUpdate(cObject *obj) {
 	DemoBaseApplLayer::handlePositionUpdate(obj);
 }
 

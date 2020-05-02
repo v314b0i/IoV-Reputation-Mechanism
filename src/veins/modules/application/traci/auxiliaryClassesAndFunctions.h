@@ -9,12 +9,36 @@
 #include <math.h>
 #include <algorithm>
 #include <sstream>
-
+#include <fstream>
 //TODO create separate structs for stats collection counters, keep app functionality and ststs collection differentiated.
 enum MyApplMessageKinds {
 	SEND_INFOMSG_EVT, STAGE_SHIFT_EVT, INFO_MSG, REPORT_MSG
 };
-
+class recorder {
+	std::string filename;
+public:
+	recorder(std::string fn) : filename(std::string("R").append(fn)) {
+		remove(filename.c_str());
+	}
+	recorder() {
+		filename = std::string("R").append("uninitialised.txt");
+	}
+	void setName(std::string fn) {
+		filename = std::string("R").append(fn);
+		remove(filename.c_str());
+	}
+	template<typename T> void record(T val) {
+		recordString(std::to_string(val));
+	}
+	void recordString(std::string str) {
+		std::ofstream fout(filename.c_str(), std::ios::app);
+		fout << str.append(",");
+		fout.close();
+	}
+	void deletefile() {
+		remove(filename.c_str());
+	}
+};
 inline int id2num(int id, int node0id) {
 	return (id - node0id) / 6;
 }
@@ -304,9 +328,9 @@ struct messageGistInDynVehMsgHistory {
 	}
 };
 struct vehMsgHistoryDynamic {
-	//can use ordered int->float map for messages instead of vector<{int,float}> but insertion and deletion complexity would be log(n)
-	//would have to use it if we allow for older messges to be added that were skipped earlier (highly exceptional cases) but that adds
-	//more complexity to the functions, not required for simulation.
+	bool stageMessages;
+	int stagingThreshhold;
+	std::tr1::unordered_map<int, messageGistInDynVehMsgHistory> msgBuffer;
 	int messagesRecv;
 	int reportsRecv;
 	int logLimit;
@@ -316,54 +340,97 @@ struct vehMsgHistoryDynamic {
 	std::tr1::unordered_map<int, std::map<int, messageGistInDynVehMsgHistory, std::greater<int>>*> messages; //ordered map
 	int_2_float splitTotals;
 	std::vector<int> splitSizes;
-	vehMsgHistoryDynamic(int start, int factor, int level) { //for f=5,l=4 : sS=<{5,-1},{25,-1},{125,-1},{625,-1}> , lL=625.
+	vehMsgHistoryDynamic(int start, int factor, int level, bool staging = false, int stageingTh = 5) { //for f=5,l=4 : sS=<{5,-1},{25,-1},{125,-1},{625,-1}> , lL=625.
 		splitFactor = factor;
 		splitLevel = level;
 		messagesRecv = 0;
 		reportsRecv = 0;
-		lockedMaxId = 0;
+		lockedMaxId = -1;
 		splitSizes = calculatePowersAscending<std::vector<int>>(start, factor, level);
+		stageMessages = staging;
+		stagingThreshhold = stageingTh;
 		for (int size : splitSizes) {
 			messages[size] = new std::map<int, messageGistInDynVehMsgHistory, std::greater<int>>;
 			splitTotals[size] = 0;
 			logLimit = size;
 		}
 	}
+	void addReport2message(messageGistInDynVehMsgHistory &msg, int reporterId, bool val) {
+		if (val)
+			msg.trueReporters.insert(reporterId);
+		else msg.falseReporters.insert(reporterId);
+		float avg = (float) msg.trueReporters.size();
+		avg /= avg + (float) msg.falseReporters.size();
+		msg.avg = avg;
+	}
 	void insertReport(int reporterId, int msgId, bool val) {
+		recorder rec("insertReportRecorder");
+		rec.record(1);
 		if (lockedMaxId >= msgId)
 			return;
-		for (int size : splitSizes)
-			if (messages[size]->count(msgId)) {
-				messageGistInDynVehMsgHistory &msg = (*messages[size])[msgId];
-				if (msg.fixed or msg.evaluated)
-					return;
-				if (val)
-					msg.trueReporters.insert(reporterId);
-				else msg.falseReporters.insert(reporterId);
-				float avg = (float) msg.trueReporters.size();
-				avg /= avg + (float) msg.falseReporters.size();
-				splitTotals[size] -= msg.avg;
-				splitTotals[size] += avg;
-				msg.avg = avg;
-				return;
+		if (stageMessages and msgBuffer.count(msgId)) {
+			messageGistInDynVehMsgHistory &msg = msgBuffer[msgId];
+			addReport2message(msgBuffer[msgId], reporterId, val);
+			if ((msgBuffer[msgId].falseReporters.size() + msgBuffer[msgId].trueReporters.size()) >= stagingThreshhold) {
+				insertMsgObj(msgBuffer[msgId], msgId);
+				msgBuffer.erase(msgId);
 			}
-		messageGistInDynVehMsgHistory newMsgGistObj;
-		newMsgGistObj.avg = val ? 1 : 0;
-		if (val)
-			newMsgGistObj.trueReporters.insert(reporterId);
-		else newMsgGistObj.falseReporters.insert(reporterId);
-		insertMsgObj(newMsgGistObj, msgId);
+		} else {
+			bool foundFlag = false;
+			for (int size : splitSizes) {
+				rec.recordString(std::string("\nlooping-iteration-").append(std::to_string(size)));
+				if (messages[size]->count(msgId)) {
+					rec.recordString(std::string("in if"));
+					messageGistInDynVehMsgHistory &msg = (*messages[size])[msgId];
+					splitTotals[size] -= msg.avg;
+					addReport2message(msg, reporterId, val);
+					splitTotals[size] += msg.avg;
+					rec.record(3);
+					foundFlag = true;
+					break;
+				}
+			}
+			if (!foundFlag) {
+				rec.recordString(std::string("\nlooping over\n"));
+				messageGistInDynVehMsgHistory newMsgGistObj;
+				addReport2message(newMsgGistObj, reporterId, val);
+				if (stageMessages)
+					msgBuffer[msgId] = newMsgGistObj;
+				else insertMsgObj(newMsgGistObj, msgId);
+			}
+		}
+		int found = 0;
+		if (msgBuffer.count(msgId)) {
+			found += msgBuffer[msgId].falseReporters.count(reporterId);
+			found += msgBuffer[msgId].trueReporters.count(reporterId);
+		}
+		for (auto a : splitSizes)
+			if (messages[a]->count(msgId)) {
+				found += (*messages[a])[msgId].falseReporters.count(reporterId);
+				found += (*messages[a])[msgId].trueReporters.count(reporterId);
+			}
+		if (found == 1)
+			rec.deletefile();
+		else {
+			rec.recordString("\nFAILED");
+			rec.record(found);
+		}
 	}
 	void insertMsg(int msgId) {
 		if (lockedMaxId >= msgId)
+			return;
+		if (msgBuffer.count(msgId))
 			return;
 		for (int size : splitSizes)
 			if (messages[size]->count(msgId))
 				return;
 		messageGistInDynVehMsgHistory newMsgGistObj;
-		insertMsgObj(newMsgGistObj, msgId);
+		if (stageMessages)
+			msgBuffer[msgId] = newMsgGistObj;
+		else insertMsgObj(newMsgGistObj, msgId);
 	}
 	void insertEvaluation(int msgId, bool val) {
+		//REDO IF USING, OUTDATED NOW
 		//not used currently, can be used. currently eveluation at self is considered like any other node's report.
 		if (lockedMaxId >= msgId)
 			return;
@@ -386,25 +453,50 @@ struct vehMsgHistoryDynamic {
 	void insertMsgObj(messageGistInDynVehMsgHistory newMsgGistObj, int msgId) {
 		if (lockedMaxId >= msgId)
 			return;
+		recorder rec("insertMsgObjRecorder");
+		rec.record(0);
+		int previousSplitSize = 0;
 		for (int size : splitSizes) {
-			if ((--(*messages[size]).end())->first < msgId) {
+			rec.recordString(std::string("\nlooping-iteration-").append(std::to_string(size)));
+			auto lastElement = messages[size]->rbegin();
+			if (lastElement == messages[size]->rend() or lastElement->first < msgId) {
+				rec.recordString(std::string("\t-in first if-"));
 				(*messages[size])[msgId] = newMsgGistObj;
 				splitTotals[size] += newMsgGistObj.avg;
-				if ((*messages[size]).size() > size) {
-					newMsgGistObj = (--(*messages[size]).end())->second;
+				rec.recordString(std::string("-end first if-"));
+				if (messages[size]->size() > (size - previousSplitSize)) {
+					rec.recordString(std::string("\t-in second if-"));
+					newMsgGistObj = lastElement->second;
 					splitTotals[size] -= newMsgGistObj.avg;
-					msgId = (--(*messages[size]).end())->first;
-					(*messages[size]).erase(msgId);
+					rec.recordString(std::string("-mid second if-"));
+					msgId = lastElement->first;
+					messages[size]->erase(msgId);
+					rec.recordString(std::string("-end second if-"));
 				} else break;
 			}
+			previousSplitSize = size;
+		}
+		int found = 0;
+		for (auto size : splitSizes)
+			found += messages[size]->count(msgId);
+		if (found == 1)
+			rec.deletefile();
+		else {
+			rec.recordString("\nFAILED");
+			rec.record(found);
 		}
 	}
 	void ingestRSUScore(std::vector<float> vec) {
 		int pendingDummyMessagesToBeInserted = vec.at(0);
 		lockedMaxId = vec.at(1);
+		auto bufferedMessages = getMapKeys<intSet>(msgBuffer);
+		for (auto id : bufferedMessages)
+			if (id <= lockedMaxId)
+				msgBuffer.erase(id);
 		std::map<int, messageGistInDynVehMsgHistory, std::greater<int>> newerMsgs;
 		for (int i = splitSizes.size() - 1; i >= 0; --i)
-			for (auto it = messages[splitSizes[i]]->begin(); ((it != messages[splitSizes[i]]->end()) and (i>=0)); ++it) {
+			for (auto it = messages[splitSizes[i]]->begin(); ((it != messages[splitSizes[i]]->end()) and (i >= 0));
+					++it) {
 				if (it->first < lockedMaxId)
 					break;
 				else newerMsgs[it->first] = it->second;
@@ -415,10 +507,11 @@ struct vehMsgHistoryDynamic {
 			delete messages[splitSizes[j]];
 			messages[splitSizes[j]] = new std::map<int, messageGistInDynVehMsgHistory, std::greater<int>>;
 			dummyMsg.avg = vec.at(j + 2);
-			int size = splitSizes[j];
-			while (((pendingDummyMessagesToBeInserted--) > 0) and (size-- > 0))
+			int pendingDummyMessagesToBeInsertedInThisSplit = splitSizes[j] - (j ? splitSizes[j - 1] : 0);
+			while (((pendingDummyMessagesToBeInserted--) > 0) and (pendingDummyMessagesToBeInsertedInThisSplit-- > 0))
 				(*messages[splitSizes[j]])[pendingDummyMessagesToBeInserted] = dummyMsg;
-			splitTotals[splitSizes[j]] = dummyMsg.avg * (splitSizes[j] - size); //short circuit above let's this work
+			splitTotals[splitSizes[j]] = dummyMsg.avg
+					* (splitSizes[j] - ((j ? splitSizes[j - 1] : 0) + pendingDummyMessagesToBeInsertedInThisSplit)); //short circuit above let's this work
 		}
 		for (auto it : newerMsgs) {
 			insertMsgObj(it.second, it.first);
@@ -430,13 +523,249 @@ struct vehMsgHistoryDynamic {
 		int commulative_total = 0;
 		int commulative_size = 0;
 		for (auto size : splitSizes) {
+			if (messages[size]->size() == 0)
+				break;
 			commulative_total += splitTotals[size];
 			commulative_size += messages[size]->size();
 			splitAvgs[size] = (float) commulative_total / (float) commulative_size;
 		}
 		return splitAvgs;
 	}
+	float getMinAvg() {
+		float min = 2;
+		int commulative_total = 0;
+		int commulative_size = 0;
+		for (auto size : splitSizes) {
+			if (messages[size]->size() == 0)
+				break;
+			commulative_total += splitTotals[size];
+			commulative_size += messages[size]->size();
+			float score = (float) commulative_total / (float) commulative_size;
+			if (min > score)
+				min = score;
+		}
+		return min;
+	}
 };
+
+struct reportLite {
+	int reporter;
+	int msgId;
+	reportLite(int reporter, int msgId) : reporter(reporter), msgId(msgId) {
+	}
+	bool operator ==(const reportLite &x) const {
+		return ((reporter == x.reporter) && (msgId == x.msgId));
+	}
+};
+struct reportValLite: public reportLite {
+	bool val;
+	reportValLite(int reporter, int msgId, bool val) : reportLite(reporter, msgId), val(val) {
+	}
+};
+class reportLiteHasher {
+public:
+	std::size_t operator()(const reportLite &x) const {
+		return std::hash<int>()(x.reporter) ^ std::hash<int>()(~x.msgId);
+	}
+};
+class splitLite {
+	int capacity;
+	int total;
+	std::vector<reportValLite> data;
+public:
+	splitLite() {
+		capacity = 0;
+		total = 0;
+	}
+	splitLite(int capacity) : capacity(capacity) {
+		total = 0;
+	}
+	splitLite(const splitLite &s) {
+		total = s.total;
+		capacity = s.capacity;
+		data = s.data;
+	}
+	void reset(int capacity) {
+		this->capacity = capacity;
+		total = 0;
+		data.clear();
+	}
+	void inline insert(reportValLite rep) {
+		data.insert(data.begin(), rep);
+		if (rep.val)
+			++total;
+	}
+	bool inline overflow() {
+		return data.size() > capacity;
+	}
+	bool inline underflow() {
+		return data.size() < capacity;
+	}
+	bool inline isEmpty() {
+		return data.size() == 0;
+	}
+	reportValLite inline popBack() {
+		auto last = data.rbegin();
+		if (last->val)
+			--total;
+		reportValLite rep = *last;
+		data.pop_back();
+		return rep;
+	}
+	reportValLite inline popFront() {
+		auto first = data.begin();
+		if (first->val)
+			--total;
+		reportValLite rep = *first;
+		data.erase(first);
+		return rep;
+	}
+	int getTotal() {
+		return total;
+	}
+	int getSize() {
+		return data.size();
+	}
+	float getAvg() {
+		return (float) total / (float) data.size();
+	}
+	void purgeLessThan(int min) {
+		std::vector<reportValLite> datanew;
+		for (auto it : data)
+			if (it.msgId > min)
+				datanew.insert(datanew.end(), it);
+			else --total;
+		data = datanew;
+	}
+};
+struct vehMsgHistoryDynamic_Lite {
+	int lockedMaxId;
+	int messagesRecv;
+	int reportsRecv;
+	int logLimit;
+	int splitFactor;
+	int splitLevel;
+	int_2_float splitTotals;
+	std::vector<int> splitSizes;
+	std::map<int, bool> myReports;
+	std::tr1::unordered_set<reportLite, reportLiteHasher> reportsSet;
+	std::tr1::unordered_map<int, splitLite> splits;
+	vehMsgHistoryDynamic_Lite(int start, int factor, int level) { //for f=5,l=4 : sS=<{5,-1},{25,-1},{125,-1},{625,-1}> , lL=625.
+		splitFactor = factor;
+		splitLevel = level;
+		messagesRecv = 0;
+		reportsRecv = 0;
+		lockedMaxId = -1;
+		splitSizes = calculatePowersAscending<std::vector<int>>(start, factor, level);
+		int previousSize = 0;
+		for (int size : splitSizes) {
+			splits[size]=splitLite(size - previousSize);
+			logLimit = size;
+			previousSize = size;
+		}
+	}
+	void insertMyReport(int reporterId, int msgId, bool val) {
+		myReports[msgId] = val;
+		insertReport(reporterId, msgId, val);
+	}
+	void insertReport(int reporterId, int msgId, bool val) {
+		reportLite rep(reporterId, msgId);
+		if (reportsSet.count(rep))
+			return;
+		reportValLite repval(reporterId, msgId, val);
+		insertReport(repval);
+		reportsSet.insert(rep);
+	}
+	void insertReport(reportValLite rep) {
+		for (auto size : splitSizes) {
+			splits[size].insert(rep);
+			if (splits[size].overflow())
+				rep = splits[size].popBack();
+			else break;
+		}
+	}
+	void ingestRSUScore(std::vector<float> vec, intSet blacklist) {
+		int pendingDummyMessagesToBeInserted = vec.at(0);
+		if(vec.at(1)<lockedMaxId)
+			lockedMaxId = vec.at(1);
+		else return;
+		float reportDensity = vec.at(2);
+		std::tr1::unordered_map<int, splitLite> oldSplits;
+		int previousSize = 0;
+		for (auto size : splitSizes) {
+			oldSplits[size] = splits[size];
+			splits[size] = splitLite((size - previousSize) * reportDensity);
+			previousSize = size;
+		}
+		reportValLite trueRep(-1, -1, true);
+		reportValLite falseRep(-1, -1, false);
+		for (int j = 0; j < splitSizes.size(); ++j) {
+			float scoreToBeEmulated = vec.at(j + 3);
+			if (scoreToBeEmulated == -1)
+				break;
+			if (j) // score for this split -> score for this split-previous split; // in rsu app the splits score overlap here we overlap them while outputtin the result;
+				scoreToBeEmulated = (((float) splitFactor * scoreToBeEmulated) - vec.at(j + 2))
+						/ (float) (splitFactor - 1);
+			int messagesToBeEmulated = splitSizes[j] - j ? splitSizes[j - 1] : 0;
+			int reportsToBeAdded = messagesToBeEmulated * reportDensity;
+			float emulatedScore = 0.5;
+			int trueReportsAdded = 0;
+			int reportsAdded = 0;
+			while (reportsAdded++ < reportsToBeAdded) {
+				if (emulatedScore < scoreToBeEmulated) {
+					splits[splitSizes[j]].insert(trueRep);
+					++trueReportsAdded;
+				} else splits[splitSizes[j]].insert(falseRep);
+				emulatedScore = (float) trueReportsAdded / (float) reportsAdded;
+			}
+		}
+		for (auto size : splitSizes) {
+			while (!oldSplits[size].isEmpty()) {
+				reportValLite rep = oldSplits[size].popBack();
+				if ((rep.msgId > lockedMaxId) && (blacklist.count(rep.reporter)==0))
+					insertReport(rep);
+				else {
+					reportsSet.erase(reportLite(rep.reporter, rep.msgId));
+					myReports.erase(rep.msgId);
+				}
+			}
+		}
+	}
+	int_2_float getSplitAvgs() {
+		int_2_float splitAvgs;
+		if (splits[splitSizes[0]].getSize()) {
+			int commulative_total = 0;
+			int commulative_size = 0;
+			for (auto size : splitSizes) {
+				commulative_total += splits[size].getTotal();
+				commulative_size += splits[size].getSize();
+				if (!commulative_size)
+					break;
+				splitAvgs[size] = (float) commulative_total / (float) commulative_size;
+			}
+		}
+		return splitAvgs;
+	}
+	float getMinAvg() {
+		if (splits[splitSizes[0]].getSize() == 0)
+			return 0;
+		float min = 2;
+		int commulative_total = 0;
+		int commulative_size = 0;
+		for (auto size : splitSizes) {
+			if (splits[size].getSize() == 0)
+				break;
+			commulative_total += splits[size].getTotal();
+			commulative_size += splits[size].getSize();
+			float score = (float) commulative_total / (float) commulative_size;
+			if (min > score)
+				min = score;
+		}
+		return min;
+	}
+};
+
 typedef std::tr1::unordered_map<int, vehMsgHistory*> int2VehMsgHistory;
 typedef std::tr1::unordered_map<int, vehMsgHistoryDynamic*> int2vehMsgHistoryDynamic;
+typedef std::tr1::unordered_map<int, vehMsgHistoryDynamic_Lite*> int2vehMsgHistoryDynamic_Lite;
 #endif

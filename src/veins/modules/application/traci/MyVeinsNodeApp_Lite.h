@@ -11,7 +11,7 @@
 
 namespace veins {
 
-class VEINS_API MyVeinsNodeApp: public DemoBaseApplLayer {
+class VEINS_API MyVeinsNodeApp_Lite: public DemoBaseApplLayer {
 public:
 	void initialize(int stage) override;
 	void finish() override;
@@ -21,12 +21,11 @@ protected:
 	void handleSelfMsg(cMessage *msg) override;
 	void handlePositionUpdate(cObject *obj) override;
 	bool inaccurateBoolCheck(bool val, float accuracy = 0.9);
-	float scoreCalculator(float old, int trueCount, int count);
 	float setSendingAccuracy();
 	float setEvaluatingAccuracy();
 	void initVehicle(int id, bool dontRequestDump=false);
 	void recordVehScores(int id);
-	int2vehMsgHistoryDynamic vehicles;
+	int2vehMsgHistoryDynamic_Lite vehicles;
 	intSet blacklistedReporters;
 	int lastRSUBroadcastId;
 	int sent;

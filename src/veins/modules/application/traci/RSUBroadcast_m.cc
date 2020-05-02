@@ -182,6 +182,7 @@ Register_Class(RSUBroadcast)
 
 RSUBroadcast::RSUBroadcast(const char *name, short kind) : ::veins::BaseFrame1609_4(name,kind)
 {
+    this->broadcastId = 0;
 }
 
 RSUBroadcast::RSUBroadcast(const RSUBroadcast& other) : ::veins::BaseFrame1609_4(other)
@@ -203,6 +204,7 @@ RSUBroadcast& RSUBroadcast::operator=(const RSUBroadcast& other)
 
 void RSUBroadcast::copy(const RSUBroadcast& other)
 {
+    this->broadcastId = other.broadcastId;
     this->vehIdAndScoresCSV = other.vehIdAndScoresCSV;
     this->blacklistCSV = other.blacklistCSV;
 }
@@ -210,6 +212,7 @@ void RSUBroadcast::copy(const RSUBroadcast& other)
 void RSUBroadcast::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::veins::BaseFrame1609_4::parsimPack(b);
+    doParsimPacking(b,this->broadcastId);
     doParsimPacking(b,this->vehIdAndScoresCSV);
     doParsimPacking(b,this->blacklistCSV);
 }
@@ -217,8 +220,19 @@ void RSUBroadcast::parsimPack(omnetpp::cCommBuffer *b) const
 void RSUBroadcast::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::veins::BaseFrame1609_4::parsimUnpack(b);
+    doParsimUnpacking(b,this->broadcastId);
     doParsimUnpacking(b,this->vehIdAndScoresCSV);
     doParsimUnpacking(b,this->blacklistCSV);
+}
+
+int RSUBroadcast::getBroadcastId() const
+{
+    return this->broadcastId;
+}
+
+void RSUBroadcast::setBroadcastId(int broadcastId)
+{
+    this->broadcastId = broadcastId;
 }
 
 const char * RSUBroadcast::getVehIdAndScoresCSV() const
@@ -306,7 +320,7 @@ const char *RSUBroadcastDescriptor::getProperty(const char *propertyname) const
 int RSUBroadcastDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 2+basedesc->getFieldCount() : 2;
+    return basedesc ? 3+basedesc->getFieldCount() : 3;
 }
 
 unsigned int RSUBroadcastDescriptor::getFieldTypeFlags(int field) const
@@ -320,8 +334,9 @@ unsigned int RSUBroadcastDescriptor::getFieldTypeFlags(int field) const
     static unsigned int fieldTypeFlags[] = {
         FD_ISEDITABLE,
         FD_ISEDITABLE,
+        FD_ISEDITABLE,
     };
-    return (field>=0 && field<2) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<3) ? fieldTypeFlags[field] : 0;
 }
 
 const char *RSUBroadcastDescriptor::getFieldName(int field) const
@@ -333,18 +348,20 @@ const char *RSUBroadcastDescriptor::getFieldName(int field) const
         field -= basedesc->getFieldCount();
     }
     static const char *fieldNames[] = {
+        "broadcastId",
         "vehIdAndScoresCSV",
         "blacklistCSV",
     };
-    return (field>=0 && field<2) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<3) ? fieldNames[field] : nullptr;
 }
 
 int RSUBroadcastDescriptor::findField(const char *fieldName) const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0]=='v' && strcmp(fieldName, "vehIdAndScoresCSV")==0) return base+0;
-    if (fieldName[0]=='b' && strcmp(fieldName, "blacklistCSV")==0) return base+1;
+    if (fieldName[0]=='b' && strcmp(fieldName, "broadcastId")==0) return base+0;
+    if (fieldName[0]=='v' && strcmp(fieldName, "vehIdAndScoresCSV")==0) return base+1;
+    if (fieldName[0]=='b' && strcmp(fieldName, "blacklistCSV")==0) return base+2;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -357,10 +374,11 @@ const char *RSUBroadcastDescriptor::getFieldTypeString(int field) const
         field -= basedesc->getFieldCount();
     }
     static const char *fieldTypeStrings[] = {
+        "int",
         "string",
         "string",
     };
-    return (field>=0 && field<2) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<3) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **RSUBroadcastDescriptor::getFieldPropertyNames(int field) const
@@ -427,8 +445,9 @@ std::string RSUBroadcastDescriptor::getFieldValueAsString(void *object, int fiel
     }
     RSUBroadcast *pp = (RSUBroadcast *)object; (void)pp;
     switch (field) {
-        case 0: return oppstring2string(pp->getVehIdAndScoresCSV());
-        case 1: return oppstring2string(pp->getBlacklistCSV());
+        case 0: return long2string(pp->getBroadcastId());
+        case 1: return oppstring2string(pp->getVehIdAndScoresCSV());
+        case 2: return oppstring2string(pp->getBlacklistCSV());
         default: return "";
     }
 }
@@ -443,8 +462,9 @@ bool RSUBroadcastDescriptor::setFieldValueAsString(void *object, int field, int 
     }
     RSUBroadcast *pp = (RSUBroadcast *)object; (void)pp;
     switch (field) {
-        case 0: pp->setVehIdAndScoresCSV((value)); return true;
-        case 1: pp->setBlacklistCSV((value)); return true;
+        case 0: pp->setBroadcastId(string2long(value)); return true;
+        case 1: pp->setVehIdAndScoresCSV((value)); return true;
+        case 2: pp->setBlacklistCSV((value)); return true;
         default: return false;
     }
 }
