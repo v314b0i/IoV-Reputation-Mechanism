@@ -8,7 +8,7 @@ examples/myProj1/.qt*
 examples/myProj1/results/
 examples/myProj1/frames/
 examples/myProj1/R/
-examples/myProj1/R/*
+!examples/myProj1/R/PostAnalysis.ipynb
 !src/
 src/*
 !src/veins/
