@@ -15,7 +15,9 @@ enum MyApplMessageKinds {
 	SEND_INFOMSG_EVT, STAGE_SHIFT_EVT, INFO_MSG, REPORT_MSG
 };
 class recorder {
+protected:
 	std::string filename;
+	bool enabled = false;
 public:
 	recorder(std::string fn) : filename(std::string("R/").append(fn)) {
 		remove(filename.c_str());
@@ -28,12 +30,22 @@ public:
 		remove(filename.c_str());
 	}
 	template<typename T> void record(T val) {
+		if (!enabled)
+			return;
 		recordString(std::to_string(val));
 	}
 	void recordString(std::string str) {
+		if (!enabled)
+			return;
 		std::ofstream fout(filename.c_str(), std::ios::app);
 		fout << str.append(",");
 		fout.close();
+	}
+	void enable() {
+		enabled = true;
+	}
+	void disable() {
+		enabled = false;
 	}
 	void deletefile() {
 		remove(filename.c_str());
@@ -193,62 +205,131 @@ public:
 typedef std::tr1::unordered_map<int, vehStats*> int2vehStats;
 
 struct reportsGist {
-	int reportedTrueCount = 0;
-	int reportedCount = 0;
-	int_2_bool messages;
+	int inline reportedTrueCount() {
+		return trueMessages.size();
+	}
+	int inline reportedCount() {
+		return (trueMessages.size() + falseMessages.size());
+	}
+	intSet trueMessages;
+	intSet falseMessages;
+	void insertReport(int msg, bool val) {
+		if (trueMessages.count(msg) || falseMessages.count(msg))
+			return;
+		if (val)
+			trueMessages.insert(msg);
+		else falseMessages.insert(msg);
+	}
 };
-typedef std::tr1::unordered_map<int, reportsGist*> int2reportsGist;
+typedef std::tr1::unordered_map<int, reportsGist> int2reportsGist;
 
 struct vehStatsEntityCentric {  // { vehId : (truefloat#, total#, { reporterId : (true#, total#, { msgId : val }) }) }
-	int reportedTrueCount = 0;
-	int reportedCount = 0;
 	int2reportsGist reporters; // { reporterId : (true#, total#, { msgId : val }) }
+	void insertReport(int reporter, int msg, bool val) {
+		if (reporters.count(reporter) == 0)
+			reporters[reporter] = reportsGist();
+		reporters[reporter].insertReport(msg, val);
+	}
+	int inline reportedTrueCount() {
+		int total = 0;
+		for (auto &reporterIt : reporters) {
+			total += reporterIt.second.reportedTrueCount();
+		}
+		return total;
+	}
+	int inline reportedCount() {
+		int total = 0;
+		for (auto &reporterIt : reporters) {
+			total += reporterIt.second.reportedCount();
+		}
+		return total;
+	}
+	float getMsgAvg(int msg, intSet blacklist) {
+		int trueR = 0;
+		int falseR = 0;
+		for (auto &rptr : reporters) {
+			if (!blacklist.count(rptr.first)) {
+				if (rptr.second.falseMessages.count(msg) == 1)
+					++falseR;
+				else if (rptr.second.trueMessages.count(msg) == 1)
+					++trueR;
+			}
+		}
+		if (falseR || trueR)
+			return ((float) trueR) / ((float) (trueR + falseR));
+		else return -1;
+	}
 };
 
-typedef std::tr1::unordered_map<int, vehStatsEntityCentric*> int2vehStatsEntityCentric;
+typedef std::tr1::unordered_map<int, vehStatsEntityCentric> int2vehStatsEntityCentric;
 
 struct reportsBasket {
-	int_2_intSet scope;
+	std::tr1::unordered_map<int, intSet> scope;
 	int2vehStatsEntityCentric vehicles;
 	inline bool contains(int veh, int msg) {
-		return (scope.count(veh) && scope[veh]->count(msg));
+		return (scope.count(veh) && scope[veh].count(msg));
 	}
 	inline bool contains(int veh) {
 		return scope.count(veh);
 	}
+	void ingestReport(int reporterId, int reporteeId, int msgId, bool foundValid) {
+		if (!scope.count(reporteeId)) {
+			scope[reporteeId] = intSet();
+			vehicles[reporteeId] = vehStatsEntityCentric();
+		}
+		scope[reporteeId].insert(msgId);
+		vehicles[reporteeId].insertReport(reporterId, msgId, foundValid);
+	}
+	int uniqueReportersCount() {
+		intSet reporters;
+		for (auto &veh : vehicles) {
+			intSet vehsReporters = getMapKeys<intSet>(veh.second.reporters);
+			reporters.insert(vehsReporters.begin(), vehsReporters.end());
+		}
+		return reporters.size();
+	}
+	int reportsInBasketCount() {
+		int reports = 0;
+		for (auto &veh : vehicles)
+			reports += veh.second.reportedCount();
+		return reports;
+	}
+	int usableReportsInBasketCount(intSet blacklist){
+		int reports =0;
+		for (auto &veh :vehicles)
+			for(auto &reporter: veh.second.reporters)
+				if(!blacklist.count(reporter.first))
+					reports+=reporter.second.reportedCount();
+		return reports;
+	}
+	int inline vehiclesInScopeCount() {
+		return scope.size();
+	}
+	inline int messagesInScopeCount() {
+		int count = 0;
+		for (auto &i : scope)
+			count += i.second.size();
+		return count;
+	}
+	int_2_float inline getMsgAvgs(int veh, intSet blacklist) {
+		int_2_float avgs;
+		if (scope.count(veh)) {
+			for (auto msg : scope[veh]) {
+				float avg = vehicles[veh].getMsgAvg(msg, blacklist);
+				if (avg != -1)
+					avgs[msg] = avg;
+			}
+		}
+		return avgs;
+	}
 };
+
 /*
  int uniqueReportersInBasket(reportsBasket basket);
  int reportsInBasket(reportsBasket basket);
  int vehiclesInScope(int_2_intSet scope);
  int messagesInScope(int_2_intSet scope);
  */
-inline int uniqueReportersInBasket(reportsBasket basket) {
-	intSet reporters;
-	for (auto veh : basket.vehicles) {
-		intSet vehsReporters = getMapKeys<intSet>(veh.second->reporters);
-		reporters.insert(vehsReporters.begin(), vehsReporters.end());
-	}
-	return reporters.size();
-}
-inline int reportsInBasket(reportsBasket basket) {
-	int reports = 0;
-	for (auto veh : basket.vehicles) {
-		for (auto reporter : veh.second->reporters) {
-			reports += reporter.second->reportedCount;
-		}
-	}
-	return reports;
-}
-inline int vehiclesInScope(int_2_intSet scope) {
-	return scope.size();
-}
-inline int messagesInScope(int_2_intSet scope) {
-	int count = 0;
-	for (auto i : scope)
-		count += i.second->size();
-	return count;
-}
 
 struct msgVal {
 	int id;
@@ -279,12 +360,24 @@ struct vehMsgHistory {
 		splitFactor = factor;
 		splitLevel = level;
 		splitSizes = calculatePowersAscending<intSet>(start, factor, level);
+		logLimit=0;
 		for (int size : splitSizes) {
 			splitTotals[size] = 0;
-			logLimit = size;
+			if (size > logLimit)
+				logLimit = size;
 		}
 	}
-
+	vehMsgHistory() { //for f=5,l=4 : sS=<{5,-1},{25,-1},{125,-1},{625,-1}> , lL=625.
+			splitFactor = 5;
+			splitLevel = 4;
+			splitSizes = calculatePowersAscending<intSet>(10, 5, 4);
+			logLimit=0;
+			for (int size : splitSizes) {
+				splitTotals[size] = 0;
+				if (size > logLimit)
+					logLimit = size;
+			}
+		}
 	void insert(int_2_float messageValsMap) {
 		std::vector<int> keys = getMapKeys<std::vector<int>>(messageValsMap);
 		std::sort(keys.begin(), keys.end());
@@ -293,13 +386,12 @@ struct vehMsgHistory {
 			insert(M);
 		}
 	}
-
 	void insert(msgVal M) {
 		messages.insert(messages.begin(), M);
 		for (auto size : splitSizes) {
 			splitTotals[size] += M.truthValue;
 			if (messages.size() > size)
-				splitTotals[size] -= messages.data()[size].truthValue;
+				splitTotals[size] -= messages.at(size).truthValue;
 		}
 		if (messages.size() > logLimit)
 			messages.pop_back();
@@ -308,7 +400,7 @@ struct vehMsgHistory {
 		int_2_float splitAvgs;
 		for (auto size : splitSizes)
 			if (messages.size() >= size)
-				splitAvgs[size] = splitTotals[size] / size;
+				splitAvgs[size] = splitTotals[size] / (float) size;
 		return splitAvgs;
 	}
 	float getOverallAvg() {
@@ -726,12 +818,13 @@ struct vehMsgHistoryDynamic2 {
 				insertMsg(msg);
 			}
 			foundFlag = true;
-		}
-		for (auto size : splitSizes) {
-			if (splits[size].contains(rep.msgId)) {
-				if (!splits[size].isFixed(rep.msgId))
-					splits[size].addReport(rep);
-				foundFlag = true;
+		} else {
+			for (auto size : splitSizes) {
+				if (splits[size].contains(rep.msgId)) {
+					if (!splits[size].isFixed(rep.msgId))
+						splits[size].addReport(rep);
+					foundFlag = true;
+				}
 			}
 		}
 		if (!foundFlag) {
@@ -773,7 +866,7 @@ struct vehMsgHistoryDynamic2 {
 				scoreToBeEmulated = (((float) splitFactor * scoreToBeEmulated) - vec.at(j + 1))
 						/ (float) (splitFactor - 1);
 			fixedMessage.avg = scoreToBeEmulated;
-			int messagesToBeEmulated = splitSizes[j] - j ? splitSizes[j - 1] : 0;
+			int messagesToBeEmulated = splitSizes[j] - ((j!=0)? splitSizes[j - 1] : 0);
 			int messagesAdded = 0;
 			while (messagesAdded++ < messagesToBeEmulated)
 				splits[splitSizes[j]].insert(lockedMaxId - messagesAdded + 1, fixedMessage);
@@ -823,6 +916,21 @@ struct vehMsgHistoryDynamic2 {
 				min = score;
 		}
 		return min;
+	}
+	float getOverallAvg(){
+		float overallAvg=-1;
+		if (splits[splitSizes[0]].getSize()) {
+			float commulative_total = 0;
+			float commulative_size = 0;
+			for (auto size : splitSizes) {
+				commulative_total += splits[size].getTotal();
+				commulative_size += splits[size].getSize();
+				if (!commulative_size)
+					break;
+			}
+			overallAvg = commulative_total / commulative_size;
+		}
+		return overallAvg;
 	}
 };
 
@@ -1029,7 +1137,7 @@ struct vehMsgHistoryDynamic_Lite {
 	}
 };
 
-typedef std::tr1::unordered_map<int, vehMsgHistory*> int2VehMsgHistory;
+typedef std::tr1::unordered_map<int, vehMsgHistory> int2VehMsgHistory;
 typedef std::tr1::unordered_map<int, vehMsgHistoryDynamic*> int2vehMsgHistoryDynamic;
 typedef std::tr1::unordered_map<int, vehMsgHistoryDynamic_Lite*> int2vehMsgHistoryDynamic_Lite;
 typedef std::tr1::unordered_map<int, vehMsgHistoryDynamic2*> int2vehMsgHistoryDynamic2;

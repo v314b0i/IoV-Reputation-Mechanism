@@ -25,6 +25,7 @@ protected:
 	float setEvaluatingAccuracy();
 	void initVehicle(int id, bool dontRequestDump=false);
 	void recordVehScores(int id);
+	recorder myMessagesHistory;
 	std::tr1::unordered_map<int,requestDumpMsg*> requestDumpMsgPointers;
 	int2vehMsgHistoryDynamic2 vehicles;
 	intSet blacklistedReporters;
@@ -48,19 +49,25 @@ protected:
 	std::vector<int> logSplitSizes; //(for convenience/less complexity)
 	static int node0id;
 	//--FOR STATS--
+	static int sentRprtGlobal;
+	static int sentMsgGlobal;
 	int sentCorrect;
 	int recMsg;
 	int recRprt;
 	int sentRprt;
+	int sentCorrectRprt;
 	int sentDumpRequests;
 	int sentDumps;
 	int receivedResponseDumps;
 	int receivedDumpRequests;
 	int receivedDumps;
 	int receivedRSUBroadcasts;
+	static cOutVector* sentRprtGlobalVector;
+	static cOutVector* sentMsgGlobalVector;
 	cOutVector sentVector;
 	cOutVector sentCorrectVector;
 	cOutVector sentReportsVector;
+	cOutVector sentCorrectReportsVector;
 	cOutVector sentDumpsVector;
 	cOutVector sentDumpRequestsVector;
 	cOutVector receivedResponseDumpsVector;

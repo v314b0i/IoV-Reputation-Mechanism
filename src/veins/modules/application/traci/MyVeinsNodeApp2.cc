@@ -29,89 +29,96 @@ using namespace veins;
 
 Define_Module(veins::MyVeinsNodeApp2);
 int MyVeinsNodeApp2::node0id = 100; // for naming vehicles correctly.
-
+int MyVeinsNodeApp2::sentRprtGlobal;
+int MyVeinsNodeApp2::sentMsgGlobal;
+cOutVector* MyVeinsNodeApp2::sentRprtGlobalVector;
+cOutVector* MyVeinsNodeApp2::sentMsgGlobalVector;
 bool MyVeinsNodeApp2::inaccurateBoolCheck(bool val, float accuracy) {
 	srand((int) simTime().raw() + myId + (int) val + (int) (accuracy * 100));
 	return ((rand() % 1000) < (accuracy * 1000)) ? val : !val;
 }
 
 void MyVeinsNodeApp2::initialize(int stage) {
-	try {
-		DemoBaseApplLayer::initialize(stage);
-		if (stage == 0) {
+	DemoBaseApplLayer::initialize(stage);
+	if (stage == 0) {
 
-			EV << "Initializing " << par("appName").stringValue() << std::endl;
-			lastRSUBroadcastId = -1;
-			logSplitFactor = par("logSplitFactor").intValue();
-			logSplitLevel = par("logSplitLevel").intValue();
-			logSplitSmallest = par("logSplitSmallest").intValue();
-			logSplitSizes = calculatePowersAscending<std::vector<int>>(logSplitSmallest, logSplitFactor, logSplitLevel);
-			withoutReportDumpSharing = par("withoutReportDumpSharing").boolValue();
-			messageInterval = par("messageInterval");
-			messageIntervalVarianceLimit = par("messageIntervalVarianceLimit");
-			reportGenTime = par("reportGenTime");
-			reportGenTimeVarianceLimit = par("reportGenTimeVarianceLimit");
-			requestDelay = par("requestDelay");
-			requestDelayVarianceLimit = par("requestDelayVarianceLimit");
-			requestResponseDelay = par("requestResponseDelay");
+		EV << "Initializing " << par("appName").stringValue() << std::endl;
+		lastRSUBroadcastId = -1;
+		logSplitFactor = par("logSplitFactor").intValue();
+		logSplitLevel = par("logSplitLevel").intValue();
+		logSplitSmallest = par("logSplitSmallest").intValue();
+		logSplitSizes = calculatePowersAscending<std::vector<int>>(logSplitSmallest, logSplitFactor, logSplitLevel);
+		withoutReportDumpSharing = par("withoutReportDumpSharing").boolValue();
+		messageInterval = par("messageInterval");
+		messageIntervalVarianceLimit = par("messageIntervalVarianceLimit");
+		reportGenTime = par("reportGenTime");
+		reportGenTimeVarianceLimit = par("reportGenTimeVarianceLimit");
+		requestDelay = par("requestDelay");
+		requestDelayVarianceLimit = par("requestDelayVarianceLimit");
+		requestResponseDelay = par("requestResponseDelay");
 
-			requestResponseDelayVarianceLimit = par("requestResponseDelayVarianceLimit");
-			messageIntervalVarianceLimit = SimTime(messageIntervalVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
-			reportGenTimeVarianceLimit = SimTime(reportGenTimeVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
-			requestDelayVarianceLimit = SimTime(requestDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
-			requestResponseDelayVarianceLimit = SimTime(requestResponseDelayVarianceLimit.inUnit(SIMTIME_S),
-					SIMTIME_MS);
-			evaluatingAccuracy = setEvaluatingAccuracy();
-			sendingAccuracy = setSendingAccuracy();
+		requestResponseDelayVarianceLimit = par("requestResponseDelayVarianceLimit");
+		messageIntervalVarianceLimit = SimTime(messageIntervalVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		reportGenTimeVarianceLimit = SimTime(reportGenTimeVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		requestDelayVarianceLimit = SimTime(requestDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		requestResponseDelayVarianceLimit = SimTime(requestResponseDelayVarianceLimit.inUnit(SIMTIME_S), SIMTIME_MS);
+		evaluatingAccuracy = setEvaluatingAccuracy();
+		sendingAccuracy = setSendingAccuracy();
 
-			evaluatableMessages = (float) par("percentageOfInfoEvaluatable").intValue() / (float) 100;
-			sendMsgEvt = new cMessage("Send Message Event", SEND_INFOMSG_EVT);
-			//STATS
-			sent = 0;
-			sentCorrect = 0;
-			recMsg = 0;
-			recRprt = 0;
-			sentRprt = 0;
-			sentDumpRequests = 0;
-			sentDumps = 0;
-			receivedResponseDumps = 0;
-			receivedDumpRequests = 0;
-			receivedDumps = 0;
-			receivedRSUBroadcasts = 0;
-			sentVector.setName("sentVector");
-			sentCorrectVector.setName("sentCorrectVector");
-			sentReportsVector.setName("sentReportsVector");
-			sentDumpsVector.setName("sentDumpsVector");
-			sentDumpRequestsVector.setName("sentDumpRequestsVector");
-			receivedResponseDumpsVector.setName("receivedResponseDumpsVector");
-			receivedDumpsVector.setName("receivedDumpsVector");
-			receivedDumpRequestsVector.setName("receivedDumpRequestsVector");
-			myAccuracyVector.setName("myAccuracyVector");
-			receivedRSUBroadcastsVector.setName("receivedRSUBroadcastsVector");
-		} else if (stage == 1) {
-			if (par("isNode0").boolValue())
-				node0id = myId;
-			//manually setting nodes 1,3 as bad senders and 0,2 as good senders.
-			if ((int) myId == num2id(1, node0id) || (int) myId == num2id(3, node0id)) {
-				sendingAccuracy = (float) par("badSendingAccuracyPercentage").intValue() / (float) 100;
-			} else if ((int) myId == num2id(2, node0id) || (int) myId == num2id(4, node0id)) {
-				sendingAccuracy = (float) par("goodSendingAccuracyPercentage").intValue() / (float) 100;
-			}
-
-			//manually setting nodes 0,1 as bad reporters
-			if ((int) myId == num2id(1, node0id) || (int) myId == num2id(0, node0id))
-				evaluatingAccuracy = (float) par("badEvaluatingAccuracyPercentage").intValue() / (float) 100;
-
-			//removing the message evaluatability limitation for rogue reporting nodes
-			if (evaluatingAccuracy == ((float) par("badEvaluatingAccuracyPercentage").intValue() / (float) 100))
-				evaluatableMessages = 1;
-			srand(myId);
-			simtime_t variance = messageIntervalVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1); //variance=(-limit to +limit)uniformly
-			scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);
-
+		evaluatableMessages = (float) par("percentageOfInfoEvaluatable").intValue() / (float) 100;
+		sendMsgEvt = new cMessage("Send Message Event", SEND_INFOMSG_EVT);
+		//STATS
+		sent = 0;
+		sentCorrect = 0;
+		recMsg = 0;
+		recRprt = 0;
+		sentRprt = 0;
+		sentCorrectRprt = 0;
+		sentDumpRequests = 0;
+		sentDumps = 0;
+		receivedResponseDumps = 0;
+		receivedDumpRequests = 0;
+		receivedDumps = 0;
+		receivedRSUBroadcasts = 0;
+		sentVector.setName("sentVector");
+		sentCorrectVector.setName("sentCorrectVector");
+		sentReportsVector.setName("sentReportsVector");
+		sentCorrectReportsVector.setName("sentCorrectReportsVector");
+		sentDumpsVector.setName("sentDumpsVector");
+		sentDumpRequestsVector.setName("sentDumpRequestsVector");
+		receivedResponseDumpsVector.setName("receivedResponseDumpsVector");
+		receivedDumpsVector.setName("receivedDumpsVector");
+		receivedDumpRequestsVector.setName("receivedDumpRequestsVector");
+		myAccuracyVector.setName("myAccuracyVector");
+		receivedRSUBroadcastsVector.setName("receivedRSUBroadcastsVector");
+	} else if (stage == 1) {
+		if (par("isNode0").boolValue()){
+			node0id = myId;
+			sentRprtGlobal=0;
+			sentRprtGlobalVector=new cOutVector("sentRprtGlobalVector");
+			sentMsgGlobal=0;
+			sentMsgGlobalVector=new cOutVector("sentMsgGlobalVector");
 		}
-	} catch (...) {
-		recordScalar("initialise threw error!", 1);
+		//manually setting nodes 1,3 as bad senders and 0,2 as good senders.
+		if ((int) myId == num2id(1, node0id) || (int) myId == num2id(3, node0id)) {
+			sendingAccuracy = (float) par("badSendingAccuracyPercentage").intValue() / (float) 100;
+		} else if ((int) myId == num2id(2, node0id) || (int) myId == num2id(4, node0id)) {
+			sendingAccuracy = (float) par("goodSendingAccuracyPercentage").intValue() / (float) 100;
+		}
+
+		//manually setting nodes 0,1 as bad reporters
+		if ((int) myId == num2id(1, node0id) || (int) myId == num2id(0, node0id))
+			evaluatingAccuracy = (float) par("badEvaluatingAccuracyPercentage").intValue() / (float) 100;
+
+		//removing the message evaluatability limitation for rogue reporting nodes
+		if (evaluatingAccuracy == ((float) par("badEvaluatingAccuracyPercentage").intValue() / (float) 100))
+			evaluatableMessages = 1;
+		myMessagesHistory.setName(std::string("NodeVals/").append(std::to_string(id2num(myId, node0id))));
+		//myMessagesHistory.enable();
+		srand(myId);
+		simtime_t variance = messageIntervalVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1); //variance=(-limit to +limit)uniformly
+		scheduleAt(simTime() + messageInterval + variance, sendMsgEvt);
+
 	}
 }
 
@@ -139,14 +146,22 @@ void MyVeinsNodeApp2::finish() {
 	recordScalar("#recievedReports", recRprt);
 	recordScalar("mySendingAccuracy", sendingAccuracy);
 	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent); //if set sending accuracy is not 0or1 the actual accuracy will wary while #sent is not large.
-
+	recordScalar("myFianlRealReportingAccuracy", (float) sentCorrectRprt / (float) sentRprt);
+	std::ofstream fout(std::string("R/NodeFinals/NodeAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
+			std::ios::out);
+	fout << (float) sentCorrect / (float) sent;
+	fout.close();
+	std::ofstream fou(std::string("R/NodeFinals/NodeRepAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
+			std::ios::out);
+	fou << (float) sentCorrectRprt / (float) sentRprt;
+	fou.close();
 	for (auto it = repScoreVector.begin(); it != repScoreVector.end(); ++it)
 		for (auto a = it->second.begin(); a != it->second.end(); ++a)
 			delete a->second;
 	for (auto it = repScoreVector_MIN.begin(); it != repScoreVector_MIN.end(); ++it)
 		delete it->second;
 	for (auto it = repScoreChangeDueToBroadCast.begin(); it != repScoreChangeDueToBroadCast.end(); ++it)
-			delete it->second;
+		delete it->second;
 
 	//delete sendMsgEvt;
 	DemoBaseApplLayer::finish();
@@ -155,77 +170,81 @@ void MyVeinsNodeApp2::finish() {
 void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
 	//TODO deal with reports on self, or maybe not
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) { //TODO
-		try {
-			recMsg++;
-			int senderId = wsm->getSenderAddress();
-			int msgId = wsm->getMsgId();
-			recorder mvec(std::string("infoMsg:").append(std::to_string(id2num(myId, node0id))).append(".txt"));
-			mvec.record(1);
-			if (vehicles.find(senderId) == vehicles.end()) //if neither a message from this sender not a report on this sender has been recieved before
-				initVehicle(senderId, false);
-			mvec.record(2);
-			vehMsgHistoryDynamic2 &veh = *(vehicles[senderId]);
-			mvec.record(3);
-			if (veh.lockedMaxId >= msgId) {
-				mvec.deletefile();
-				return;
-			}
-			mvec.record(4);
-			veh.messagesRecv++;
-			mvec.record(5);
-			if (inaccurateBoolCheck(true, evaluatableMessages)) {
-				mvec.recordString(std::string("6A"));
-				bool val = inaccurateBoolCheck(wsm->getCorrect(), evaluatingAccuracy);
-				veh.insertMyReport(myId, msgId, val);
-				reportMsg *rep = new reportMsg();
-				populateWSM(rep);
-				rep->setName("Report Message");
-				rep->setReporterAddress(myId);
-				rep->setReporteeAddress(senderId);
-				rep->setReportedMsgId(msgId);
-				rep->setFoundValid(val);
-				rep->setKind(REPORT_MSG);
-				srand((int) simTime().raw() + myId + msgId + senderId + 3851);
-				simtime_t variance = reportGenTimeVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1);
-				scheduleAt(simTime() + reportGenTime + variance, rep);
+		recMsg++;
+		int senderId = wsm->getSenderAddress();
+		int msgId = wsm->getMsgId();
+		recorder mvec(std::string("infoMsg:").append(std::to_string(id2num(myId, node0id))).append(".txt"));
+		mvec.record(1);
+		if (vehicles.find(senderId) == vehicles.end()) //if neither a message from this sender not a report on this sender has been recieved before
+			initVehicle(senderId, false);
+		mvec.record(2);
+		vehMsgHistoryDynamic2 &veh = *(vehicles[senderId]);
+		mvec.record(3);
+		if (veh.lockedMaxId >= msgId) {
+			mvec.deletefile();
+			return;
+		}
+		mvec.record(4);
+		veh.messagesRecv++;
+		mvec.record(5);
+		if (inaccurateBoolCheck(true, evaluatableMessages)) {
+			mvec.recordString(std::string("6A"));
+			bool val = inaccurateBoolCheck(wsm->getCorrect(), evaluatingAccuracy);
+			sentReportsVector.record(++sentRprt);
+			sentRprtGlobalVector->record(++sentRprtGlobal);
 
-				//STATS
-				recordVehScores(senderId);
-			} else {
-				mvec.recordString(std::string("6A"));
-			}
-			mvec.deletefile();
-		} catch (...) {
-			recordScalar("onWSM:infomsg threw error", 1);
+			std::ofstream fou(std::string("R/NodeFinals/NodeRepAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
+					std::ios::trunc);
+			fou << (float) sentCorrectRprt / (float) sentRprt;
+			//temporary fix for misc error. some nodes weren't doing this in the finish() function.
+			fou.close();
+			if (val == wsm->getCorrect())
+				sentCorrectReportsVector.record(++sentCorrectRprt);
+			veh.insertMyReport(myId, msgId, val);
+			reportMsg *rep = new reportMsg();
+			populateWSM(rep);
+			rep->setName("Report Message");
+			rep->setReporterAddress(myId);
+			rep->setReporteeAddress(senderId);
+			rep->setReportedMsgId(msgId);
+			rep->setFoundValid(val);
+			rep->setKind(REPORT_MSG);
+			srand((int) simTime().raw() + myId + msgId + senderId + 3851);
+			simtime_t variance = reportGenTimeVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1);
+			scheduleAt(simTime() + reportGenTime + variance, rep);
+
+			//STATS
+			recordVehScores(senderId);
+		} else {
+			mvec.recordString(std::string("6A"));
 		}
-	} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
-		try {
-			recRprt++;
-			recorder mvec(std::string("reportMsg:").append(std::to_string(id2num(myId, node0id))).append(".txt"));
-			int reporteeId = wsm->getReporteeAddress();
-			int reporterId = wsm->getReporterAddress();
-			if (reporterId == reporteeId)
-				return; //not going to happen but failsafe for modification in report gen block.
-			int msgId = wsm->getReportedMsgId();
-			bool foundValid = wsm->getFoundValid();
-			if (blacklistedReporters.count(reporterId))
-				return;
-			mvec.record(1);
-			if (!vehicles.count(reporteeId))
-				initVehicle(reporteeId);
-			mvec.record(2);
-			vehMsgHistoryDynamic2 &veh = *(vehicles[reporteeId]);
-			if (veh.lockedMaxId >= msgId)
-				return;
-			mvec.record(3);
-			veh.reportsRecv++;
-			veh.insertReport(reporterId, msgId, foundValid);
-			mvec.record(4);
-			recordVehScores(reporteeId);
-			mvec.deletefile();
-		} catch (...) {
-			recordScalar("onWSM:reportMsg threw error", 1);
-		}
+		mvec.deletefile();
+	}
+
+	else if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
+		recRprt++;
+		recorder mvec(std::string("reportMsg:").append(std::to_string(id2num(myId, node0id))).append(".txt"));
+		int reporteeId = wsm->getReporteeAddress();
+		int reporterId = wsm->getReporterAddress();
+		if (reporterId == reporteeId)
+			return; //not going to happen but failsafe for modification in report gen block.
+		int msgId = wsm->getReportedMsgId();
+		bool foundValid = wsm->getFoundValid();
+		if (blacklistedReporters.count(reporterId))
+			return;
+		mvec.record(1);
+		if (!vehicles.count(reporteeId))
+			initVehicle(reporteeId);
+		mvec.record(2);
+		vehMsgHistoryDynamic2 &veh = *(vehicles[reporteeId]);
+		if (veh.lockedMaxId >= msgId)
+			return;
+		mvec.record(3);
+		veh.reportsRecv++;
+		veh.insertReport(reporterId, msgId, foundValid);
+		mvec.record(4);
+		recordVehScores(reporteeId);
+		mvec.deletefile();
 	} else if (withoutReportDumpSharing)
 		return;
 	else if (requestDumpMsg *wsm = dynamic_cast<requestDumpMsg*>(frame)) {
@@ -277,7 +296,7 @@ void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remo
 				rec.record(0.5);
 				if (requestDumpMsgPointers[reporteeId]->isScheduled())
 					//cancelEvent(requestDumpMsgPointers[reporteeId]);
-				requestDumpMsgPointers.erase(reporteeId);
+					requestDumpMsgPointers.erase(reporteeId);
 			}
 			rec.record(1);
 			int senderId = wsm->getSenderAddress();
@@ -300,7 +319,9 @@ void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remo
 		}
 	} else if (RSUBroadcast *wsm = dynamic_cast<RSUBroadcast*>(frame)) {
 		try {
-			recorder rec(std::string("wsm=RSUBroadcast").append(std::to_string(myId)).append(std::to_string(wsm->getBroadcastId())).append(".txt"));
+			recorder rec(
+					std::string("wsm=RSUBroadcast").append(std::to_string(myId)).append(
+							std::to_string(wsm->getBroadcastId())).append(".txt"));
 			rec.record(wsm->getBroadcastId());
 			receivedRSUBroadcastsVector.record(++receivedRSUBroadcasts);
 			if (lastRSUBroadcastId < wsm->getBroadcastId()) {
@@ -320,23 +341,27 @@ void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remo
 }
 void MyVeinsNodeApp2::ingestRSUBroadcast(std::string csvStr) {
 	recorder rec(std::string("ingestRSUBroadcast").append(std::to_string(myId)).append(".txt"));
-	rec.record(0);
-	int_2_floatVec reportsCsv2DFloatValsParse = csv2DFloatValsParse(csvStr, logSplitSizes.size() + 3);
+	rec.recordString(csvStr);
+	rec.recordString("\n-----\n");
+	int_2_floatVec reportsCsv2DFloatValsParse = csv2DFloatValsParse(csvStr, logSplitSizes.size() + 2);
 	rec.record(1);
 	for (auto i : reportsCsv2DFloatValsParse) {
 		rec.recordString(std::string("\ninloop ").append(std::to_string(i.first)));
-		if (vehicles.count(i.first) == 0)
+		float splitavg0;
+		if (vehicles.count(i.first) == 0) {
 			initVehicle(i.first);
-		auto splitavgs0 = vehicles[i.first]->getSplitAvgs();
+			splitavg0 = 0;
+		} else splitavg0 = vehicles[i.first]->getOverallAvg();
 		vehicles[i.first]->ingestRSUScore(i.second, blacklistedReporters);
-		auto splitavgs1 = vehicles[i.first]->getSplitAvgs();
-		repScoreChangeDueToBroadCast[i.first]->record(splitavgs1[logSplitSizes.back()]-splitavgs0[logSplitSizes.back()]);
+		float splitavg1 = vehicles[i.first]->getOverallAvg();
+		repScoreChangeDueToBroadCast[i.first]->record(splitavg1 - splitavg0);
 	}
 	rec.deletefile();
 }
 void MyVeinsNodeApp2::initVehicle(int id, bool dontRequestDump) {
 	try {
-		vehicles[id] = new vehMsgHistoryDynamic2(logSplitSmallest, logSplitFactor, logSplitLevel, par("stagingMessagesEnabled").boolValue());
+		vehicles[id] = new vehMsgHistoryDynamic2(logSplitSmallest, logSplitFactor, logSplitLevel,
+				par("stagingMessagesEnabled").boolValue());
 		repScoreVector[id] = std::tr1::unordered_map<int, cOutVector*>();
 		for (auto size : logSplitSizes) {
 			repScoreVector[id][size] = new cOutVector(
@@ -345,8 +370,10 @@ void MyVeinsNodeApp2::initVehicle(int id, bool dontRequestDump) {
 		}
 		repScoreVector_MIN[id] = new cOutVector(
 				std::string("RepScoreVector-MIN").append(" - ").append(std::to_string(id2num(id, node0id))).c_str());
-		repScoreChangeDueToBroadCast[id] = new cOutVector(
-				std::string("repScoreChangeDueToBroadCast").append(" - ").append(std::to_string(id2num(id, node0id))).c_str());
+		repScoreChangeDueToBroadCast[id] =
+				new cOutVector(
+						std::string("repScoreChangeDueToBroadCast").append(" - ").append(
+								std::to_string(id2num(id, node0id))).c_str());
 		if (!(dontRequestDump || withoutReportDumpSharing || requestDumpMsgPointers.count(id))) {
 			requestDumpMsg *req = new requestDumpMsg();
 			populateWSM(req);
@@ -378,7 +405,6 @@ void MyVeinsNodeApp2::handleSelfMsg(cMessage *msg) {
 			sentVector.record(sent);
 			sendDown(wsm);
 		} else if (reportMsg *wsm = dynamic_cast<reportMsg*>(msg)) {
-			sentReportsVector.record(++sentRprt);
 			sendDown(wsm);
 		} else if (requestDumpMsg *wsm = dynamic_cast<requestDumpMsg*>(msg)) {
 			sentDumpRequestsVector.record(++sentDumpRequests);
@@ -399,7 +425,11 @@ void MyVeinsNodeApp2::handleSelfMsg(cMessage *msg) {
 			if (wsm->getCorrect())
 				sentCorrectVector.record(++sentCorrect);
 			sentVector.record(sent);
+			sentMsgGlobalVector->record(++sentMsgGlobal);
 			myAccuracyVector.record((float) sentCorrect / (float) sent);
+			myMessagesHistory.recordString(
+					std::string("\n").append(std::to_string(sent-1)).append(",").append(
+							std::to_string(wsm->getCorrect() ? 1 : 0)));
 			//-----
 			srand((int) simTime().raw() + myId + sent + 5643);
 			simtime_t variance = messageIntervalVarianceLimit * ((((float) (rand() % 100000)) / (float) 50000) - 1);

@@ -7,6 +7,8 @@ examples/*
 examples/myProj1/.qt*
 examples/myProj1/results/
 examples/myProj1/frames/
+examples/myProj1/R/
+examples/myProj1/R/*
 !src/
 src/*
 !src/veins/

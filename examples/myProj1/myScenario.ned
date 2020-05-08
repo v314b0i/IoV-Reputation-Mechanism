@@ -27,7 +27,7 @@ network myScenario extends Scenario
 {
 	@display("bgb=5000,3000;bgi=myImages/b,s;bgg=1000,2,grey95;bgu=km");
     submodules:
-        rsu[3]: RSU {
+        rsu[11]: RSU {
             @display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
         }
 }

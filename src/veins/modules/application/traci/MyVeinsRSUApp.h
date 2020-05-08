@@ -22,7 +22,6 @@ protected:
 	void addVehicletoCurrentBasket(int vehId);
 	void initVehicleStats(int vehId);
 	void stageShift();
-	void deleteBasket(reportsBasket *basket);
 	int_2_float genarateSecondaryScores(reportsBasket *basket);
 	intSet generateBlacklistedReportersList(int_2_float secondaryScores);
 	int_2_float genaratePrimaryScores_ReportsBased(reportsBasket *basket, intSet blacklist,
@@ -30,7 +29,7 @@ protected:
 	int_2_int2float genaratePrimaryScores_MessagesBased_MajorityAbsolutist(reportsBasket *basket, intSet blacklist,
 			int2VehMsgHistory &logs);
 	int_2_int2float genaratePrimaryScores_MessagesBased(reportsBasket *basket, intSet blacklist,
-			int2VehMsgHistory &logs, int_2_float &reportDensity);
+			int2VehMsgHistory &logs);
 	void BroadcastResults(int_2_int2float scores, intSet blacklist, int broadcastId, bool litenode = false,
 			int_2_float reportdensity = int_2_float());
 	cMessage *stageShiftEvt;
@@ -83,6 +82,7 @@ protected:
 	cOutVector vehiclesInStagedScope;
 	cOutVector messagesInStagedScope;
 	cOutVector reportsInStagedBasket;
+	cOutVector usableReportsInBasketCount;
 	cOutVector reportersInStagedBasket;
 	cOutVector blacklistedReportersInStagedBasket;
 

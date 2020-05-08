@@ -540,159 +540,159 @@
         <properties name="Symbols.Type/secondaryScoreVector-84" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-86" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-87" value="Plus"/>
-        <properties name="Symbols.Type/secondaryScoreVector-88" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-91" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-88" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-91" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-92" value="Plus"/>
-        <properties name="Symbols.Type/secondaryScoreVector-97" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-97" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-98" value="Plus"/>
-        <properties name="Symbols.Type/secondaryScoreVector-99" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-99" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-100" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-102" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-103" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-104" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-105" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-106" value="Plus"/>
-        <properties name="Symbols.Type/secondaryScoreVector-108" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-108" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-109" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-110" value="Plus"/>
-        <properties name="Symbols.Type/secondaryScoreVector-111" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-112" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-115" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-116" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-111" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-112" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-115" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-116" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-118" value="Plus"/>
-        <properties name="Symbols.Type/secondaryScoreVector-119" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-120" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-123" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-127" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-128" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-129" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-130" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-133" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-139" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-141" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-151" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-154" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-161" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-165" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-166" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-168" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-169" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-171" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-174" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-180" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-184" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-185" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-193" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-194" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-196" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-197" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-202" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-203" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-119" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-120" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-123" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-127" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-128" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-129" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-130" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-133" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-139" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-141" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-151" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-154" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-161" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-165" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-166" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-168" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-169" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-171" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-174" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-180" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-184" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-185" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-193" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-194" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-196" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-197" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-202" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-203" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-206" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-213" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-213" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-214" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-217" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-217" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-218" value="Cross"/>
         <properties name="Symbols.Type/secondaryScoreVector-221" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-222" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-222" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-228" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-229" value="Cross"/>
-        <properties name="Symbols.Type/secondaryScoreVector-231" value="Cross"/>
+        <properties name="Symbols.Type/secondaryScoreVector-229" value="Plus"/>
+        <properties name="Symbols.Type/secondaryScoreVector-231" value="Plus"/>
         <properties name="Symbols.Type/secondaryScoreVector-234" value="Cross"/>
         <properties name="Symbols.Type/secondaryScoreVector-242" value="Cross"/>
         <properties name="Symbols.Type/secondaryScoreVector-246" value="Cross"/>
         <properties name="Line.Color/secondaryScoreThreshhold" value="black"/>
         <properties name="Line.Type/secondaryScoreThreshhold" value="SampleHold"/>
-        <properties name="Line.Type/secondaryScoreVector-1" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-3" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-7" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-9" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-11" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-12" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-13" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-14" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-15" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-17" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-19" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-20" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-21" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-23" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-27" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-28" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-29" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-31" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-32" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-33" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-34" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-35" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-39" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-40" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-43" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-44" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-45" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-46" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-48" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-52" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-53" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-55" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-56" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-59" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-60" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-62" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-63" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-65" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-66" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-70" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-72" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-73" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-75" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-81" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-83" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-84" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-86" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-87" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-88" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-92" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-94" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-97" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-98" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-99" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-100" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-102" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-103" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-104" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-105" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-106" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-108" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-109" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-110" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-111" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-112" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-115" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-118" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-119" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-120" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-123" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-127" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-129" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-130" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-133" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-139" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-141" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-151" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-161" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-165" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-166" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-168" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-169" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-172" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-174" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-180" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-184" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-193" value="Linear"/>
-        <properties name="Line.Type/secondaryScoreVector-196" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-1" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-3" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-7" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-9" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-11" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-12" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-13" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-14" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-15" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-17" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-19" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-20" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-21" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-23" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-27" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-28" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-29" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-31" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-32" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-33" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-34" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-35" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-39" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-40" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-43" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-44" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-45" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-46" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-48" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-52" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-53" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-55" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-56" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-59" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-60" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-62" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-63" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-65" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-66" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-70" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-72" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-73" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-75" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-81" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-83" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-84" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-86" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-87" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-88" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-92" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-94" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-97" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-98" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-99" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-100" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-102" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-103" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-104" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-105" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-106" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-108" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-109" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-110" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-111" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-112" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-115" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-118" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-119" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-120" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-123" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-127" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-129" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-130" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-133" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-139" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-141" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-151" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-161" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-165" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-166" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-168" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-169" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-172" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-174" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-180" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-184" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-193" value="Dots"/>
+        <properties name="Line.Type/secondaryScoreVector-196" value="Dots"/>
         <properties name="Symbols.Type/secondaryScoreVector-60" value="Plus"/>
-        <properties name="Line.Color/secondaryScoreVector-1" value="#F57900"/>
+        <properties name="Line.Color/secondaryScoreVector-1" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-9" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-11" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-13" value="#204A87"/>
@@ -744,128 +744,620 @@
         <properties name="Line.Color/secondaryScoreVector-103" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-104" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-0" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-0" value="Linear"/>
-        <properties name="Line.Color/secondaryScoreVector-0" value="#73D216"/>
+        <properties name="Line.Type/secondaryScoreVector-0" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-0" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-2" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-2" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-2" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-2" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-4" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-4" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-4" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-4" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-5" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-5" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-5" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-5" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-6" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-6" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-6" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-6" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-7" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-8" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-8" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-8" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-8" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-12" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-16" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-16" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-16" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-16" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-18" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-18" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-18" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-18" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-22" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-22" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-22" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-22" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-25" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-25" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-25" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-25" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-26" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-26" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-26" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-26" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-36" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-36" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-36" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-36" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-37" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-37" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-37" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-37" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-38" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-38" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-38" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-38" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-41" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-41" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-41" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-41" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-42" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-42" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-42" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-42" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-47" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-47" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-47" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-47" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-49" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-49" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-49" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-49" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-50" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-50" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-50" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-50" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-54" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-54" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-54" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-54" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-58" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-58" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-58" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-58" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-61" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-61" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-61" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-61" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-62" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-64" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-64" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-64" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-64" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-67" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-67" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-67" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-67" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-68" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-68" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-68" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-68" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-69" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-69" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-69" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-69" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-77" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-77" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-77" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-77" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-78" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-78" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-78" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-78" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-79" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-79" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-79" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-79" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-80" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-80" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-80" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-80" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-82" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-82" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-82" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-82" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-85" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-85" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-85" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-85" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-89" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-89" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-89" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-89" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-94" value="Plus"/>
         <properties name="Line.Color/secondaryScoreVector-94" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-95" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-95" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-95" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-95" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-105" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-106" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-109" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-110" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-113" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-113" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-113" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-113" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-114" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-114" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-114" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-114" value="#204A87"/>
         <properties name="Symbols.Type/secondaryScoreVector-117" value="Plus"/>
-        <properties name="Line.Type/secondaryScoreVector-117" value="Linear"/>
+        <properties name="Line.Type/secondaryScoreVector-117" value="Dots"/>
         <properties name="Line.Color/secondaryScoreVector-117" value="#204A87"/>
         <properties name="Line.Color/secondaryScoreVector-118" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-76" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-76" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-76" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-88" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-91" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-91" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-97" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-99" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-101" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-101" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-101" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-108" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-111" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-112" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-115" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-116" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-116" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-119" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-120" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-121" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-121" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-121" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-122" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-122" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-122" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-123" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-124" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-124" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-124" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-125" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-125" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-125" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-127" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-128" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-128" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-129" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-130" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-132" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-132" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-132" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-133" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-135" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-135" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-135" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-136" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-136" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-136" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-137" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-137" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-137" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-138" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-138" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-138" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-139" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-140" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-140" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-140" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-141" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-143" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-143" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-143" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-144" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-144" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-144" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-146" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-146" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-146" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-148" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-148" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-148" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-149" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-149" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-149" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-150" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-150" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-150" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-151" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-152" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-152" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-152" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-153" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-153" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-153" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-154" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-154" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-155" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-155" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-155" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-156" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-156" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-156" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-157" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-157" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-157" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-158" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-158" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-158" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-159" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-159" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-159" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-161" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-163" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-163" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-163" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-164" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-164" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-164" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-165" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-166" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-168" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-169" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-170" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-170" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-170" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-171" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-171" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-172" value="Plus"/>
+        <properties name="Line.Color/secondaryScoreVector-172" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-173" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-173" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-173" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-174" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-175" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-175" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-175" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-177" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-177" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-177" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-178" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-178" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-178" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-180" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-181" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-181" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-181" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-182" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-182" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-182" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-183" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-183" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-183" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-184" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-185" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-185" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-186" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-186" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-186" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-187" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-187" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-187" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-190" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-190" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-190" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-191" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-191" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-191" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-192" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-192" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-192" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-193" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-194" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-194" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-195" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-195" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-195" value="#204A87"/>
+        <properties name="Line.Color/secondaryScoreVector-196" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-197" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-197" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-201" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-201" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-201" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-202" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-202" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-203" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-203" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-204" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-204" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-204" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-207" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-207" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-207" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-208" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-208" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-208" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-210" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-210" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-210" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-211" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-211" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-211" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-213" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-213" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-215" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-215" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-215" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-217" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-217" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-220" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-220" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-220" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-222" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-222" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-223" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-223" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-223" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-226" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-226" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-226" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-227" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-227" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-227" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-229" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-229" value="#204A87"/>
+        <properties name="Line.Type/secondaryScoreVector-231" value="Linear"/>
+        <properties name="Line.Color/secondaryScoreVector-231" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-10" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-10" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-10" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-24" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-24" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-24" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-51" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-51" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-51" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-57" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-57" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-57" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-71" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-71" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-71" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-74" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-74" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-74" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-90" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-90" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-90" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-93" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-93" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-93" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-96" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-96" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-96" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-107" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-107" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-107" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-126" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-126" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-126" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-131" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-131" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-131" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-134" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-134" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-134" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-142" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-142" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-142" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-145" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-145" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-145" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-162" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-162" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-162" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-179" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-179" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-179" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-198" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-198" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-198" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-30" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-30" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-30" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-147" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-147" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-147" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-160" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-160" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-160" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-167" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-167" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-167" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-176" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-176" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-176" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-188" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-188" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-188" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-189" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-189" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-189" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-199" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-199" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-199" value="#204A87"/>
+        <properties name="Symbols.Type/secondaryScoreVector-200" value="Plus"/>
+        <properties name="Line.Type/secondaryScoreVector-200" value="Dots"/>
+        <properties name="Line.Color/secondaryScoreVector-200" value="#204A87"/>
         <properties name="Symbols.Size" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-0" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-1" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-2" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-3" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-4" value="6"/>
         <properties name="Symbols.Size/secondaryScoreVector-5" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-6" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-7" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-8" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-9" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-10" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-11" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-12" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-13" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-14" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-15" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-16" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-17" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-18" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-20" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-21" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-22" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-23" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-24" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-25" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-26" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-27" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-28" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-29" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-30" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-31" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-32" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-34" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-35" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-36" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-37" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-38" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-39" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-40" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-41" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-42" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-43" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-44" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-45" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-46" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-47" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-48" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-49" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-50" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-51" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-52" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-53" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-54" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-55" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-56" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-57" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-58" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-59" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-60" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-61" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-62" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-63" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-64" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-65" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-66" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-67" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-68" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-69" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-70" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-71" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-72" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-73" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-74" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-75" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-76" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-77" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-78" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-79" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-80" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-81" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-82" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-84" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-85" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-86" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-87" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-88" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-89" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-90" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-91" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-92" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-93" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-94" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-95" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-96" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-97" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-98" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-99" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-100" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-101" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-102" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-103" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-104" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-105" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-106" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-107" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-108" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-109" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-110" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-111" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-112" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-113" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-114" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-115" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-116" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-117" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-118" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-119" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-120" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-121" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-122" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-123" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-124" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-125" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-126" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-127" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-128" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-129" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-130" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-131" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-132" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-133" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-134" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-135" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-136" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-137" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-138" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-139" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-140" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-142" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-143" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-144" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-145" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-146" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-147" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-148" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-149" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-150" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-151" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-152" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-153" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-154" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-155" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-156" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-157" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-158" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-159" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-160" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-161" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-162" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-163" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-164" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-165" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-166" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-167" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-168" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-170" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-171" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-172" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-173" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-174" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-175" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-176" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-177" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-178" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-179" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-180" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-181" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-182" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-183" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-184" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-185" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-186" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-187" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-188" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-189" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-190" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-191" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-192" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-194" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-195" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-196" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-198" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-199" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-200" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-201" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-202" value="6"/>
+        <properties name="Symbols.Size/secondaryScoreVector-203" value="6"/>
       </items>
     </datasets>
     <datasets name="RSUAppn: Blacklisted Nodes">
@@ -880,7 +1372,6 @@
         <properties name="Graph.Title" value="Primary Scores - Reports Based"/>
         <properties name="Y.Axis.Min" value="-0.01"/>
         <properties name="Y.Axis.Max" value="1.01"/>
-        <properties name="X.Axis.Min" value="355.0"/>
       </items>
     </datasets>
     <datasets name="RSUAppn: Primary Scores - Messages Based - Majorty Absolutist">
@@ -924,7 +1415,7 @@
       </items>
     </datasets>
     <datasets name="RSUAppn: Primary Scores - Messages Based WOBL- Overall">
-      <items xsi:type="scave:Add" filterPattern="name(primaryScore_MessagesBasedVector_WOBL_SLICE10-*)" type="VECTOR"/>
+      <items xsi:type="scave:Add" filterPattern="name(primaryScore_MessagesBasedVector_WOBL_SLICE1250-*)" type="VECTOR"/>
       <items xsi:type="scave:LineChart" name="Primary Scores - Messages Based WOBL- Overall" lineNameFormat="">
         <properties name="Graph.Title" value="Primary Scores - Messages Based WOBL- Overall"/>
         <properties name="Y.Axis.Min" value="-0.01"/>
@@ -2727,14 +3218,21 @@
         <properties name="Symbols.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-SPLIT50 - 0" value="Cross"/>
         <properties name="Line.Type//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-SPLIT50 - 0" value="Dots"/>
         <properties name="Line.Color//veins/examples/myProj1/results/Default-#0.vec myScenario.node[69].appl RepScoreVector-SPLIT50 - 0" value="#3465A4"/>
+        <properties name="Line.Color//veins/examples/myProj1/results/Default-#0.vec myScenario.rsu[0].appl primaryScore_MessageBased_SLICE10-0" value="#EF2929"/>
       </items>
     </datasets>
     <datasets name="rsuEffect">
       <items xsi:type="scave:Add" filterPattern="name(&quot;repScoreChangeDueToBroadCast *&quot;) " type="VECTOR"/>
       <items xsi:type="scave:LineChart" name="" lineNameFormat=""/>
     </datasets>
+    <datasets name="coverage">
+      <items xsi:type="scave:Add" filterPattern="name(sentMsgGlobalVector)  OR name(messagesInArchivedScope) " type="VECTOR"/>
+      <items xsi:type="scave:LineChart" name="coverage" lineNameFormat="">
+        <properties name="Graph.Title" value="coverage"/>
+      </items>
+    </datasets>
   </datasets>
   <chartSheets>
-    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.6 //@datasets/@datasets.1/@items.5 //@datasets/@datasets.2/@items.1 //@datasets/@datasets.3/@items.1 //@datasets/@datasets.4/@items.1 //@datasets/@datasets.5/@items.1 //@datasets/@datasets.6/@items.1 //@datasets/@datasets.7/@items.1 //@datasets/@datasets.8/@items.1 //@datasets/@datasets.9/@items.1 //@datasets/@datasets.10/@items.1 //@datasets/@datasets.11/@items.5 //@datasets/@datasets.11/@items.6 //@datasets/@datasets.12/@items.6 //@datasets/@datasets.13/@items.6 //@datasets/@datasets.14/@items.6 //@datasets/@datasets.15/@items.6 //@datasets/@datasets.16/@items.1"/>
+    <chartSheets name="default" charts="//@datasets/@datasets.0/@items.5 //@datasets/@datasets.1/@items.4 //@datasets/@datasets.0/@items.6 //@datasets/@datasets.1/@items.5 //@datasets/@datasets.2/@items.1 //@datasets/@datasets.3/@items.1 //@datasets/@datasets.4/@items.1 //@datasets/@datasets.5/@items.1 //@datasets/@datasets.6/@items.1 //@datasets/@datasets.7/@items.1 //@datasets/@datasets.8/@items.1 //@datasets/@datasets.9/@items.1 //@datasets/@datasets.10/@items.1 //@datasets/@datasets.11/@items.5 //@datasets/@datasets.11/@items.6 //@datasets/@datasets.12/@items.6 //@datasets/@datasets.13/@items.6 //@datasets/@datasets.14/@items.6 //@datasets/@datasets.15/@items.6 //@datasets/@datasets.16/@items.1 //@datasets/@datasets.17/@items.1"/>
   </chartSheets>
 </scave:Analysis>
