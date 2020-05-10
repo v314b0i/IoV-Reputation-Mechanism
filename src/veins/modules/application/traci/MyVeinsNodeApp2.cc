@@ -147,11 +147,11 @@ void MyVeinsNodeApp2::finish() {
 	recordScalar("mySendingAccuracy", sendingAccuracy);
 	recordScalar("myFinalRealAccuracy", (float) sentCorrect / (float) sent); //if set sending accuracy is not 0or1 the actual accuracy will wary while #sent is not large.
 	recordScalar("myFianlRealReportingAccuracy", (float) sentCorrectRprt / (float) sentRprt);
-	std::ofstream fout(std::string("R/NodeFinals/NodeAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
+	std::ofstream fout(std::string("R/").append(std::to_string(par("scnId").intValue())).append("/NodeFinals/NodeAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
 			std::ios::out);
 	fout << (float) sentCorrect / (float) sent;
 	fout.close();
-	std::ofstream fou(std::string("R/NodeFinals/NodeRepAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
+	std::ofstream fou(std::string("R/").append(std::to_string(par("scnId").intValue())).append("/NodeFinals/NodeRepAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
 			std::ios::out);
 	fou << (float) sentCorrectRprt / (float) sentRprt;
 	fou.close();
@@ -167,7 +167,7 @@ void MyVeinsNodeApp2::finish() {
 	DemoBaseApplLayer::finish();
 }
 
-void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remove redundant code
+void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) {
 	//TODO deal with reports on self, or maybe not
 	if (infoMsg *wsm = dynamic_cast<infoMsg*>(frame)) { //TODO
 		recMsg++;
@@ -193,10 +193,10 @@ void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) { //TODO restructure to remo
 			sentReportsVector.record(++sentRprt);
 			sentRprtGlobalVector->record(++sentRprtGlobal);
 
-			std::ofstream fou(std::string("R/NodeFinals/NodeRepAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
+			std::ofstream fou(std::string("R/").append(std::to_string(par("scnId").intValue())).append("/NodeFinals/NodeRepAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
 					std::ios::trunc);
 			fou << (float) sentCorrectRprt / (float) sentRprt;
-			//temporary fix for misc error. some nodes weren't doing this in the finish() function.
+			//temporary fix for misc error (veins or omnetpp). some nodes weren't doing this in the finish() function.
 			fou.close();
 			if (val == wsm->getCorrect())
 				sentCorrectReportsVector.record(++sentCorrectRprt);

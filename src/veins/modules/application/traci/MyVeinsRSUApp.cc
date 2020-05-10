@@ -132,20 +132,30 @@ void MyVeinsRSUApp::finish() {
 		//	delete log.second;
 	}
 	for (auto &i : logs) {
-		std::ofstream fout(std::string("R/RSUFinals/NodeAcc/").append(std::to_string(id2num(i.first, node0id))).c_str(),
-				std::ios::out);
+		std::ofstream fout(
+				std::string("R/").append(std::to_string(par("scnId").intValue())).append("/RSUFinals/NodeAcc/std/").append(
+						std::to_string(id2num(i.first, node0id))).c_str(), std::ios::out);
 		fout << i.second.getOverallAvg();
+		fout.close();
+	}
+	for (auto &i : logs_WOBL) {
+		std::ofstream fout(
+				std::string("R/").append(std::to_string(par("scnId").intValue())).append("/RSUFinals/NodeAcc/WOBL/").append(
+						std::to_string(id2num(i.first, node0id))).c_str(), std::ios::out);
+		fout << i.second.getOverallAvg();
+		fout.close();
+	}
+	for (auto &i : logs_RB) {
+		std::ofstream fout(
+				std::string("R/").append(std::to_string(par("scnId").intValue())).append("/RSUFinals/NodeAcc/RB/").append(
+						std::to_string(id2num(i.first, node0id))).c_str(), std::ios::out);
+		fout << ((float) i.second.first) / ((float) i.second.second);
 		fout.close();
 	}
 }
 
 void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
-	recorder rec(
-			std::string("RSU on WSM").append(std::to_string(myId)).append(std::to_string(simTime().raw())).append(
-					".txt"));
-	rec.record(0);
 	if (reportMsg *wsm = dynamic_cast<reportMsg*>(frame)) {
-		rec.record(1);
 		int reporteeId = wsm->getReporteeAddress();
 		int reporterId = wsm->getReporterAddress();
 		int msgId = wsm->getReportedMsgId();
@@ -153,7 +163,6 @@ void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
 		ingestReport(reporterId, reporteeId, msgId, foundValid);
 
 	} else if (reportDumpMsg *wsm = dynamic_cast<reportDumpMsg*>(frame)) {
-		rec.record(2);
 		int reporteeId = wsm->getReporteeAddress();
 		int senderId = wsm->getSenderAddress();
 		intSet trueMsgs = csvToIntSet(std::string(wsm->getTrueMsgs()));
@@ -164,7 +173,6 @@ void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
 			ingestReport(senderId, reporteeId, msgId, false);
 	}
 	if ((!isMaster) && (myStage < stageCounter)) {
-		rec.record(3);
 		std::lock_guard<std::mutex> lock(staticMemberAccessLock);
 		RSUBroadcast *rsucast = new RSUBroadcast();
 		populateWSM(rsucast);
@@ -176,7 +184,6 @@ void MyVeinsRSUApp::onWSM(BaseFrame1609_4 *frame) {
 		broadcastsSentVector.record(++broadcastsSent);
 		myStage = stageCounter;
 	}
-	rec.deletefile();
 }
 void MyVeinsRSUApp::ingestReport(int reporterId, int reporteeId, int msgId, bool foundValid) {
 	std::lock_guard<std::mutex> lock(staticMemberAccessLock);
@@ -269,10 +276,6 @@ void MyVeinsRSUApp::initVehicleStats(int id) {
 
 void MyVeinsRSUApp::stageShift() {
 	std::lock_guard<std::mutex> lock(staticMemberAccessLock);
-	recorder rec(
-			std::string("rsuStageShift recorder").append(std::to_string(myId)).append(std::to_string(myStage)).append(
-					".txt"));
-	rec.record(0);
 	//STATS--------------------------
 	vehiclesInArchivedScope.record(archivedScope.size());
 	int sum = 0;
@@ -299,7 +302,6 @@ void MyVeinsRSUApp::stageShift() {
 			archivedScope[stagedScopeIt->first] = new intSet();
 		archivedScope[stagedScopeIt->first]->insert(stagedScopeIt->second.begin(), stagedScopeIt->second.end());
 	}
-	rec.record(1);
 	reportsBasket *archivedBasket = stagedBasket;
 	stagedBasket = currentBasket;
 	currentBasket = new reportsBasket();
@@ -308,49 +310,46 @@ void MyVeinsRSUApp::stageShift() {
 			reportDensity[i.first] = (float) archivedBasket->vehicles[i.first].reportedCount()
 					/ (float) archivedBasket->scope[i.first].size();
 		}
-		rec.record(2);
 		int_2_float secondaryScores = genarateSecondaryScores(archivedBasket);
+		intSet blacklistedReporters = generateBlacklistedReportersList(secondaryScores);
 		for (auto &i : secondaryScores) {
 			std::ofstream fout(
-					std::string("R/RSUFinals/NodeSecScore/").append(std::to_string(id2num(i.first, node0id))).c_str(),
+					std::string("R/").append(std::to_string(par("scnId").intValue())).append("/RSUFinals/NodeSecScore/").append(std::to_string(id2num(i.first, node0id))).c_str(),
 					std::ios::app);
-			fout << i.second << "\n";
+			fout << stageCounter<<","<<i.second<<","<<blacklistedReporters.count(i.first)<<",\n";
 			fout.close();
 		}
-		intSet blacklistedReporters = generateBlacklistedReportersList(secondaryScores);
 		usableReportsInBasketCount.record(stagedBasket->usableReportsInBasketCount(blacklistedReporters));
 		int_2_float primaryScores_RB = genaratePrimaryScores_ReportsBased(archivedBasket, intSet(), logs_RB);
 		int_2_int2float primaryScores_WOBL = genaratePrimaryScores_MessagesBased(archivedBasket, intSet(), logs_WOBL);
 		int_2_int2float primaryScores = genaratePrimaryScores_MessagesBased(archivedBasket, blacklistedReporters, logs);
-		int_2_int2float primaryScores_MA_WOBL = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
-				intSet(), logs_MA_WOBL);
-		int_2_int2float primaryScores_MA = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
-				blacklistedReporters, logs_MA);
+		//int_2_int2float primaryScores_MA_WOBL = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
+		//		intSet(), logs_MA_WOBL);
+		//int_2_int2float primaryScores_MA = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
+		//		blacklistedReporters, logs_MA);
 		scores = primaryScores;
 		blacklist = blacklistedReporters;
 		BroadcastResults(primaryScores, blacklistedReporters, stageCounter, par("liteNode").boolValue(), reportDensity);
 		//STATS
 		/*for (auto &i : logs) {
-			int node = i.first;
-			recorder evalrec(
-					std::string("RSUEval/").append(std::to_string(stageCounter)).append("--").append(
-							std::to_string(node)));
-			evalrec.enable();
-			for (auto &j : i.second.messages) {
-				evalrec.recordString(
-						std::string("\n").append(std::to_string(j.id)).append(",").append(
-								std::to_string(j.truthValue)));
-			}
-		}*/
+		 int node = i.first;
+		 recorder evalrec(
+		 std::string("RSUEval/").append(std::to_string(stageCounter)).append("--").append(
+		 std::to_string(node)));
+		 evalrec.enable();
+		 for (auto &j : i.second.messages) {
+		 evalrec.recordString(
+		 std::string("\n").append(std::to_string(j.id)).append(",").append(
+		 std::to_string(j.truthValue)));
+		 }
+		 }*/
 		recordPrimaryScores(logs, primaryScore_MessagesBasedVector);
 		recordPrimaryScores(logs_WOBL, primaryScore_MessagesBasedVector_WOBL);
-		recordPrimaryScores(logs_MA, primaryScore_MessagesBased_MajorityAbsolutistVector);
-		recordPrimaryScores(logs_MA_WOBL, primaryScore_MessagesBased_MajorityAbsolutistVector_WOBL);
+		//recordPrimaryScores(logs_MA, primaryScore_MessagesBased_MajorityAbsolutistVector);
+		//recordPrimaryScores(logs_MA_WOBL, primaryScore_MessagesBased_MajorityAbsolutistVector_WOBL);
 		blacklistedReportersInStagedBasket.record(blacklistedReporters.size());
 	}
-	rec.record(3);
 	delete archivedBasket;
-	rec.deletefile();
 }
 void MyVeinsRSUApp::recordPrimaryScores(int2VehMsgHistory &lgs,
 		std::tr1::unordered_map<int, std::tr1::unordered_map<int, cOutVector*>> scoresVector) {

@@ -28,10 +28,12 @@ simple MyVeinsRSUApp extends DemoBaseApplLayer
     parameters:
     	@class(veins::MyVeinsRSUApp);
     	string appName = default("MyVeinsRSUApp");
-    	double stageShiftInterval = default(10s) @unit(s);
-    	int logSplitFactor = default(5);
-		int logSplitLevel = default(4);
-		int logSplitSmallest = default(10);
+    	double stageShiftInterval = default(20s) @unit(s);
+    	int logSplitFactor;
+		int logSplitLevel;
+		int logSplitSmallest;
 		bool isMaster = default(false);
 		bool liteNode = default(false);
+		
+		int scnId;
 }

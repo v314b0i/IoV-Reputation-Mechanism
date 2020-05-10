@@ -28,9 +28,9 @@ simple MyVeinsNodeApp2 extends DemoBaseApplLayer
     parameters:
     	@class(veins::MyVeinsNodeApp2);
     	string appName = default("MyVeinsNodeApp2");
-    	int logSplitFactor = default(5);
-		int logSplitLevel = default(4);
-		int logSplitSmallest = default(10);
+    	int logSplitFactor;
+		int logSplitLevel;
+		int logSplitSmallest;
     	int percentageWithBadSendingAccuracy;
     	int badSendingAccuracyPercentage;
     	int goodSendingAccuracyPercentage;
@@ -49,4 +49,6 @@ simple MyVeinsNodeApp2 extends DemoBaseApplLayer
 		bool withoutReportDumpSharing = default(false);
 		bool isNode0 = default(false);
 		bool stagingMessagesEnabled = default(true);
+		
+		int scnId;
 }
