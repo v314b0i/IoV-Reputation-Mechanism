@@ -99,7 +99,7 @@ void MyVeinsNodeApp2::initialize(int stage) {
 			sentMsgGlobal=0;
 			sentMsgGlobalVector=new cOutVector("sentMsgGlobalVector");
 		}
-		//manually setting nodes 1,3 as bad senders and 0,2 as good senders.
+		/*//manually setting nodes 1,3 as bad senders and 0,2 as good senders.
 		if ((int) myId == num2id(1, node0id) || (int) myId == num2id(3, node0id)) {
 			sendingAccuracy = (float) par("badSendingAccuracyPercentage").intValue() / (float) 100;
 		} else if ((int) myId == num2id(2, node0id) || (int) myId == num2id(4, node0id)) {
@@ -109,7 +109,7 @@ void MyVeinsNodeApp2::initialize(int stage) {
 		//manually setting nodes 0,1 as bad reporters
 		if ((int) myId == num2id(1, node0id) || (int) myId == num2id(0, node0id))
 			evaluatingAccuracy = (float) par("badEvaluatingAccuracyPercentage").intValue() / (float) 100;
-
+*/
 		//removing the message evaluatability limitation for rogue reporting nodes
 		if (evaluatingAccuracy == ((float) par("badEvaluatingAccuracyPercentage").intValue() / (float) 100))
 			evaluatableMessages = 1;
@@ -319,6 +319,7 @@ void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) {
 		}
 	} else if (RSUBroadcast *wsm = dynamic_cast<RSUBroadcast*>(frame)) {
 		try {
+			return;
 			recorder rec(
 					std::string("wsm=RSUBroadcast").append(std::to_string(myId)).append(
 							std::to_string(wsm->getBroadcastId())).append(".txt"));

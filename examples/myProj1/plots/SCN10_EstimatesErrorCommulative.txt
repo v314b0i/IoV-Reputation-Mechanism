@@ -1,0 +1,59 @@
+### Scenario: 10 ###
+
+
+
+###		Report Based		###|
+|---------------------------------------------------------------|
+|	Nodes evaluated:	50/50				|
+|		(100.0% of Total Nodes)				|
+|_______________________________________________________________|
+|					|#nodes	|%nodes *	|
+|---------------------------------------------------------------|
+| Estimates Within 01% of Actual:	|4	|8.0%		|
+| Estimates Within 05% of Actual:	|11	|22.0%		|
+| Estimates Within 10% of Actual:	|28	|56.0%		|
+| Estimates Within 15% of Actual:	|42	|84.0%		|
+| Estimates Within 20% of Actual:	|44	|88.0%		|
+| Estimates Within 25% of Actual:	|44	|88.0%		|
+| Estimates Within 30% of Actual:	|44	|88.0%		|
+| Estimates Within 35% of Actual:	|44	|88.0%		|
+|---------------------------------------------------------------|
+ *= (of those evaluated)
+
+
+###		Without Blacklisting		###|
+|---------------------------------------------------------------|
+|	Nodes evaluated:	50/50				|
+|		(100.0% of Total Nodes)				|
+|_______________________________________________________________|
+|					|#nodes	|%nodes *	|
+|---------------------------------------------------------------|
+| Estimates Within 01% of Actual:	|1	|2.0%		|
+| Estimates Within 05% of Actual:	|49	|98.0%		|
+| Estimates Within 10% of Actual:	|50	|100.0%		|
+| Estimates Within 15% of Actual:	|50	|100.0%		|
+| Estimates Within 20% of Actual:	|50	|100.0%		|
+| Estimates Within 25% of Actual:	|50	|100.0%		|
+| Estimates Within 30% of Actual:	|50	|100.0%		|
+| Estimates Within 35% of Actual:	|50	|100.0%		|
+|---------------------------------------------------------------|
+ *= (of those evaluated)
+
+
+###		With Blacklisting		###|
+|---------------------------------------------------------------|
+|	Nodes evaluated:	50/50				|
+|		(100.0% of Total Nodes)				|
+|_______________________________________________________________|
+|					|#nodes	|%nodes *	|
+|---------------------------------------------------------------|
+| Estimates Within 01% of Actual:	|1	|2.0%		|
+| Estimates Within 05% of Actual:	|50	|100.0%		|
+| Estimates Within 10% of Actual:	|50	|100.0%		|
+| Estimates Within 15% of Actual:	|50	|100.0%		|
+| Estimates Within 20% of Actual:	|50	|100.0%		|
+| Estimates Within 25% of Actual:	|50	|100.0%		|
+| Estimates Within 30% of Actual:	|50	|100.0%		|
+| Estimates Within 35% of Actual:	|50	|100.0%		|
+|---------------------------------------------------------------|
+ *= (of those evaluated)

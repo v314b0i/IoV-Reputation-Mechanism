@@ -3229,6 +3229,7 @@
       <items xsi:type="scave:Add" filterPattern="name(sentMsgGlobalVector)  OR name(messagesInArchivedScope) " type="VECTOR"/>
       <items xsi:type="scave:LineChart" name="coverage" lineNameFormat="">
         <properties name="Graph.Title" value="coverage"/>
+        <properties name="X.Axis.Max" value="1500.0"/>
       </items>
     </datasets>
   </datasets>
