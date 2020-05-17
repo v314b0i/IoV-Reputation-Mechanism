@@ -314,13 +314,21 @@ void MyVeinsRSUApp::stageShift() {
 		intSet blacklistedReporters = generateBlacklistedReportersList(secondaryScores);
 		for (auto &i : secondaryScores) {
 			std::ofstream fout(
-					std::string("R/").append(std::to_string(par("scnId").intValue())).append("/RSUFinals/NodeSecScore/").append(std::to_string(id2num(i.first, node0id))).c_str(),
-					std::ios::app);
-			fout << stageCounter<<","<<i.second<<","<<blacklistedReporters.count(i.first)<<",\n";
+					std::string("R/").append(std::to_string(par("scnId").intValue())).append("/RSUFinals/NodeSecScore/").append(
+							std::to_string(id2num(i.first, node0id))).c_str(), std::ios::app);
+			fout << stageCounter << "," << i.second << "," << blacklistedReporters.count(i.first) << ",\n";
 			fout.close();
 		}
 		usableReportsInBasketCount.record(stagedBasket->usableReportsInBasketCount(blacklistedReporters));
-		int_2_float primaryScores_RB = genaratePrimaryScores_ReportsBased(archivedBasket, intSet(), logs_RB);
+		/*int_2_float primaryScores_RB = genaratePrimaryScores_ReportsBased(archivedBasket, intSet());
+		for (auto &i : primaryScores_RB) {
+			std::ofstream fout(
+					std::string("R/").append(std::to_string(par("scnId").intValue())).append("/RSUFinals/NodeAcc/RBM/").append(
+							std::to_string(id2num(i.first, node0id))).c_str(), std::ios::app);
+			fout << stageCounter << "," << i.second << ",\n";
+			fout.close();
+		}*/
+		int_2_float primaryScores_RBQ = genaratePrimaryScores_ReportsBased_quick(archivedBasket, intSet(), logs_RB);
 		int_2_int2float primaryScores_WOBL = genaratePrimaryScores_MessagesBased(archivedBasket, intSet(), logs_WOBL);
 		int_2_int2float primaryScores = genaratePrimaryScores_MessagesBased(archivedBasket, blacklistedReporters, logs);
 		//int_2_int2float primaryScores_MA_WOBL = genaratePrimaryScores_MessagesBased_MajorityAbsolutist(archivedBasket,
@@ -363,7 +371,7 @@ void MyVeinsRSUApp::recordPrimaryScores(int2VehMsgHistory &lgs,
 		}
 	}
 }
-int_2_float MyVeinsRSUApp::genaratePrimaryScores_ReportsBased(reportsBasket *basket, intSet blacklist,
+int_2_float MyVeinsRSUApp::genaratePrimaryScores_ReportsBased_quick(reportsBasket *basket, intSet blacklist,
 		std::tr1::unordered_map<int, std::pair<int, int>> &logs) {
 	int_2_float rawScores;
 	for (auto basketIt = basket->vehicles.begin(); basketIt != basket->vehicles.end(); ++basketIt) {
@@ -379,6 +387,19 @@ int_2_float MyVeinsRSUApp::genaratePrimaryScores_ReportsBased(reportsBasket *bas
 		}
 		rawScores[vehId] = (float) logs[vehId].first / (float) logs[vehId].second;
 		primaryScore_ReportsBasedVector[vehId]->record(rawScores[vehId]);
+	}
+	return rawScores;
+}
+int_2_float MyVeinsRSUApp::genaratePrimaryScores_ReportsBased(reportsBasket *basket, intSet blacklist) {
+	int_2_float rawScores;
+	for (auto basketIt = basket->vehicles.begin(); basketIt != basket->vehicles.end(); ++basketIt) {
+		int vehId = basketIt->first;
+		vehStatsEntityCentric &veh = basketIt->second;
+		std::vector<float> impliedScores;
+		for (auto reporterIt = veh.reporters.begin(); reporterIt != veh.reporters.end(); ++reporterIt)
+			impliedScores.insert(impliedScores.end(),
+					((float) reporterIt->second.reportedTrueCount()) / ((float) reporterIt->second.reportedCount()));
+		rawScores[vehId] = vectorMedian(impliedScores);
 	}
 	return rawScores;
 }

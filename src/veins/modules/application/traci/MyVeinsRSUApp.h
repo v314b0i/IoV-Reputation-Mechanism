@@ -24,8 +24,9 @@ protected:
 	void stageShift();
 	int_2_float genarateSecondaryScores(reportsBasket *basket);
 	intSet generateBlacklistedReportersList(int_2_float secondaryScores);
-	int_2_float genaratePrimaryScores_ReportsBased(reportsBasket *basket, intSet blacklist,
+	int_2_float genaratePrimaryScores_ReportsBased_quick(reportsBasket *basket, intSet blacklist,
 			std::tr1::unordered_map<int, std::pair<int, int>> &logs);
+	int_2_float genaratePrimaryScores_ReportsBased(reportsBasket *basket, intSet blacklist);
 	int_2_int2float genaratePrimaryScores_MessagesBased_MajorityAbsolutist(reportsBasket *basket, intSet blacklist,
 			int2VehMsgHistory &logs);
 	int_2_int2float genaratePrimaryScores_MessagesBased(reportsBasket *basket, intSet blacklist,

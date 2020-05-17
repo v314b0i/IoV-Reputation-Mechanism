@@ -26,7 +26,7 @@
 #include <string>
 #include <iostream>
 using namespace veins;
-
+//TODO: FIXME: add bool broadcsstReady in RSU app to prevent slave RSUs from sending empty broadcasts. then fix the whole broadcast issue
 Define_Module(veins::MyVeinsNodeApp2);
 int MyVeinsNodeApp2::node0id = 100; // for naming vehicles correctly.
 int MyVeinsNodeApp2::sentRprtGlobal;
@@ -192,14 +192,14 @@ void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) {
 			bool val = inaccurateBoolCheck(wsm->getCorrect(), evaluatingAccuracy);
 			sentReportsVector.record(++sentRprt);
 			sentRprtGlobalVector->record(++sentRprtGlobal);
-
+			if (val == wsm->getCorrect())
+				sentCorrectReportsVector.record(++sentCorrectRprt);
 			std::ofstream fou(std::string("R/").append(std::to_string(par("scnId").intValue())).append("/NodeFinals/NodeRepAcc/").append(std::to_string(id2num(myId, node0id))).c_str(),
 					std::ios::trunc);
 			fou << (float) sentCorrectRprt / (float) sentRprt;
 			//temporary fix for misc error (veins or omnetpp). some nodes weren't doing this in the finish() function.
 			fou.close();
-			if (val == wsm->getCorrect())
-				sentCorrectReportsVector.record(++sentCorrectRprt);
+
 			veh.insertMyReport(myId, msgId, val);
 			reportMsg *rep = new reportMsg();
 			populateWSM(rep);
@@ -255,7 +255,7 @@ void MyVeinsNodeApp2::onWSM(BaseFrame1609_4 *frame) {
 			int senderId = wsm->getSenderAddress();
 			int requestedReporteeId = wsm->getRequestedReporteeAddress();
 			if (vehicles.find(requestedReporteeId) == vehicles.end()) {
-				rec.deletefile();
+				rec.deletefile(); //TODO: FIXME: initvehicle here with dontReqDump so we dont request a dump aswell.
 				return;
 			}
 			vehMsgHistoryDynamic2 &veh = *(vehicles[requestedReporteeId]);

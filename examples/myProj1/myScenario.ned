@@ -25,9 +25,9 @@ import org.car2x.veins.nodes.Scenario;
 
 network myScenario extends Scenario
 {
-	//@display("bgb=5000,3000;bgi=myImages/b,s;bgg=1000,2,grey95;bgu=km");
+	@display("bgb=5000,3000;bgi=myImages/b,s;bgg=1000,2,grey95;bgu=km");
     submodules:
-        rsu[15]: RSU {
+        rsu[12]: RSU {
             @display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
         }
 }
