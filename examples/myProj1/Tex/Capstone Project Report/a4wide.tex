@@ -1,0 +1,46 @@
+\documentclass[parskip=true, pagesize=auto]{scrartcl}
+
+\usepackage{fixltx2e}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+\addtokomafont{disposition}{\rmfamily}
+\sisetup{obeybold}
+
+\newunit{\point}{pt}
+\newunit{\inch}{in}
+
+\title{The \textsf{a4wide} package}
+\author{Jean-François Lamy \and Alexander Holt}
+\date{August 1994}
+
+
+\begin{document}
+
+\maketitle
+
+The \textsf{a4wide} package redefines the margins so that they are more in line with what we are used to see.
+It was written by Jean-François Lamy in July 1986 and minimally modified for \LaTeXe\ by Alexander Holt, August 1994.
+
+The package is released under the LPPL, version 1, or (at your option)
+any later version.
+
+Depending on the base font size, it modifies the margins as follows:
+%
+\begin{center}
+  \begin{tabular}{@{}S[tabformat=2]S[tabformat=2]S[tabformat=1.3]S[tabformat=1.3]S[tabformat=1.2]@{}}
+    \toprule
+    {Base font}          & {Number of lines} & {Width of}               & {Width of left and}         & {Width of}                    \\
+    {size (\si{\point})} & {in page body}    & {text line (\si{\inch})} & {right margin (\si{\inch})} & {marginal notes (\si{\inch})} \\
+    \midrule
+    10                   & 53                & 5.875                    & 0.25                        & 0.75                          \\
+    11                   & 46                & 6.125                    & 0.125                       & 0.75                          \\
+    12                   & 42                & 6.375                    & 0                           & 0.75                          \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\end{document}

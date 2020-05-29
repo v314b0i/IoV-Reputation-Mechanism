@@ -364,7 +364,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Simple Feedback Driven Accuracy Based\\ Reputation Mechanism for IoV}
+\title{Simple Feedback Driven Accuracy Based\\ Reputition Mechanism for IoV}
 %
 %
 % author names and IEEE memberships
@@ -378,7 +378,7 @@
 %TODO: should i say geelong like in Dr. Doss's latest paper or Burwood?
 %TODO: get Dr. Jiang's IEEE membership category.
 \author{Rohan~Dahiya,
-        Frank~Jiang,
+        Frank~Jiang,~\IEEEmembership{DontKnow,~IEEE,}
         and~Robin~Doss,~\IEEEmembership{Senior Member,~IEEE}% <-this % stops a space
 \thanks{R. Dahiya is a visiting researcher at the School of Info Technology, Deakin University, Burwood, VIC 3125, Australia, and a student at Vellore Institute of Technology, Vellore, TN 632014, India. e-mail: rohandahiya@outlook.in}% <-this % stops a space
 \thanks{F. Jiang and R. Doss are with School of Info Technology, Deakin University, Geelong, VIC 3220, Australia}% <-this % stops a space
@@ -438,12 +438,12 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract or keywords.
 \begin{abstract}
-Several mechanisms have been proposed for trust management in SIoV. Most of these employ reputation as an important factor. There have also been various mechanisms proposed for detection of false information being shared in IoVs in various applications. The advent of 5G is expected to enable fast communication between nodes in an IoV thereby removing previously limiting factors on applications. We propose and evaluate a reputation mechanism for IoV that uses false information detection mechanisms to generate feedback and uses this feedback, after filtration/vetting, to generate a reputation score that may be used as part of a trust management system or as a factor in a false message detection system.
+The abstract goes here.
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-IoV, VANET, V2X, Reputation System, Trust Management.
+IoV, IoT, Reputition System, Trust Management, VANET.
 \end{IEEEkeywords}
 
 
@@ -464,7 +464,6 @@ IoV, VANET, V2X, Reputation System, Trust Management.
 
 
 \section{Introduction}
-
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
 % 
@@ -480,20 +479,23 @@ IoV, VANET, V2X, Reputation System, Trust Management.
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{V}{ehicular} ad-hoc networks (VANETs) which have been around for decades are based on the principles of mobile ad hoc networks (MANETs) being applied to the domain of vehicles and infrastructure. They consist of On Board Units (OBUs) in vehicles (peers/nodes) and Road Side Units (RSUs). Internet of Vehicles (IoV) is a concept that is derived from VANETs where each node and RSU is internet enabled and is capable of communicating with each other via dedicated short-range communication (DSRC). Numerous uses of IoV have been proposed from infotainment to traffic safety related application such as traffic information sharing, emergency vehicle notification systems and collision avoidance systems.
-\\5G, the fifth generation technology standard for cellular networks \cite{c:INTERNET_5garticle}, began being deployed in 2019 and mid-band 5G (which offers much higher data transfer rates) is expected to be available in most metropolitan areas by 2020. In Europe, a consortium of companies, is helping to develop a 5G system architecture to provide optimized end-to-end vehicle to everything (V2X) connectivity called the 5GCAR project.
-V2X is an umbrella term that refers to a combination of more specific types of communication as V2I (vehicle-to-infrastructure), V2N (vehicle-to-network), V2V (vehicle-to-vehicle), V2P (vehicle-to-pedestrian), V2D (vehicle-to-device) and V2G (vehicle-to-grid). 5G can be expected to mitigate some of the limitations in IoV and pave the way for applications that would not have been plausible before.
-\\Most application in IoV rely on cooperativeness of other nodes to function especially applications that are based on the exchange of information between nodes. False information being shared by malicious nodes can negatively affect the utility of these application. For this reason trust management systems and reputation mechanisms are employed in Social Internet of Vehicles to quantify the reliability of information received.
-\\ The scope of this paper is to introduce a primarily centralised reputation mechanism that aims to accurately estimate the accuracy of a nodes messages based on feedback from other nodes while filtering out false feedback. A review of related works on attacks in IoV, False information detection systems and trust management systems is presented in Sections \ref{sec:RV:attacks}, \ref{sec:RV:FalseMsgDetection} and \ref{sec:RV:trust&Reputation} respectively. The proposed methods are described in Section \ref{sec:PM}. The proposed methods were tested via software simulation, details on the experiments and the observations are presented in Section \ref{sec:Experiments} and Section \ref{sec:Results} respectively, and the conclusion is contained in Section \ref{sec:Conclusion}.
+\IEEEPARstart{T}{his} demo file is intended to serve as a ``starter file''
+for IEEE journal papers produced under \LaTeX\ using
+IEEEtran.cls version 1.8b and later.
+% You must have at least 2 lines in the paragraph with the drop letter
+% (should never be an issue)
+I wish you the best of success.
 
-%\hfill mds
+\hfill mds
  
-%\hfill August 26, 2015
+\hfill August 26, 2015
 
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 
+\subsubsection{Subsubsection Heading Here}
+Subsubsection text here.
 
 
 % An example of a floating figure using the graphicx package.
@@ -592,6 +594,9 @@ V2X is an umbrella term that refers to a combination of more specific types of c
 
 \section{Related Works}
 \label{sec:RV}
+\subsection{VANETs and IoV}
+\label{sec:RV:vanets&IoV}
+TODO:  brief introduction to VANETS and IoV. also 5G V2X article.
 \subsection{Attacks in IoV}
 \label{sec:RV:attacks}
 A survey of various attacks and detection mechanisms on VANETs and IoVs has been done by Sakiz et al. \cite{c:AttacksSurvey}. A brief description of the various attacks described is as follows.
@@ -603,7 +608,7 @@ A survey of various attacks and detection mechanisms on VANETs and IoVs has been
 	\item \textbf{Bogus Information Attack} A type of soft attack where a malicious node sends false information in the network.
 	\item \textbf{Replay Attack} An attacker replays a message that was sent earlier out of context. Unlikely with the use of timestamps.
 \end{itemize}
-The bogus information attack mentioned above is based on the fact that vehicles in an IoV share information among each other and use that information in various protocols. In this attack a malicious node disseminates false information with the aim of manipulating the behaviour of other nodes, this affect is increased if the attacker is moving around swiftly\cite{c:MotorwayAttack}. Various variation of this attack have been studied\cite{c:AttacksSurvey} such as False Position Information\cite{c:FalsePositionInformation}, Sensor Tampering, Illusion Attack\cite{c:IllusionAttack} and GPS Spoofing/Tunnel Attack\cite{c:TunnelAttack}. Various methods have been proposed for the detection of false messages as described in the following subsection (\ref{sec:RV:FalseMsgDetection}). These can help a vehicle identify which messages to ignore and the results of these methods could further be used to detect and purge attackers from the network for which voting, evaluation and reputation based mechanisms have been suggested\cite{c:MDSandLEAVE}(\textit{Local Eviction of Attackers by Voting Evaluators})\cite{c:messagefilterCoE}. 
+The bogus information attack mentioned above is based on the fact that vehicles in an IoV share information among each other and use that information in various protocols. In this attack a malicious node disseminates false information with the aim of manipulating the behaviour of other nodes, this affect is increased if the attacker is moving around swiftly\cite{c:MotorwayAttack}. Various variation of this attack have been studied\cite{c:AttacksSurvey} such as False Position Information\cite{c:FalsePositionInformation}, Sensor Tampering, Illusion Attack\cite{c:IllusionAttack} and GPS Spoofing/Tunnel Attack\cite{c:TunnelAttack}. This can be an issue as many IoV protocols rely on cooperativeness of vehicles to function. Various methods have been proposed for the detection of false messages as described in the following subsection (\ref{sec:RV:FalseMsgDetection}). These can help a vehicle identify which messages to ignore and the results of these methods could further be used to detect and purge attackers from the network for which voting, evaluation and reputation based mechanisms have been suggested\cite{c:MDSandLEAVE}(\textit{Local Eviction of Attackers by Voting Evaluators})\cite{c:messagefilterCoE}. 
 
 \subsection{False Message Detection}
 \label{sec:RV:FalseMsgDetection}
@@ -611,24 +616,11 @@ Lo et al. \cite{c:IllusionAttack} propose a mechanism called \textit{Plausibilit
 Another  message filtering model is proposed by Kim et al. \cite{c:messagefilterCoE}. The model includes a threshold curve and a certainty of event (CoE) curve. The CoE, which indicates the confidence level of a received message, is calculated by combining the data from various sources such as local sensors, RSUs and reputation mechanism. The solution relies on honest majority. The threshold curve shows the insensitivity of the driver with respect to the distance to the event. Sensitivity and the distance to the event are inversely proportional. Therefore, while the threshold value is decreasing, the CoE value keeps increasing and, if it exceeds the threshold value which is assigned according to the application, the driver is warned with an alert message. The paper suggested the use of a rudimentary reputation system as an input factor for the CoE score among 5 other factors.
 \subsection{Trust Management and Reputation}
 \label{sec:RV:trust&Reputation}
-Iqbal et al. \cite{c:trustInSIoV} enumerated the various factors involved in the conceptualisation of a trust system in Social Internet of Vehicles (SIoV) where SIoV differs from IoV by the fact that objects in SIoV maintain social relationships. Trust management mechanism in SIoV serves the purpose of establishing a node as trustworthy and to gauge the trustworthiness of other nodes in the network. The eight main factors enumerated for evaluation of trust were:\\
-	\begin{enumerate}
-		\item Reputation - Score based on feedback.
-		\item Context
-		\item Environment
-		\item Goals
-		\item User expectations
-		\item Social relationships
-		\item Willingness to connect
-		\item Timeliness of evaluation 
-	\end{enumerate}
-Of these eight factors, reputation plays a fundamental role. Various methods have been proposed of a reputation mechanism in VANETs. The utility of various reputation mechanisms proposed for MANETs is limited in VANETs due to the dynamic nature of the network where no two nodes are in range of each other for long periods. Various reputation mechanisms have been proposed for specific applications such as location verification\cite{c:positionVerificationRepMech}. The importance of a decentralised system for trust management in VANETs has been recognised in \cite{c:Huang_decentrTrustMechVANETS} among other previous efforts surveyed in \cite{c:trustinVANETsurvey}.
+TODO: just to expand on this paper ->\cite{c:trustInSIoV}.  and 2 others.
+
 \section{Proposed Methods}
 \label{sec:PM}
-With the advent of 5G networks enabling rapid 2-way communication, we propose a primarily centralised system that leverages this connectivity for reputation score generation based on accuracy of information shared, where the information is not restricted to any specific type or application as long as it can be evaluated to be true or false by a node. The aim of this mechanism is to accurately predict the accuracy of information from sources based on feedback on that information and to filter out false feedback. This reputation mechanism may then be used as a sub module of a multi-factor trust management system.
-We describe our proposed system for Reputation Score generation in this section as well as propose methods of sharing feedback to the network and usage of the scores. \\ We have divided the section into three subsections. The first subsection details how the feedback is created, propagated and collected in the network, in the second sub-section methods of score generation are described and the third sub-section details the proposed method for the distribution/application of the scores generated. It is assumed that the RSUs can communicate with each other and therefore can distribute the computation and maintain shared storage in the from of IPFS etc.
-%(TODO add citation?)
-However, the details of it are beyond the scope of this article. For simplicity the network of RSUs is referred to as a single unit henceforth in this section.
+We Describe our proposed system for Reputation Score generation in this section as well as propose methods of sharing feedback to the network and usage of the scores. The system is based on using an estimate of the utility of a node's previous messages as it's reputation.\\ We divide the section into three subsections ('Feedback Generation and Collection', 'Score Generation' and 'Usage'). The first subsection details how the feedback is created and propagated and collected in the network, in the second sub-section methods of score generation are described and the third sub-section details the proposed method for the distribution/application of the scores generated. It is assumed that the RSUs can communicate with each other and therefore can maintain shared storage in the from of IPFS etc. Processing tasks can also be distributed among the RSUs (TODO add citation?), however the details of it are beyond the scope of this article. For simplicity the network of RSUs is referred to as a single unit henceforth in this section.
 \subsection{Feedback Generation and Collection}
 \label{sec:PM:FeedbackGen&Collect}
 Nodes in an IoV may be able to classify some of the information they receive as true or false either by means of self observation or context aware deduction using primarily data centric methods of false information detection such as the those proposed by Kim et al.\cite{c:messagefilterCoE} and Lo et al.\cite{c:IllusionAttack}, as previously mentioned in Section \ref{sec:RV:FalseMsgDetection}. If a message is determined to be true or false by a receiving node, it can share feedback on it with the other nodes of the network. The usage of this feedback is detailed in subsequent subsections. In the proposed system feedback is shared primarily in the form of a report comprising of 4 elements: the reportee's id (or address), the reporter's id (or address), the message id (or a unique message identifier), and a boolean value used to indicate if the message being reported on was found to be true or false by the reporter. 
@@ -637,21 +629,21 @@ The feedback exchange in the network is triggered by the following events:
 \begin{itemize}
 	\item \textbf{Message Classified:} Whenever the truthfulness of a received message is determined, a report is created and shared on the network.
 	\item \textbf{Message received from a sender for the first time:} In order to bring new nodes joining a network up to par on the feedback on nodes with the rest of the network, whenever a node $ a $ receives a message from a node $ b $ on which it has no feedback information, it ($ a $) sends a "Request for Reports" message containing only $ b $'s id.
-	\item \textbf{Request for Reports Received:} When a Request for Reports on any node $ b $ is received by some node $ a $, it sends a "Reports Dump" message containing all the reports it has sent on $ b $ that it contains in storage.
+	\item \textbf{Request for Reports Recieved:} When a Request for Reports on any node $ b $ is receieved by some node $ a $, it sends a "Reports Dump" message containing all the reports it has sent on $ b $ that it contains in storage.
 \end{itemize}
 \subsubsection{Feedback Collection at RSU}
 Three lists of messages are maintained: Current Scope, Staged Scope, Archived Scope.
-All reports that are received are put into one of two baskets:
+All reports that are recieved are put into one of two baskets:
 \begin{enumerate}
 	\item \textbf{Current Basket}: if the message that the report is on is not in Staged Scope or Archived Scope, the message is added to the Current Scope and the report is collected in the Current Basket.
 	\item \textbf{Staged Basket}: Only reports on messages that are listed in the staged scope are collected in the staged basket.
 \end{enumerate}
-If a report is received on a message that is in the Archived Scope, it is ignored. Each basket stores the reports that are inserted in it and it's implementation can include variables to maintain some metadata on the reports to facilitate the score generation process which is detailed later. At regular intervals of time, which roughly equals the average amount of time between a node sending a message and another node receiving a report on that message, a "Stage Shift" event is triggered. When Stage shift occurs the elements of the staged scope are added to archived scope. Secondary Scores and Message truth-values are calculated based on the contents of the Staged Basket before it is emptied, this process is elaborated in following subsections. These truth-values are then inserted into Logs. After this the contents of the Current Basket are shifted to the Staged Basket before it is emptied. Corresponding operations are performed on the Staged and Current Scope lists. 
-The logs for each vehicle contain the calculated truth-values of messages sent by it, and other counters that are used to calculate the Primary Scores for it with optimal complexity.
-It can be summarised that the Archived Scope is the list of messages for which the truth-values have been calculated and inserted into the logs, the Staged Scope is the list of messages for which the reports are still being collected and that will be processed and inserted into logs at the next stage shift event, and the current scope is the expanding list of messages that will form the fixed message list of staged scope at the next stage shift event.
+If a report is recieved on a message that is in the Archived Scope, it is ignored. Each basket stores the reports that are inserted in it and it's implementation can include variables to maintain some metadata on the reports to facilitate the score generation process which is detailed later. At regular intervals of time, which roughly equals the average amount of time between a node sending a message a node receiving a report on that message, a "Stage Shift" event is triggered. When Stage shift occurs the elements of the staged scope are added to archived scope. Secondary Scores and Message Truthvalues are calculated based on the contents of the Staged Basket before it is emptied, this process is elaborated in following subsections. These Truthvalues are then inserted into Logs. After this the contents of the Current Basket are shifted to the Staged Basket before it is emptied. Corresponding operations are performed on the Staged and Current Scope lists. 
+The logs for each vehicle contain the calculated truthvalues of messages sent by it, and other counters that are used to calculate the Primary Scores for it with optimal complexity.
+It can be summarised that the Archived Scope is the list of messages for which the truthvalues have been calculated and inserted into the logs, the Staged Scope is the list of messages for which the reports are still being collected and that will be processed and inserted into logs at the next stage shift event, and the current scope is the expanding list of messages that will form the fixed message list of staged scope at the next stage shift event.
 \subsubsection{RSU Results Broadcasting and incorporation at Nodes}
 As mentioned previously, the Logs at the RSU contain the calculated truth-values of messages which are used to generate the Primary Scores, the calculation of these truth-values and Primary Scores is detailed in the subsequent subsection.
-In order to share it's results the RSU calculates the Primary Score of each node for various window sizes i.e [10,50,250,1250] or such and sends these (with other metadata) along with the list of blacklisted nodes in a message to all nodes in the network. Whenever a message from an RSU is received the node can make a copy of the blacklist to ignore reports from the blacklisted nodes, until the blacklist is updated again and it can insert dummy messages/reports from various nodes into it's own storage by reverse calculating from the received primary scores and metadata in order to emulate the same knowledge.
+In order to share it's results the RSU calculates the Primary Score of each node for various window sizes i.e [10,50,250,1250] or such and sends these (with other metadata) along with the list of blacklisted nodes in a message to all nodes in the network. Whenever a message from an RSU is received the node can make a copy of the blacklist to ignore reports from the blacklisted nodes, untill the blacklist is updated again and it can insert dummy messages/reports from various nodes into it's own storage by reverse calculating from the received primary scores and metadata in order to emulate the same knowledge.
 \subsection{Score Generation}
 \label{sec:PM:ScoreGeneretion}
 We describe the method of score-generation in this subsection. All data pertaining to reports and counters in this subsection and in Figures \ref{fig:ALG_ss} to \ref{fig:ALG_PSCalc} refers to the data collected in the staged basket up until the stage shift event occurs and the various score generation methods are called, unless otherwise specified to refer to data in Logs. 
@@ -660,7 +652,7 @@ The following sub-sub-sections describe the methods for ultimately generating th
 %\subsubsection{Reports Based (RAW) Score Generation}
 
 \subsubsection{Secondary Score Generation}
-When ever a new report is received by the RSU, counters corresponding to the number of positive and negative reports on a node and the number of positive and negative reports from a node on another node can be incremented. These counters can then be utilised to quickly calculate each node's median implied reputation score (MI Score), which is defined as the median of all the implied reputation scores for that node, where an implied reputation score of a node is the fraction of positive reports to total reports by another node. See Fig. \ref{fig:ALG_ss}, Alg. \ref{algo:mi}.
+When ever a new report is received by the RSU, counters corresponding to the number of positive and negative reports on a node and the number of positive and negative reports from a node on another node can be incremented. These counters can then be utilised to quickly calculate each node's median implied reputation score (MI Score), which is defined as the median of all the implied reputation scores for that node, where an implied reputation score of a node is the fraction of positive reports to total reports by another node. See Fig. \ref{fig:ALG_ss}, Alg. \ref{algo:SSCalc}.
 \begin{figure}[!t]\removelatexerror
 	\caption{Calculation of Secondary Scores} 
 	\label{fig:ALG_ss}
@@ -739,7 +731,7 @@ When ever a new report is received by the RSU, counters corresponding to the num
 By assuming the MI score for each node as a benchmark, the deviation of the scores implied by a node's reports from the respective MI scores is utilised as a measure of the utility of it's reports. This deviation is measured in terms of Mean Squared Deviation per report and is termed as the Secondary Score of the Node. It is calculated for each node as described in Fig. \ref{fig:ALG_ss} Alg. \ref{algo:SSCalc}.
 
 \subsubsection{Blacklist Generation}
-The Secondary Scores are a measure of abnormality on the reports of a node. This measure may be used to scale down the effect of it's reports during the Primary Score generation, or more simply it may be used to blacklist nodes whose Secondary Score crosses a certain threshold. The latter approach was pursued by us during experimentation where a simple heuristic method of determining a dynamic threshold based on the distribution of the secondary scores was adopted. With the assumption of honest majority the median of secondary scores must not be more than that of a dishonest node with abnormally lower utility of reports. Therefore the threshold value was defined as a function of the median of all Secondary Scores and the median absolute deviation around that median. The process of the generation of the blacklist is as described in Fig. \ref{fig:ALG_blklist} Alg. \ref {algo:BLKLGen} 
+The Secondary Scores are a measure of abnormality on the reports of a node. This measure may be used to scale down the effect of it's reports during the Primary Score generation, or more simply it may be used to blacklist nodes who's Secondary Score crosses a certain threshold. The latter approach was pursued by us during experimentation where a simple heuristic method of determining a dynamic threshold based on the distribution of the secondary scores was adopted. With the assumption of honest majority the median of secondary scores must not be more than that of a dishonest node with abnormally lower utility of reports. Therefore the threshold value was defined as a function of the median of all Secondary Scores and the median absolute deviation around that median. The process of the generation of the blacklist is as described in Fig. \ref{fig:ALG_blklist} Alg. \ref {algo:BLKLGen} 
 \begin{figure}[!t]\removelatexerror
 	\caption{Generation of Blacklist} 
 	\label{fig:ALG_blklist}
@@ -772,7 +764,7 @@ The Secondary Scores are a measure of abnormality on the reports of a node. This
 \end{algorithm}
 \end{figure}
 \subsubsection{Primary Score Generation}
-The counters utilised during secondary score calculation may also be used to calculate estimates of accuracy for each node in constant time as described in Fig. \ref{fig:ALG_rawSCalc} - Alg. \ref{algo:rawSCalc}. This estimation is referred to as RAW Score and serves as a baseline during experiments, in itself the RAW score is highly inaccurate however it is quick to calculate therefore it may be employed at nodes where the usual method may not be applicable, this is detailed in Section \ref{sec:PM:usage:raw@node}.\\
+The counters utilised during secondary score calculation may also be used to calculate estimates of accuracy for each node in constant time as described in Fig. \ref{fig:ALG_rawSCalc} - Alg. \ref{algo:rawSCalc}. This estimation is referred to as RAW Score and serves as a baseline during experiments, in itself the RAW score is highly inaccurate however it is quick to calculate.\\
 With all the reports on each message indicating it to be either true or false, the mean of these reports can be calculated and treated as a fuzzy truth-value of it. As mentioned earlier the primary score is an estimation of the accuracy of all the information shared by a node, this can be trivially calculated as the mean of the calculated truth-value of a set of messages by that node. During this calculation the reports by blacklisted nodes are ignored. The process of calculating these truth-values is as described in Fig. \ref{fig:ALG_PSCalc} - Alg. \ref{algo:TVCalc}. These calculated truth-values for messages are then inserted into the logs. From these logs we generate the Primary Score which is the mean of the truth-values of a set of messages. Calculating the Primary Score over the all the messages would give a close estimate of a nodes actual accuracy assuming it remains consistent however it is not likely to reflect a change in the accuracy of a node quickly. On the other hand the Primary Score of a node over a small window of message truth-values is likely to fluctuate more on every stage shift and not be an accurate estimate of the behaviour of a node however it would reflect a sudden change in th accuracy of a node quickly. The process of generating Primary Scores over a given window size for all nodes is described in Fig.\ref{fig:ALG_PSCalc} - Alg.\ref{algo:PSCalc}
 \begin{figure}[!t]\removelatexerror
 	\caption{RAW Score Calculation} 
@@ -854,9 +846,9 @@ With all the reports on each message indicating it to be either true or false, t
 \end{figure}
 \subsection{Usage}
 \label{sec:PM:usage}
-Trends in the Primary Scores of each nodes, over different window sizes, can be tracked to detect malicious behaviour such as perpetual inconsistency, drastic changes etc. besides the trivial case of being low. Likewise Secondary Scores can be monitored as well to identify and remove nodes from the network. In the process of calculating the MI Scores prior to Secondary Score Calculation (See Fig. \ref{fig:ALG_ss} Alg. \ref{algo:mi}) the distribution of the implied scores can be analysed by using statistical methods of multimodality detection such as Dip test\cite{c:DipTest} or Silverman's test\cite{c:SilvermansTest}, where a high degree of bi-modality can be an indicator of collusion to manipulate the reputation system. These options of deeper analysis have not been further explored in this article however have been mentioned here as an indicator of possible extension of the methods. In the scope of this article the calculated truth values are used to calculate the Primary Scores at various sizes and share them with the Nodes where their utilisation can be done in a number of \underline{alternative} ways. The application of the generated scores could be as an input to the false message detection system that generated the feedback this system depends on, as some methods consider reputation of the sender as a parameter for evaluation\cite{c:messagefilterCoE}. The reputation score could also used to select vehicles that must be removed from the network or it could be used as a factor from a broader trust management system\cite{c:trustInSIoV}.
+Trends in the Primary Scores of each nodes, over different window sizes, can be tracked to detect malicious behaviour such as perpetual inconsistency, drastic changes etc. besides the trivial case of being low. Likewise Secondary Scores can be monitored as well to identify and remove nodes from the network. In the process of calculating the MI Scores prior to Secondary Score Calculation (See Fig. \ref{fig:ALG_ss} Alg. \ref{algo:mi}) the distribution of the implied scores can be analysed by using statistical methods of multimodality detection such as Dip test\cite{c:DipTest} or Silverman's test\cite{c:SilvermansTest}, where a high degree of bimodality can be an indicator of collusion to manipulate the reputation system. These options of deeper analysis have not been further explored in this article however have been mentioned here as an indicator of possible extension of the methods. In the scope of this article the calculated truth values are used to calculate the Primary Scores at various sizes and share them with the Nodes where their utilisation can be done in a number of \underline{alternative} ways. The application of the generated scores could be as a an input to the false message detection system that generated the feedback this system depends on, as some methods consider reputation of the sender as a parameter for evaluation\cite{c:messagefilterCoE}. The reputation score could also used to select vehicles that must be removed from the network or it could be used as a factor from a broader trust management system\cite{c:trustInSIoV}.
 \subsubsection{Usage at RSU}
-As previously mentioned in Section \ref{sec:PM:FeedbackGen&Collect}, at the RSU the Primary Scores are calculated at certain window sizes for all nodes and this data along with some meta data such as the id or timestamp of the last message considered from each node is sent along with the blacklist as a message to the network. At the nodes this data of primary scores along with the metadata is used to create dummy message truth-values or reports (depending on the usage) to emulate the data that would produce these Primary Scores, This is done to reduce the amount of information that needs to be sent over the network. In a fast 5G network, all the truth values in a certain window may be shared for each vehicle.
+As previously mentioned in Section \ref{sec:PM:FeedbackGen&Collect}, at the RSU the Primary Scores are calculated at certain window sizes for all nodes and this data along with some meta data such as the id or timestamp of the last message considered from each node is sent along with the blacklist as a message to the network. At the nodes this data of primary scores along with the metadata is used to create dummy message truth-values or reports (depending on the usage) to emulate the data that would produce these Primary Scores, This is done to reduce the amount of information that needs to be sent over the network.
 \subsubsection{Usage at Nodes - Disabled Node}
 The nodes can depend on the RSU entirely to provide the Primary Scores. Pessimistically minimum of the primary scores of a node (over different window sizes) can be taken.\\
 \textbf{Advantages:} Low Computation at nodes\\
@@ -866,8 +858,7 @@ The nodes can depend on the RSU entirely to provide the Primary Scores. Pessimis
 	\item System is Entirely dependant on RSU
 \end{itemize}
 \subsubsection{Usage at Nodes - Adapted RAW Score Algorithm}
-\label{sec:PM:usage:raw@node}
-Reports can be used by nodes to calculate Reputation Scores by using an adaptation of the RAW Score Algorithm at the RSU (See Alg. \ref{algo:rawSCalc}) where the average of the last $ w' $ reports on a node is taken as a Primary score over a window size of $ w' $. When a RSU Broadcast is received, for each window size $ w $ for which a primary score exists on nodes, $ w $ messages with truth-value $ tv = Score^{Primary,w} $ are emulated. For each message to be emulated $ x $ number of dummy reports, whose average approximately equals the desired truth-value, are inserted into the logs, where $ x $ is the average number of reports per message (this can be included as part of the metadata in the RSU broadcast). The window sizes to be used when calculating Primary Scores locally can be calculated by scaling the window sizes used at the RSU by a factor of $ x $.\\
+Reports can be used by nodes to calculate Reputation Scores by using an adaptation of the RAW Score Algorithm at the RSU (See Alg. \ref{algo:rawSCalc}) where the average of the last $ w' $ reports on a node is taken as a Primary score over a window size of $ w' $. When a RSU Broadcast is received, for each window size $ w $ for which a primary score exists on nodes, $ w $ messages with truth-value $ tv = Score^{Primary,w} $ are emulated. For each message to be emulated $ x $ number of dummy reports, whose average $ \approx $ desired truth-value, are inserted into the logs, where $ x $ = average number of reports per message (this can be included as part of the metadata in the RSU broadcast). The window sizes to be used when calculating Primary Scores locally can be calculated by scaling the window sizes used at the RSU by a factor of $ x $.\\
 \textbf{Advantages:}
 	\begin{itemize}
 		\item More adaptable to change in behaviour of nodes, scores are dynamic between RSU Stage Shifts
@@ -875,10 +866,10 @@ Reports can be used by nodes to calculate Reputation Scores by using an adaptati
 	\end{itemize}
 \textbf{Disadvantages:} 
 	\begin{itemize}
-		\item System is largely dependant on RSU, Estimates will become highly inaccurate over time without RSU updates
+		\item System is Largely dependant on RSU, Estimates will become highly inaccurate over time without RSU updates
 	\end{itemize}
 \subsubsection{Usage at Nodes - Adapted Primary Score Algorithm}
-Reports can be used by nodes to calculate Reputation Scores by using an adaptation of the Primary Score Algorithm at the RSU (See Alg. \ref{algo:TVCalc} and \ref{algo:PSCalc}) where the average of the truth-values of the last $ w $ messages on a node is taken as a Primary score over a window size of $ w $. Messages with less than a certain number of reports on it can be kept in a buffer while more reports are received. Whenever a new report on a message is received it's truth-value is accordingly updated and so is the Primary Score over windows that includes the message. When a RSU Broadcast is received, for each window size $ w $ for which a primary score exists on nodes, $ w $ dummy messages with truth-value $ tv = Score^{Primary,w} $ are inserted. Reports from nodes that are blacklisted are purged and so are the reports on messages that have been evaluated by the RSU for Score generation. This data can be provided in the metadata of the RSU Broadcast\\
+Reports can be used by nodes to calculate Reputation Scores by using an adaptation of the Primary Score Algorithm at the RSU (See Alg. \ref{algo:TVCalc} and \ref{algo:PSCalc}) where the average of the truth-values of the last $ w $ messages on a node is taken as a Primary score over a window size of $ w $. Messages with less than a certain number of reports on it can be kept in a buffer while more reports are received. Whenever a new report on a message is received it's truth-value is accordingly updated and so is the Primary Score over windows what include the message. When a RSU Broadcast is received, for each window size $ w $ for which a primary score exists on nodes, $ w $ dummy messages with truth-value $ tv = Score^{Primary,w} $ are inserted. Reports from nodes that are blacklisted are purged and so are the reports on messages that have been evaluated by the RSU for Score Genaration. This data can be provided in the metadata of the RSU Broadcast\\
 \textbf{Advantages:}
 \begin{itemize}
 	\item More adaptable to change in behaviour of nodes than disabled node, scores are dynamic between RSU Stage Shifts
@@ -895,20 +886,21 @@ Reports can be used by nodes to calculate Reputation Scores by using an adaptati
 	\caption{Melbourne CBD Road Network}
 	\label{fig:CBDRoads}
 	%\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}
-	\includegraphics[width=\linewidth,keepaspectratio]{images/cbdmap.jpg}
+	\includegraphics[width=7cm,keepaspectratio]{images/cbdmap.jpg}
 \end{figure}
 \label{sec:Experiments}
-The core system was tested by software simulation in various scenarios. Details on the simulation set-up and parameters can be found in Appendix \ref{apdx:simSetUp}. Three different cases in two separate environments were simulated to give a total of six scenarios. The Environments were as follows:
+The system was tested by software simulation in various scenarions. Details on the Simulation Set-up and parameters can be found in Appendix \ref{apdx:simSetUp}. Three different cases in two separate environments were simulated to give a total of six scenarios. The Environments were as follows:
 \subsection{Environments}
 \label{sec:Experiments:env}
 \subsubsection{City}
-	The road network of Melbourne CBD was taken with vehicles spawning at random locations, at random times, driving to a random destinations, then going off-line. Lifespans of individual vehicles were short, however the network is always densely populated with new vehicles appearing as old ones go offline.	Meant to simulate the situation of traffic in a busy city centre. See Fig.. \ref{fig:CBDRoads}	
+	The road network of Melbourne CBD was taken with vehicles spawning at random locations, at random times, driving to a random destinations, then going off-line. Short lifespans of individual vehicles, however the network is always densely populated with new vehicles appearing as old ones go offline.\\
+	Meant to simulate the situation of traffic in a busy city centre. See Fig.. \ref{fig:CBDRoads}	
 \subsubsection{Highway}
-	A flow of a fixed number of vehicles was simulated to run on a fixed route, mostly comprised of straight multi-lane roads. All nodes had larger lifespans than before. By means of overtaking and other reasons, the order of initialisation was not maintained as the order in which the nodes continued to travel. It was meant to simulate the situation of vehicles moving on a highway for a flow of vehicles from a point to a distant point.
+	A flow of a fixed number of vehicles was simulated to run on a fixed route, mostly comprised of straight multi-lane roads. All nodes had larger lifespans than before. By means of overtaking and other reasons, the order of initialisation was not maintained as the order in which the nodes continued to travel.\\ It was meant to simulate the situation of vehicles moving on a highway for a flow of vehicles from a point to a distant point.
 \subsection{Situations}
 \label{sec:Experiments:sit}
-Different situations were simulated to analyse the system's performance against various attack vectors of compromising the the systems ability to produce accurate estimates. The behaviour of a regular node was programmed as follows: Overall accuracy of Sent Messages is around 90\%. The node can determine the truthfulness of 60\% messages it receives with an accuracy of 95\%. %TODO: add citation?.
-Further details of a regular node's behaviour can be  found in appendix \ref{apdx:simSetUp}.
+Different situations were simulated to analyse the system's performance against various attack vectors of compromising the the systems ability to produce accurate estimates. The behaviour of a regular node was programmed as follows: Overall accuracy of Sent Messages is around 90\%. The node can determine the truthfulness of 60\% messages it receives with an accuracy of 95\%. TODO: add citation.
+Further details of a regular nodes behaviour can be  found in appendix \ref{apdx:simSetUp}.
 \subsubsection{Situation 0}
 \label{sec:Experiments:sit:0}
 The first situation considered was that of a few (10\%) malicious nodes that send false information on the network with an accuracy of 5\%. The rest of the parameters controlling their behaviour was the same as regular nodes. This situation enables us to analyse the system's performance at detecting false messages and malicious nodes in a scenario where no node is sharing falsified feedback to jeopardise the reputation system. This can then be compared with other situations to spot degradation in performance.
@@ -929,7 +921,6 @@ The various permutations of environments and situations were termed as follows.
 	\item[-] Scenario 12: Situation 2 on Highway
 \end{itemize}
 \section{Results}
-\label{sec:Results}
 \begin{figure}[!t]
 	\caption{Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error in Scenario 0 (above) and Scenario 1 (below)}
 	\label{fig:plot:comparitiveSCN0&1}
@@ -956,8 +947,7 @@ Comparing the system's performance between scenario 0 and scenario 1 (where fals
 In Scenarios 2 and 12, where a more intelligent approach to sabotage the system's accuracy estimate (score) of a node was made by 20\% nodes in the network that acted like regular nodes except when sending reports on 5\% nodes that were the targets for the collusion, the accuracy of those target nodes was highly inaccurate as expected, this can be seen in Fig. \ref{fig:plot:psscatterSCN12} (lower) where the accuracy of 5 nodes was uniquely inaccurate. With blacklisting, however, the errors were minimal as can be observed in Fig. \ref{fig:plot:psscatterSCN12} (upper). This lack of error can again be attributed to the system's ability to accurately identify and blacklist nodes that send false feedback even some of the times. This can be observed from in Fig. \ref{fig:plot:ssSCN2} where nodes with slightly lower utility of reports blacklisted sometimes to most often as indicated by the light blue to red colours. It is important to note that the special collusion detection methods of multimodality detection\cite{c:DipTest}\cite{c:SilvermansTest} as explained in section \ref{sec:PM:usage} was not leveraged during experiments.
 
 \section{Conclusion}
-\label{sec:Conclusion}
-In this paper we proposed a primarily centralised reputation mechanism that relies on feedback generated by nodes using false information detection mechanisms to first evaluate the truth value for each message, after filtering out the false/malicious feedback using rudimentary statistical methods. Then, using these truth values, for messages the reputation score was calculated. We further proposed possible extensions of this method such as specialised method for detection of collusion, and various ways in which this data can be shared by the RSUs to the rest of the network. We also proposed the ways in which the nodes can utilise this data to generate reputation scores for nodes at their end and to dynamically alter this score in between RSU broadcasts. The core method for reputation score calculation was tested using software simulation where it was observed that the system was highly accurate at estimating the accuracy of nodes (reputation) when the feedback was entirely genuine. The estimates naturally became much more inaccurate with falsified feedback from ten percent of the network however this change in error was almost entirely eliminated with the proposed method for false feedback filtration. The same observations were made in a scenario where a large group of attackers maintained a good ratio of useful to false feedback by colluding to targeting specific few nodes.
+T
 
 % if have a single appendix:
 %\appendix[Proof of the Zonklar Equations]
@@ -981,7 +971,8 @@ In this paper we proposed a primarily centralised reputation mechanism that reli
 \subsection{Traffic Simulation}
 Traffic was simulated on SUMO. For city environment the road network of Melbourne CBD was generated using the osm web wizard script. Vehicle trips for this road network were created by a call to the random trips script from within the osm web wizard script. Routes for the generated random passenger trips were calculated with explicitly calling the duarouter method of SUMO. For the Highway Scenario, road network of larger Melbourne area was generated using the osm web wizard script. After this two points on the network, one in front of Deakin University, Burwood, and one in Fitzroy were chosen as starting and ending points. A route for the same was calculated using Duarouter and a flow of 50/100 vehicles was generated on that route.
 \subsection{Network/Application Simulation}
-Veins on OMNET++ was utilised to simulate the network and the application. The default parameters in veins for antenna strength were utilised which are based on \cite{c:AntennaOmnetpp}, same applies to 11p parameters and so on.
+Veins on OMNET++ was utilised to simulaate the network and the application. The default parameters in veins for antenna strength etc. were utilised which are based on TODO add citation.
+
 \subsection{Regular Nodes }
 \begin{itemize}
 	\item Overall accuracy of Sent Messages is around 90\%.
@@ -995,64 +986,8 @@ Other nodes' behaviour was different from a regular in only ways previously expl
 
 \section{Simulation Results}
 \label{apdx:simResults}
-
-The the performance of the system in Situations 0 (Scenario 0 \& 10), 1 (Scenario 1 \& 11) and 2 (Scenario 2 \& 12) is visualised in Figures  \ref{fig:apdx:ev0}, \ref{fig:apdx:ev1} and \ref{fig:apdx:ev2} respectively.
+The the performance of the system in Scenario 0, 1, 2, 10, 11, and 12 is visualised in Figures  \ref{fig:apdx:sc0}, \ref{fig:apdx:sc1}, \ref{fig:apdx:sc2}, \ref{fig:apdx:sc10}, \ref{fig:apdx:sc11} and \ref{fig:apdx:sc12} respectively.
 In these figures "Message Average Based Estimation with Blacklisting" refers to the proposed system, "Message Average Based Estimation without Blacklisting" refers to score calculation without blacklisting and "Reports Based Estimation" refers to the RAW Score (See Section \ref{sec:PM:ScoreGeneretion})
-\begin{figure*}[!ht]
-	\caption{Graphs for Results of Scenario 0 and 10. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 0 (left) and Scenario 10 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 0 (left) and Scenario 10 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 0 (left) and Scenario 10 (right)}
-	\label{fig:apdx:ev0}
-	\centering
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf}
-		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf}
-	} \\\vfill
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN0_AbsoluteErrorsInEstimationComparison.pdf}
-		\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN10_AbsoluteErrorsInEstimationComparison.pdf}
-	}
-	\hfill
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
-		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
-	}
-\end{figure*}
-\begin{figure*}[!ht]
-	\caption{Graphs for Results of Scenario 1 and 11. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 1 (left) and Scenario 11 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 1 (left) and Scenario 11 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 1 (left) and Scenario 11 (right)}
-	\label{fig:apdx:ev1}
-	\centering
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf}
-		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf}
-	} \\\vfill
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN1_AbsoluteErrorsInEstimationComparison.pdf}
-		\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN11_AbsoluteErrorsInEstimationComparison.pdf}
-	}
-	\hfill
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
-		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
-	}
-\end{figure*}
-\begin{figure*}[!ht]
-	\caption{Graphs for Results of Scenario 2 and 12. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 2 (left) and Scenario 12 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 2 (left) and Scenario 12 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 2 (left) and Scenario 12 (right)}
-	\label{fig:apdx:ev2}
-	\centering
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf}
-		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf}
-	} \\\vfill
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN2_AbsoluteErrorsInEstimationComparison.pdf}
-		\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN12_AbsoluteErrorsInEstimationComparison.pdf}
-	}
-	\hfill
-	\subfloat[]{
-		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
-		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
-	}
-\end{figure*}
-\iffalse
 \begin{figure*}[!ht]
 	\caption{Graphs for Results of Scenario 0. (a) Primary Score vs. Actual Accuracy - Scatter plot. (b) Primary Score and Actual Accuracy KDE. An Indicator of closeness of estimates. (c) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error. (d) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot.}
 	\label{fig:apdx:sc0}
@@ -1162,10 +1097,11 @@ In these figures "Message Average Based Estimation with Blacklisting" refers to 
 		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 	}
 \end{figure*}
-\fi
 % use section* for acknowledgment
 %\section*{Acknowledgment}
-%dsdfsfsdf
+
+
+%The authors would like to thank...
 
 
 % Can use something like this to put references on a page
@@ -1192,9 +1128,8 @@ In these figures "Message Average Based Estimation with Blacklisting" refers to 
 % The IEEEtran BibTeX style support page is at:
 % http://www.michaelshell.org/tex/ieeetran/bibtex/
 \newpage
-\vfill\hfill
-\newpage
 \hfill
+\newpage
 \bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
 

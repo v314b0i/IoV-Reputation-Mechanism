@@ -1,0 +1,762 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{cite}
+\usepackage{framed}
+\usepackage{a4wide}
+\usepackage{float}
+\usepackage{fontspec}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{tocloft}
+\usepackage{afterpage}
+\usepackage{nameref}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{array}
+%  \usepackage[tocflat]{tocstyle}
+
+%The below Section make chapter and its name to center of the page
+\usepackage{blindtext}
+\usepackage{xpatch}
+\makeatletter
+\xpatchcmd{\@makeschapterhead}{%
+  \Huge \bfseries  #1\par\nobreak%
+}{%
+  \Huge \bfseries\centering #1\par\nobreak%
+}{\typeout{Patched makeschapterhead}}{\typeout{patching of @makeschapterhead failed}}
+
+
+\xpatchcmd{\@makechapterhead}{%
+  \huge\bfseries \@chapapp\space \thechapter
+}{%
+  \huge\bfseries\centering \@chapapp\space \thechapter
+}{\typeout{Patched @makechapterhead}}{\typeout{Patching of @makechapterhead failed}}
+
+\makeatother
+%The above Section make chapter and its name to center of the page
+%\unwanted packages also included
+
+\linespread{1.25}
+%\pagestyle{fancy}
+%\fancyhead{}
+%\header and footer section
+%\renewcommand\headrulewidth{0.1pt}
+%\fancyhead[L]{\footnotesize \leftmark}
+%\fancyhead[R]{\footnotesize \thepage}
+%\renewcommand\headrulewidth{0pt}
+%\fancyfoot[R]{\small College of Engineering, Kidangoor}
+%\renewcommand\footrulewidth{0.1pt}
+%\fancyfoot[C]{2019 - 2020}
+%\fancyfoot[L]{\small Name of the project}
+
+\setmainfont{Times New Roman}
+% \renewcommand{\contentsname}{\large\hfill Table of Contents\hfill\llap{Page}}
+\renewcommand{\contentsname}{\hfill\bfseries\Large CONTENTS\hfill}
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+\renewcommand{\listfigurename}{\hfill\bfseries\Large List of Figures\hfill}
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+\renewcommand{\listtablename}{\hfill\bfseries\Large List of Tables\hfill}   
+\renewcommand{\cftaftertoctitle}{\hfill}
+% Redefinition of ToC command to get centered heading
+% \makeatletter
+% \renewcommand\tableofcontents{%
+%   \null\hfill\textbf{\Large\contentsname}\hfill\null\par
+%   \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+%   \@starttoc{toc}%
+% }
+% \makeatother
+
+
+% Title page
+\begin{document}
+\begin{center}
+{\Large \textbf{Simple Feedback Driven Accuracy Based\\ Reputation Mechanism for IoV}}\\
+\vspace{2cm}
+{\large \textit{Submitted in partial fulfillment of the requirements for the degree of}}\\
+\vspace{0.5cm}
+{\LARGE \textbf{Bachelor of Technology}} \\
+% \vspace{1cm}
+{\large in}\\
+{\LARGE \textbf{Computer Science and Engineering with specialisation in Information Security}} \\
+\vspace{2cm}
+{\large \textit{by}}\\
+\vspace{0.2cm}
+{\large \textbf{ROHAN DAHIYA}}\\
+{\large \textbf{16BCI0031}}\\
+\vspace{0.7cm}
+{\large \textbf{Under the guidance of}}\\
+\vspace{0.2cm}
+{\large \textbf{Dr. Anand M.}}\\
+{\textbf{School of Computer Science and Engineering}}\\
+{\textbf{VIT, Vellore.}}\\
+\end{center}
+\begin{center}
+\vspace{1.2cm}
+\includegraphics[scale=0.2]{vellore-institute-of-technology-vit-logo-vector.jpg}
+
+May, 2020\\
+\end{center}
+\thispagestyle{empty}
+
+\newpage
+%\Declaration in this page.
+\begin{center}
+\section*{\textbf{\underline{DECLARATION}}}
+\end{center}
+\vspace{1 cm}
+I hereby declare that the thesis entitled “Simple Feedback Driven Accuracy Based Reputation Mechanism for IoV" submitted by me, for the award of the degree of \textit{Bachelor of Technology in Computer Science and Engineering with specialisation in Information Security} to VIT is a record of bonafide work carried out by me under the supervision of \textbf{Dr. Anand M., Dr. Frank Jiang and Dr. Robin Doss.}\\ 
+
+I further declare that the work reported in this thesis has not been submitted and will not be submitted, either in part or in full, for the award of any other degree or diploma in this institute or any other institute or university.
+
+\noindent \begin{minipage}{0.45\linewidth}
+\begin{flushleft}
+\vspace{5 cm}
+                         
+Place  : Burwood, VIC 3125, Australia\\
+Date  : 22.05.2020\\
+\end{flushleft} 
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+\begin{flushright}                                      
+\vspace{9cm}
+                   
+%\includegraphics{signature blue.jpg}\\   TODO Signature
+\textbf{Signature of the Candidate}\\
+\end{flushright} 
+\end{minipage}
+
+\thispagestyle{empty}
+
+\newpage
+\begin{center}
+\section*{\textbf{\underline{CERTIFICATE}}}
+\end{center}
+\vspace{1 cm}
+This is to certify that the thesis entitled “Simple Feedback Driven Accuracy Based Reputation Mechanism for IoV” submitted by \textbf{Rohan Dahiya, 16BCI0031, SCOPE, VIT,} for the award of the degree of \textit{Bachelor of Technology in Computer Science and Engineering with specialisation in Information Security}, is a record of bonafide work carried out by him under my supervision during the period, 14. 12. 2019 to 22.05.2020, as per the VIT code of academic and research ethics.\\
+
+The contents of this report have not been submitted and will not be submitted either in part or in full, for the award of any other degree or diploma in this institute or any other institute or university. The thesis fulfills the requirements and regulations of
+the University and in my opinion meets the necessary standards for submission.
+
+\noindent \begin{minipage}{0.45\linewidth}
+\begin{flushleft}
+\vspace{3 cm}
+                         
+Place  : Burwood, VIC 3125, Australia\\
+Date  : 22.05.2020
+\end{flushleft} 
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+\begin{flushright}                                      
+\vspace{6 cm}
+                   
+\textbf{Signature of the Guide}\\
+\end{flushright} 
+\end{minipage}
+\hfill
+\noindent \begin{minipage}{0.45\linewidth}
+\begin{flushleft}
+\vspace{3 cm}
+
+\textbf{Internal Examiner}
+\end{flushleft} 
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+\begin{flushright}                                      
+\vspace{3 cm}
+                   
+\textbf{External Examiner}\\
+\end{flushright} 
+\end{minipage}
+% \hfill
+
+\begin{center}
+\vspace{1 cm}
+\textbf{Dr. Prabu S.}\\
+Bachelor of Technology\\
+\end{center}
+
+
+\thispagestyle{empty}
+
+\newpage
+\begin{center}
+\section*{\textbf{\underline{ACKNOWLEDGEMENTS}}}
+\label{sec:ack}
+\end{center}
+\vspace{1 cm}
+\pagenumbering{roman}
+I take this opportunity to express my deep sense of gratitude and sincere thanks to all who helped me to complete the work successfully. My first and foremost thanks goes to my parents for their continued support. I would also like to express my sincere thanks thank my guide \textbf{Dr. Anand M, School of Computer Science and Engineering} and my supervisors \textbf{Dr. Frank Jiang} and \textbf{Dr. Robin Doss}.\\
+
+
+
+
+\vspace{1 cm}
+\begin{flushright}
+\textbf{ROHAN DAHIYA}
+\end{flushright}
+% \thispagestyle{empty}
+
+\newpage
+\begin{center}
+\section*{\textbf{\underline{Executive Summary}}}
+\label{sec:summary}
+\end{center}
+\vspace{1 cm}
+In this research based capstone project, we present a method aimed at integrating domain knowledge abstracted as logic rules into the predictive behaviour of a neural network using feature extracting functions for both visual and textual sentiment analysis. We combine the declarative first-order logic rules which represent the human knowledge in a logically-structured format with feature-extracting functions which act in a manner akin to the decision rules. These functions are embodied as programming functions which can represent, in a straightforward manner, the applicable domain knowledge as a set of logical instructions and provide a cumulative set of probability distributions of the input data. These distributions can then be used during the training process in a mini-batch strategy. In contrast with other neural logic approaches, the programmatic nature in practice of these functions do not require any kind of special mathematical encoding, which makes our method very general in nature. We also illustrate the utility of our method for image sentiment analysis and text sentiment analysis, and compare our results to those obtained using a number of alternatives elsewhere in the literature. We provide a framework in which we show how the general purpose neural networks can be enhanced using human domain knowledge about the dataset provided as a sort of indirect supervision in the form feature-extracting functions.
+
+
+\newpage
+\addtocontents{toc}{~\hfill\large\textbf{Page}\par}
+\addtocontents{toc}{~\hfill\large\textbf{No.}\par}
+% \addtocontents{lof}{\newline}
+\addcontentsline{toc}{section}{Acknowledgement}
+\addcontentsline{toc}{section}{Executive Summary}
+\addcontentsline{toc}{section}{Table of Contents}
+\addcontentsline{toc}{section}{List of Figures}
+\addcontentsline{toc}{section}{List of Tables}
+\addcontentsline{toc}{section}{Abbreviations}
+\addcontentsline{toc}{section}{Symbols and Notations}
+\tableofcontents %This command used for index.
+
+
+
+\newpage
+\listoffigures
+\addtocontents{lof}{\large\textbf{Figure No.}\hfill\large\textbf{Title}\hfill\large\textbf{Page No.}}
+\addtocontents{lof}{\newline}
+
+\newpage
+\listoftables
+\addtocontents{lot}{\large\textbf{Table No.}\hfill\large\textbf{Title}\hfill\large\textbf{Page No.}}
+\addtocontents{lot}{\newline}
+
+\newpage
+\begin{center}
+  \Large\textbf{List of Abbreviations} 
+  \end{center}
+  \large{MSE} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Mean Square Error}\newline
+  \large{ANN} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Artificial Neural Networks}\newline
+  \large{SME} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Subject Matter Experts}\newline
+  \large{CNN} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Convolutional Neural Networks}\newline
+  \large{RNN} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Recurrent Neural Networks}\newline
+  \large{SGD} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Stochastic Gradient Descent}\newline
+  \large{RMS} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Root Mean Square}\newline
+  \large{ADAM} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Adaptive Moment Estimation}\newline
+  
+  
+  
+\newpage
+\begin{center}
+  \Large\textbf{Symbols and Notations} 
+  \end{center}
+  \large{$\lambda$} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Greek symbol Lambda}\newline
+  \large{$E_q$} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Expectation operator}\newline
+  \large{$\Sigma$} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Greek symbol Sigma for summation}\newline
+  \large{$\theta$} \indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\indent\large{Greek symbol Theta}\newline
+  
+% \thispagestyle{empty}
+
+\newpage
+\section{\uppercase{Introduction}}
+\label{sec:intro}
+% \subsection{OBJECTIVE}
+\pagenumbering{arabic}
+In today's world of technology where we are witnessing a rapid development in computational intelligence and cognitive systems, Machine Learning is one of the major driving force behind it. According to Tom Mitchell \cite{Tom:1997}, Machine Learning is a study of computer algorithms which can learn to improve automatically through experiences. It is generally seen as a subset of Artificial Intelligence which consists of Mathematical models defined by specific "Objective Functions" based on the problem nature which are optimised on a sample data called "training data" in order to provide predictions or make decisions without being explicitly coded to do so. Closely related fields to Machine Learning are Data Mining, Statistical Modelling, Computational Statistics and Data Science.
+\vspace{2mm}
+
+Machine learning researchers and engineers are leading the charge from the forefront in a vast number of areas like web-search engines, content filtering systems for social media platforms, recommendation systems for e-commerce services, and designing products or services present in consumer products such as cameras and smartphones. Without theses services, it is very hard to imagine the life today's fast evolving world. Machine Learning systems can be further divided into different fields depending on the type of task they perform like object detection and identification systems in self-driving cars which can categorised as a sub-field of computer vision, speech recognition and translation systems in communication devices generally belong to a sub-field in Natural Language Processing, match making systems are able to provide relevant results for a particular person based on his or her past history of interests and actions which we can categorise in recommendation and content-filtering engines.
+\vspace{2mm}
+
+The general process of training a Machine Learning model is associated with optimization of a convex-function which is also denoted as "loss-function" in the literature. A model is said to be trained or learned when it's prediction values align with the expected values measured by a set of suitable parameters like accuracy, log-loss, F1-score and many more. The choice of suitable loss-function depends on the type of problem statement. If we want our model to predict correct continuous values, we go for MSE and the problem statement is considered as "Regression". On the other hand, if we want our model to classify the input data points into correct classes or assign them labels, we solve a "Cross-Entropy" loss function and the problem statement is of "Classification" nature. Most of the tasks in Machine Learning generally fall in these categories except where the model is required to learn and generate data like "Sequence Learning" or "Language Modelling".
+\vspace{2mm}
+
+Most of the renowned Machine Learning models can be divided based on the training data and mode of supervision. Supervised Learning is a process of training a Machine Learning model in which labeled instances of training data is provided to the objective function of the model during every iteration. The calculated loss value from objective function is then "back-propagated" through the trainable parameters of the model and then used to update those parameters via Gradient Descent based technique like "Stochastic Gradient Descent" or "Ada-Delta". The supervised mode of training is generally used for parametric based "Discriminative Models" like "Logistic Regression" or "Perceptrons" which require modelling data points in a multi-dimensional tensor form and learns a decision boundary through them.
+\vspace{2mm}
+
+As our capacities to generate and store data are increasing everyday, conventional models are unable to keep up as they are limited in their ability to process and analyze huge amounts of data and thus unable to capture the complex patterns. These models often require a careful engineering of features by a human expert in that particular domain called SME which converts the input data into a suitable internal representation before it can be fed to model for training. This both a very costly and time consuming task.
+\vspace{2mm}
+
+ANN are a class of powerful parametric based discriminative models that achieve state-of-the-art results on a wide range of supervised complex machine learning problems. They are especially used for Representation Learning or Feature Learning in the raw data itself and thus do not require hand engineered features unlike traditional linear models. Whenever dealing with huge amount of input data with a lot of features, we use deep neural networks as the data can be fed directly for training. Figure \ref{fig:01} shows the basic architecture of a modern day Deep Artificial Neural Network. 
+\vspace{2mm}
+
+\begin{figure*}[!b]
+\vspace{-5mm}
+\begin{center}
+\includegraphics[width = \textwidth]{images/Capture (1).pdf}
+\end{center}
+\caption{\textit{Artificial Neural Network}} \cite{Hu:2019}. \textbf{An example a Deep Artificial Neural Network consisting of 1 input layer, 2 hidden layers and an output layer.}
+\label{fig:01}
+\vspace{-3mm}
+\end{figure*}
+
+Deep Neural Networks are based on Deep Belief Networks are built by stacking layers made of Artificial Neurons called Nodes and these layers may be fully or partially connected with each other. By fully connected, we mean that each neuron of the previous layer is feeding it's output activation as an input to every other neuron in the next layer and so on.We call this type of connection between the layers as Dense Connection and the layers themselves are called Dense Layers. Each hidden layer computes some complex set of features from the input features to the layer and these features may or may not be human understandable. Each dense hidden layer consists of Nodes and each node takes set of features as activations from previous layers neurons and computes a weighted sum of input features with associated weights with them. These associated weights are called trainable parameters of that neuron they signify the strength of the connection between this neuron and previous layer neurons. After computing the weighted sum and adding necessary bias value, we pass the results to an activation function which introduces non-linearity in our model. Now based on the type of computations and activation functions used, we can divide the Artificial Neural Networks into generally three main categories - Feed Forward Neural Networks, Convolutional Neural Networks and Recurrent Neural Networks.
+\vspace{2mm}
+
+As ANNs are also parametric learning model which learns their parameters by optimizing generally a convex problem which is a function of it’s parameters.Thus our goal of learning is to find those values of the parameters for the which the value of convex function is at global optimum. If we are using a gradient based learning algorithm such as Stochastic Gradient Descent or Momentum Gradient Descent like RMS Propagation and ADAM, then we are required to calculate the gradients of cost function with respect to the learning parameters. These gradient values measure the learning that will occur to the parameters of the model during an iteration. 
+\vspace{2mm}
+
+On every iteration in a Feed Forward Neural Network, we calculate the above gradients for each hidden layer and output layer by using Back propagation on the computation graph of the Neural Network. During Back Propagation, we use chain rule to calculate intermediate gradients and the final output is a long chain gradients that is several gradient values are in multiplication. Thus for a early hidden layer in the network, this chain of gradients becomes very long. Now in this chain, there are gradients contributed from all the following layers in the network. So if one of the gradient value becomes too smaller than $1$, then it will get multiplied with rest of the gradients and thus the final value will be very close to $0$ that is our gradient values of Cost function with respect to the parameters for an early layer becomes $0$ and thus no learning occurs for that layer during that iteration. Thus problem of vanishing gradients stops the learning of parameters for earlier layers in feed forward neural network.
+\vspace{2mm}
+
+\subsection{OBJECTIVE}
+The goal of this project is to provide a framework to combine Human knowledge about the domain of a dataset for a Machine Learning problem with the decision making process of a general purpose Neural Network which is to make their decision making process interpretable based on presence of some features.
+\vspace{2mm}
+
+One of the ways to make network predictions interpretable is to encode the intended rules or patterns derived from human domain knowledge in their trainable parameters. That is, to provide some sort of direct or indirect supervision in their training process to make them capture categorical or logic rules together with the target discriminative patterns. This can be viewed as the process of combining structured knowledge representing high-level cognition with neural systems \cite{Garcez:2002}. This is quite relevant to sentiment analysis since sentiment analysis in both text and images is naturally based upon ontologies  \cite{Borth:2014}. 
+\vspace{2mm}
+
+Declarative First-Order logic rules provide a flexible means to represent the human knowledge and high-level cognition in a structured format that is represent the "domain-knowledge or human-knowledge" in the language understandable by computers or mathematical systems. It is therefore desirable to integrate them with the neural networks and influence their decision making process. But logic-rules suffer from limited expressiveness and flexibility issues as they need to be translated from natural language to logical representations. Moreover, they also require a proper encoding format which is not a straightforward task since, in most cases, this encoding is task specific.
+\vspace{2 mm}
+
+\subsection{MOTIVATION}
+Deep Neural Networks have made a significant impact in the field of machine learning. They are able to provide high levels of performance in terms of both accuracy and efficiency on all kinds of supervised and unsupervised problems. Thus, there has been an explosion of interest in developing deep-learning  systems across industry, government and academia. One of these is sentiment analysis, where neural networks have been applied to Twitter images \cite{You:2015,Vadicamo:2017} and to generating image descriptions with sentiments \cite{Mathews:2016}.
+\vspace{2mm}
+
+Despite the success of Deep Neural Networks in vast areas of computational intelligence, they suffer from quite a lot of drawbacks as they often require large amounts of labelled data for training. This is mainly due to the notion that neural network training is often purely data-driven, with no direct or indirect human intervention or domain knowledge involved. As a result, the interpretation of the transformation between input and output is often challenging if not almost intractable, whereby deep networks do not have an inherent representation of causality or logical rule application. Previous work has shown that supervision purely in the form of data can lead a model to learn some unwanted patterns and provide wrong predictions \cite{Szegedy:2014}\cite{Nguyen:2015}. It is worth noting in passing that this is not exclusive to sentiment analysis, but rather is a drawback that has hindered the application of deep learning in a wide variety of areas such as safety critical systems, medical applications, food security, fault detection, power generation and transmission and critical environmental management which require a level of trust or confidence associated with the predictions of the network \cite{Ribeiro:2016}.
+\vspace{2 mm}
+
+\subsection{BACKGROUND}
+In sentiment analysis, probably the closest approach to the one presented here is that applied to text and presented in \cite{Hu:2019}. Along these lines, Hu \cite{Hu:2019} present a method for encoding human knowledge into the parameters of the model via an indirect supervision training method called Iterative-knowledge Distillation. Iterative-knowledge Distillation represents logical, structured knowledge in the form of a set of declarative first-order logic rules which are encoded using soft-logic \cite{Bach:2015}. In \cite{Hu:2019}, a parametric base neural network is used as a ``student'' which needs to be provided with logical knowledge by a non-parametric ``teacher'' network. The teacher network is a projection of the base network over a regularized sub-space whereby the training data is constrained by logical rules. This is achieved via adapting posterior-regularization \cite{Ganchev:2010} making use of constraints defined by logic-rules. The authors demonstrate their framework by performing sentiment analysis on a variety of text data sets. A basic overview of their method is shown in Figure \ref{fig:02}.
+\vspace{2 mm}
+
+In contrast, and in order to apply neural logic rule to text and visual sentiment analysis both, we use logic rules for representing human knowledge as applied to feature extraction on the network. This tackles the main drawback in the work presented in \cite{Hu:2019}, where the teacher network represents soft-predictions calculated using text-based rules, which are transferred into the weights of the student network via an appropriate loss function. Thus, we propose the use of feature-extracting functions instead of constructing a teacher network with logic rules. These functions are directly applied on the text and imagery data so as to transfer the human knowledge into a distribution of the input data. This approach also eliminates the need of assuming, {\it a priori}, the initial posterior distributions of features in train, validation and test data. This, in turn, avoids the conversion of human knowledge from natural language to logical rules and the subsequent requirement of any special encoding for these rules which is specific to the task in hand.
+\vspace{2 mm}
+
+\begin{figure*}
+\vspace{-5mm}
+\begin{center}
+\includegraphics[width = \textwidth]{images/Diagram1.pdf}
+\end{center}
+\caption{\textit{Iterative rule-knowledge distillation overview}} \cite{Hu:2019}. \textbf{At each iteration, a teacher network \begin{math}q(y|x)\end{math} is  constructed as a rule-regularized projection of student network \begin{math}p_\theta(y|x)\end{math}. The student network is trained to imitate both, the ground truth labels from the training data and the teacher network output.}
+\label{fig:02}
+\vspace{-3mm}
+\end{figure*}
+
+In our approach, we derive a feature-extracting function from each logic rule. We do this by viewing this function as a mini-batch processing step during each iteration. Since this function is applied directly to the data, we do not compute probability distributions nor construct a teacher network. This effectively reduces the complexity of the method. Also, these feature-extracting functions can be modified at any time during the training process, thus providing a lot of flexibility in adapting to qualitative and quantitative characteristics of data. This is consistent with the well known properties of feature-extracting functions to represent expressive capabilities in natural language \cite{lewis:92}, exploiting these traits for the training of deep networks to provide a more direct nature of supervision based upon the input data.
+\vspace{2 mm}
+
+This contrasts with the method in \cite{Hu:2019}, which transfers logic rules to the parameters of the network using posterior-regularization \cite{Ganchev:2010}. Despite effective for weakly supervised learning tasks, this approach is mainly aimed at language-related tasks. Moreover, our method does not employ transfer learning such as the approach in \cite{You:2015} or requires image descriptions with sentiments \cite{Mathews:2016}. Further, our method is quite general in nature, being a  flexible manner of providing human knowledge supervision to the network and, hence, can be applied to tasks in both the computer-vision and natural-language domain.
+\vspace{2 mm}
+
+We show that our approach can be used in every use-case possible for the original approach (Iterative-distillation)
+and find that simple programming functions have far more
+expressive capabilities to represent human intentions in natural
+language and works very well with every kind of variation in
+the training procedure. We provide a more direct nature of supervision which is applied on the input data during an iteration
+rather then on all the available data during preprocessing.
+\vspace{2mm}
+
+\newpage
+\section{\uppercase{Project Description}}
+\label{sct:02}
+In our study, we find that the proposed use of logic rules
+for representing human knowledge can be applied only for
+feature extracting purposes that is supervising the network
+on what features it should use while providing predictions
+given the presence of certain features. Moreover, the teacher
+network just represents soft-predictions calculated using rules
+knowledge which is transferred into the weights of the student
+network via a appropriate loss function. Thus, we propose the
+use of feature extracting functions instead of constructing the
+teacher network with logic rules. These functions are directly
+applied on the data and transfers the human knowledge into a
+modified set of distribution of input data. We find that using
+this approach 1) Eliminates the need of finding initial posterior
+distributions of logic-rule features in train, validation and test
+data, 2) Avoids the task of conversion of human knowledge
+from natural language to logical format and subsequently 3)
+Requirement of any special encoding format for logic rules
+specific to a task. But most importantly it, 4) Eliminates the
+need of constructing a teacher network.
+
+Our proposed approach works in a slightly different manner
+while being applicable to every use-case of the Distillation \cite{Hu:2019}. Instead, we develop feature extracting functions from human knowledge which are basically programming functions
+and does the same job as what logic rules does in original
+method which is to take the input data and calculate the
+distribution of rule feature. But now, they feed the calculated
+distribution directly to the base network for training and
+eliminates the need for constructing a teacher network. Thus,
+we significantly reduce the complexity of the framework. As
+in previous method, these functions can be applied either
+during the training process in each iteration or during the
+preprocessing phase of the data. Figure \ref{fig:03} shows an overview of our framework.
+\vspace{2mm}
+
+\subsection{FEATURE-EXTRACTING FUNCTIONS AND NEURAL LOGIC}
+As mentioned earlier, Hu \cite{Hu:2019} use Iterative-knowledge Distillation to encapsulate the human knowledge represented as logical structured knowledge into the trainable parameters of the neural network. This is achieved by making the network learn from soft-predictions of a teacher network explicitly representing rules knowledge which is also evolved during each iteration. This process is shown in Figure \ref{fig:02}.
+\vspace{2 mm}
+
+Despite effective for text-based sentiment analysis, distillation is often a challenging task when the focus is on transferring knowledge within the same domain with no additional labels \cite{chen:2017}. Our approach works in a different manner. Instead, we develop feature-extracting functions from human knowledge which are expressed as programming functions which take the data instances as input and enforce logic rules directly upon the ``base'' network for training. This, as mentioned earlier, eliminates the need for constructing a teacher network and provide the flexibility of allowing these functions to be applied either during the training process, at each iteration, or during the pre-processing phase of the data. In Figure \ref{fig:03}, we show the diagrammatic representation of our approach.
+\vspace{2 mm}
+
+\begin{figure}[!b]
+\includegraphics[width = \columnwidth]{images/Diagram2.pdf}
+\caption{\textit{Proposed system overview.}} \textbf{At each iteration, a batch of data is passed to the feature extracting functions whose output is then used to update the distribution $p_\theta(y|x)$. This updated distribution is then used to train the neural network.}
+\label{fig:03}
+\end{figure}
+
+\subsection{DISTILLATION vs FEATURE EXTRACTION}
+
+Recall that, in Iterative-distillation \cite{Hu:2019}, the student network is made to learn from both, labeled instances and structured logical knowledge, so as to represent a set of declarative first-order logic rules. These logic rules are encoded using soft-logic \cite{Bach:2015} for the sake of constructing soft-boundaries and for calculating rule-regularized distributions. Thus, the training data comprises both, a set $D = {\{ (x_n,y_n) \}}_{n=1}^N$ of N tuples $(x_i,y_i)$ where $x_i$ is an input instance, {\it i.e.} an independent variable or a set of independent variables, and $y$ is the corresponding target. The set of logic rules are expressed as \begin{math} R = {\{ (R_l,\lambda_l) \}}_{l=1}^L\end{math} where \begin{math} R_l \end{math} is the \begin{math}l^{th}\end{math} rule constructed from human knowledge and corresponding $\lambda_l$ is the confidence value. A logic-rule can be made up of several conditions or logic expressions. These logic expressions in \cite{Hu:2019} are called groundings and represent a rule as a set of \begin{math}\{ (r_{l_g}(D)) \}_{g=1}^{G_l}\end{math} on \begin{math}D\end{math} where each $r_{l_g}$ is $gth$ grounding of $lth$ rule. The combined set of $D$ and $R$ is called {\it learning resources}.
+\vspace{2mm}
+
+For example, consider a set of movie reviews in which $x$ comprises a set of tokens or words and the target $y$ represents the sentiment value which is 0 for negative and 1 for positive reviews. From the use of the language and propositional logic, we know that, if a sentence is stated in the form of ``A-but-B'', then the sentiment of the review should be consistent with that of ``B''. Therefore, we can express this, in a straightforward manner, the ``A-but-B'' statement as a logic rule stated as $R_1$ with \begin{math}\lambda_1 = 1\end{math} since it will be applied fully given the presence of ``A-but-B'' structure in input sentence $x$. To encode this formally, we can define a Boolean random variable \begin{math}r_{l_g}(x,y)\end{math} = ``If the sentence $x$ has an ``A-but-B'' structure'', then apply a expectation operator on it to calculate sets of valid distributions in \begin{math}D\end{math} such that $\lambda_l = 1$ which will be further used to construct a ``teacher network''. This process is a complex and time consuming one which is not applicable, in a straightforward manner, to visual data.
+\vspace{2mm}
+
+To tackle this drawback, our method combines the input and human knowledge to provide a pre-processed data set which can be used for training the neural network. For the sake of consistency, here we denote the input data be \begin{math} D = {\{ (x_n,y_n) \}}_{n=1}^N\end{math} a set of $N$ tuples $(x,y)$ where $x_i$ is a set of input independent variables and the corresponding target is given by $y_i$ and the human knowledge \begin{math}F = {\{ (F_l(D) \}}_{l=1}^L\end{math} as a set of \begin{math}L\end{math} feature extracting functions which are applied on \begin{math}D\end{math}. With these ingredients, in the previous example, instead of using soft-logic using auxiliary random variables, for the ``A-but-B'' rule, we write a function \begin{math}F_l = A-but-B(x,y)\end{math} which outputs $(x*,y)$ where $x*$ has only 'B' features, which is consistent with \begin{math}\lambda_l = 1\end{math} as presented above.
+\vspace{2mm}
+
+To demonstrate it on Images, we take a set of images in which $x$ comprises a set of pixel-values or a feature-map of pixels and the target $y$ represents the sentiment value which is 0 for negative and 1 for positive images. As explained by Truong and Lauw in \cite{Truong:2017}, we can frame the problem of visual sentiment analysis as a function of image features or properties like aesthetic score, color properties etc. and contexts which can be well captured by captions, tags, categories etc. Also, the identification of presence of adult and gore like contents which defines the theme can play a crucial role in understanding the sentiment of an image. Thus, we can construct a logic rule as ``The sentiment of an image can be determined by a combination of it's contextual features and properties''. From this rule, we can define a feature-extracting function \begin{math}F_1 = Image-features(x,y)\end{math} on set $D$ which takes the input image-label pair and outputs the corresponding image features.
+\vspace{2mm}
+
+\subsection{FEATURE-EXTRACTING FUNCTIONS}
+
+Consider the conditional probability distribution \begin{math}p_\theta(y_i|x_i)\end{math} with parameter set $\theta$ and let the distribution for every rule-based feature be governed by a set of random variables \begin{math}\{ (r_{l_g}(D)) \}_{g=1}^{G_l}\end{math} calculated from the data set \begin{math}D\end{math}. In order to find a posterior probability distribution \begin{math}q(y_i|x_i)\end{math} which captures the rule-set we can adapt the posterior regularization technique in \cite{Ganchev:2010} to find a set of valid or ``allowed'' distributions \begin{math}Q\end{math}. This opens-up the possibility of applying an Expectation operator to recover \begin{math}Q\end{math}.
+\vspace{2mm}
+
+More formally, this is expressed by \begin{math}Q = \{ q(y_i|x_i) : E_q[r_{l_g}(D)] = 1 \}\end{math}, where every \begin{math}q(y|x)\end{math} in \begin{math}Q\end{math} defines a valid distribution which can be viewed as a rule-regularized sub-space in \begin{math}D\end{math}. Since we aim at finding a \begin{math}q(y_i|x_i)\end{math} in \begin{math}Q\end{math} which is ``close'' to \begin{math}p_\theta(y_i|x_i)\end{math}, we can opt to minimise the KL-Divergence so as to obtain the rule-to-knowledge conditional probability distribution.  This yields the following optimisation problem
+\begin{equation} 
+\label{eq1}
+%\begin{split}
+\min_{q,\xi \geq 0} KL(q(y_i|x_i)||p_\theta(y_i|x_i)) + C\Sigma_{l,g_l} \xi_{l,g_l}
+\end{equation}
+where $\lambda_l(1 - E_q(r_{l,g_l}(D)]) \leq \xi_{l,g_l}$ and $g_l = 1,...,G_l, l = 1,...,L$. Note that, at each iteration, solving Equation \ref{eq1} in which $\xi_{l,g_l} \geq 0$ represents introducing a slack variable for each of the rules under consideration.
+\vspace{2mm}
+
+Here, inspired by the labeling functions used by Ratner in \cite{Ratner:2017}, we use the input instance $x_i$ to compute an post-processed instance $x_i^*$.
+We can view the post-processed instance $x_i^*$ as an explicit representation of the domain knowledge, expressed in the rule under consideration and mapped onto the input instance $x_i$. This is an important observation since it hints at a minimisation problem on the cumulative output on the feature extracting functions so as to obtain the parameter set $\theta$ which can be expressed formally as follows
+\begin{equation} \label{eq3}
+\begin{split}
+\theta & = \arg\min_{\theta\in\Theta}\frac{1}{N}\Sigma_{n=1}^{N}L(y_n,p_\theta(Y|X^*))
+\end{split}
+\end{equation}
+where $L(\cdot)$ is the loss function of choice and \begin{math}p_\theta(Y|X)\end{math} is the conditional probability distribution of the target set $Y$ given the set $X^*$ of all the post-processed instances $x_i^*$. Since the information is purely present in the modified feature-set, the feature extracting functions become an post-processed input data for the network.
+\vspace{2mm}
+
+The treatment above also has the advantage of ease of implementation. We summarise the training and testing process of our method in Algorithms 1 and 2, respectively. Note that, at each training iteration, we calculate the post-processed data set \begin{math} D^* = {\{ (x_n^*,y_n) \}}_{n=1}^N\end{math} using the feature extracting functions \begin{math}F_l \in F\end{math} as applied on the input batch \begin{math} D = {\{ (x_n,y_n) \}}_{n=1}^N\end{math}. These are passed on to the neural network so as to calculate the conditional probability $p_\theta(y_i|x_i^*)$ for each \begin{math}(x_i^*,y_i) \in D^*\end{math}.
+Following provides a skeletal format for the feature extracting functions in both mathematical and programmatic encodings while taking the example of A-but-B rule.
+
+\begin{gather*}
+F_l\colon x \rightarrow x*\\
+s.t. \; F_l(x) = A-but-B(x) = x*
+\end{gather*}
+
+\vspace{2mm}
+
+Writing a programmatic function
+\begin{lstlisting}[language=Python]
+def A-but-B(x):
+    
+    if A-but-B structure in x:
+        x* = 'B' features of x
+    else:
+        x* = x
+    
+    return x*
+\end{lstlisting}
+
+We can see that the x* explicitly represents the combination
+of input data and the human knowledge which can be directly
+fed to the data loss term of the student network in Eq.(2). x* is the cumulative output of all the feature extracting
+functions and $p_\theta(y|x^*)$ is the conditional probability distribution on x*. Since the information is purely present in a
+modified feature-set form, we are not encoding it into the
+parameters of the model. Thus the feature extracting functions
+becomes an ad-hoc initialization of input data but with the
+exception that they are applied during the training process and
+thus can be used at test time to help model predict output using
+the human knowledge.
+
+\newpage
+\section{\uppercase{IMPLEMENTATION}}
+This section explains the training and testing process of our
+method summarized in Algorithm 1 and 2 respectively.
+
+\begin{algorithm}[!h]
+\SetAlgoLined
+% \KwResult{Write here the result }
+ \textbf{Input:} The training batch \begin{math} D = {\{ (x_n,y_n) \}}_{n=1}^N\end{math}, \\
+ \quad \quad \quad The functions set \begin{math}F = {\{ (F_l(D) \}}_{l=1}^L\end{math} \\
+ Initialize the neural network parameters \textbf{$\theta$} \\
+ \While{Iteration}{
+  1: Calculate \begin{math} D^* = {\{ (x_n^*,y_n) \}}_{n=1}^N\end{math}\\
+  2: Calculate the probability distribution $p_\theta(Y|X^*)$\\
+  3: Update the parameters \textbf{$\theta$} using objective function in Eq.(2)
+ }
+ \textbf{Output:} Trained neural network %$p_\theta$
+ \caption{Training\vspace{-5mm}}
+\end{algorithm}
+
+\begin{algorithm}[!h]
+\SetAlgoLined
+% \KwResult{Write here the result }
+ \textbf{Input:} The testing batch \begin{math} D = {\{ (x_n,y_n) \}}_{n=1}^N\end{math}, \\
+ \quad \quad \quad The functions set \begin{math}F = {\{ (F_l(D) \}}_{l=1}^L\end{math} \\
+ 1: Calculate \begin{math} D^* = {\{ (x_n^*,y_n) \}}_{n=1}^N\end{math}\\
+2: Calculate probability distribution $p_\theta(Y|X^*)$\\
+3: Predict the class-label using $\arg \max p_\theta(y_i|x_i^*)$
+
+\textbf{Output:} Neural network prediction
+\caption{Testing}
+\end{algorithm}
+
+During each iteration, we calculate the modified distribution
+as \begin{math} D^* = {\{ (x_n^*,y_n) \}}_{n=1}^N\end{math} which is a cumulative output of every function \begin{math}F_l \in F\end{math} applied on input batch \begin{math} D = {\{ (x_n,y_n) \}}_{n=1}^N\end{math}. We pass on this distribution to the neural network and calculate the conditional probability distribution as $p_\theta(y_i|x_i^*)$ where each \begin{math}(x_i^*,y_i) \in D^*\end{math}. There maybe a possible situation where two or
+more than two rules are conflicting in nature. That’s where
+the flexibility of our functions come in handy since we can
+choose which functions to apply on $D$ and change the set $F$
+anytime during training.
+
+\subsection{DATASETS}
+\subsubsection{\large{Text Sentiment Analysis}}
+For validation of our framework on sentence level sentiment analysis, we use three popular public datasets which are as follows:-
+\vspace{2mm}
+
+\textbf{1) SST2}: Stanford Sentiment Treebank \cite{Socher:2014} which contains 2 classes (negative and positive), and 6920/872/1821 sentences in the train/dev/test sets respectively. Following \cite{Kim:2014}, we train models on both sentences and phrases since all labels are provided. 
+
+\textbf{2) MR}: Movie Reviews dataset from \cite{Pang-Lee:2005}, a set of 10,662 one-sentence movie reviews with negative or positive sentiment. 
+
+\textbf{3) CR}: Customer Reviews dataset from \cite{Hu-and-Liu:2004} consisting of customer reviews of various products, containing 2 classes and 3,775 instances.
+\vspace{2mm}
+
+\subsubsection{\large{Visual Sentiment Analysis}}
+To illustrate the utility of our method for purposes of visual sentiment classification, we have used two publicly available data-sets:-
+
+\textbf{1) Image Polarity}:The Image Polarity dataset \footnote{%The dataset is widely available and accesible at
+\url{https://data.world/crowdflower/image-sentiment-polarity}}, which is publicly available at Data-World and consists of 15,613 images. The imagery in the data set is divided into 5 classes - highly negative, negative, neutral, positive and highly positive. We use this dataset for training.
+
+\textbf{2) Twitter Image}: The twitter image dataset presented in \cite{You:2015} \footnote{\url{https://www.cs.rochester.edu/u/qyou/DeepSent/deepsentiment.html}}, consists of 1269 images categorized into positive and negative classes. We use this dataset for testing.
+
+
+
+\subsection{TECHNICAL SPECIFICATIONS}
+We validate our method by evaluating it's applications on visual and textual sentiment classification so as to provide a general framework which can be used in both Computer Vision and Natural Language Processing tasks using Deep Neural Networks. We design one Feature-Extracting function for each task and compare the results with a diverse set of literature. For computation, we use a Nvidia GTX 1080Ti GPU with 4 GB of Video Memory present on a Linux machine with eight 4.0GHz CPU cores and 32 GB DDR4 RAM. We implemented neural networks using \textbf{Theano}
+, a popular deep learning platform.
+
+
+\newpage
+\section{\uppercase{PROJECT DEMONSTRATION}}
+We now provide some snapshots of the code samples and results denoting the key features of our research work and their code implementations.
+
+\subsection{CODE SNIPPETS}
+
+\begin{center}
+\includegraphics[scale=0.5]{images/FOL.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.5]{images/Fe.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.4]{images/driver.jpg}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.5]{images/Image Features.jpg}
+\end{center}
+
+\subsection{RESULTS}
+
+\begin{center}
+\includegraphics[scale=0.5]{images/Base score.jpeg}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.5]{images/exp_2.jpeg}
+\end{center}
+
+
+\newpage
+\section{\uppercase{experiments}}
+We now turn our attention to the application of our method for sentiment classification using both texts and images. 
+
+\subsection{Visual Sentiment Analysis}
+In our experiments, we define a logic rule motivated from the findings in \cite{Truong:2017} which states that ``The sentiment of an image can be determined by a combination of it's contextual features and properties''. This is consistent with the developments presented previously and, accordingly, we define the feature extracting function as presented in Section \ref{sct:02}. To this end, we extract a rich set of visual features based on the image content which comprise image properties, category classification, a flag for adult content, the dominant colors, object tags and simplified captions which provide a factual description. These features are then combined to form a sentence-level string which can be used to perform sentiment analysis and classify each image into positive or negative categories.
+\vspace{2mm}
+
+%Add figures on the dataset and results
+\begin{figure}[!hb]
+\vspace{2mm}
+\begin{center}
+\includegraphics[width = \textwidth]{images/Diagram3.pdf}
+\end{center}
+\caption{\textit{Overview of our framework.}} \textbf{At each iteration, an image $x$ is passed on to a feature-extracting function $F_l$ which extracts image features such as captions %$xc*$ 
+and properties %$xp*$ 
+using the generative model in \cite{Vinyals:2016} and the Azure vision API respectively. These features are then passed to the neural network  % $p_\theta(y|x*)$ 
+  in \cite{Kim:2014}.}
+\label{fig:05}
+\end{figure}
+
+In our experiments, we have used the Azure vision API \footnote{More information on the API can be found at \url{https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/}} to obtain the image properties, category classification, a flag for adult content, the dominant colors and the object tags. For the captions, we have used the deep generative LSTM model in Vinyals \cite{Vinyals:2016}, which is a state-of-the-art method for generating image captions that won the 2015 MS-COCO image captioning challenge \cite{Lin:2014}. For our base network in Figure \ref{fig:03} and Section \ref{sct:02}, we have used the Convolutional Neural Network architecture proposed in \cite{Kim:2014}. Our motivation for choosing this network resides in the fact that it has achieved compelling performance on various sentiment classification benchmarks. We use it's ``non-static'' version with the exact same configuration as that presented by the authors. We have initialised word vectors using word2vec \cite{Mikolov:2014} and used fine tuning, training the neural network using stochastic gradient descent (SGD) with the AdaDelta updates \cite{Zeiler:2012}.
+\vspace{2mm}
+
+To illustrate the utility of our method for purposes of visual sentiment classification, we have used two publicly available data-sets. The first one of these is Image Polarity Dataset \footnote{%The dataset is widely available and accesible at
+\url{https://data.world/crowdflower/image-sentiment-polarity}}, which is publicly available at Data-World and consists of 15,613 images. The imagery in the data set is divided into 5 classes - highly negative, negative, neutral, positive and highly positive. The second on is the Twitter dataset presented in \cite{You:2015} \footnote{\url{https://www.cs.rochester.edu/u/qyou/DeepSent/deepsentiment.html}}, which consists of 1269 images categorized into positive and negative classes. For our method, we have pre-processed the Image Polarity data set to convert all the highly positive classes to just positive and highly negative classes to just negative classes. We have also removed all the neutral class images. This leaves 10,680 images, which we use as our training dataset. We use the Twitter data set for testing.
+\vspace{2mm}
+
+For purposes of evaluating our results and comparing against alternatives elsewhere in the literature, we use the CNN and PCNN models in \cite{You:2015} as published by the authors. Here, we provide results for two instances of our method, CNN-C and CNN-F, which were trained using our feature-extracting function defined in Section \ref{sct:02}. For CNN-C, we analyse only captions of images generated by the deep generative LSTM model \cite{Vinyals:2016} that is, given an input image, our feature-extracting function will pass only it's simplified caption to the base Convolutional neural network %$p_\theta(y|x*)$ 
+in \cite{Kim:2014}. For the second model, CNN-F, we combine caption features with the categories, adult content flag, dominant colors and object tags features extracted by the Azure vision API and pass them as a single set of features to the neural network.    %Since we have modified an existing approach in \cite{Hu:2019}, we also provide a direct comparison with Iterative-Distillation \cite{Hu:2019} and CNN model(non-static version) \cite{Kim:2014} on sentiment analysis using text data in supplementary material. 
+In Figure \ref{fig:05}, we illustrate our approach for both cases, when only the captions are used (CNN-C) and when these are combined with the output of the Azure vision API (CNN-F).
+\vspace{2mm}
+
+In our experiments, we have compared our results against those yielded by the trained from scratch CNN and PCNN models in \cite{You:2015} that is, those models which were trained using the full half-a-million Flickr image set from SentiBank\footnote{\url{http://visual-sentiment-ontology.appspot.com/}} and tested on the Twitter dataset containing 1269 images. We do not compare with the results from their transfer-learning models as they are fine-tuned using a subset of Twitter dataset which we use only for testing. Note the Flickr images are weakly labelled since each of these belongs to one adjective noun pair. Moreover, the alternatives in \cite{You:2015} employ approximately half-a-million images for training. This contrasts with our training scheme, whereby, instead of using a query-based, weakly labelled data set, with a large number of images, we have used a much smaller set for training.
+\vspace{2mm}
+
+Both, our method and the alternatives, have been tested on the Twitter data set. In our results, we use the same ``$x$ agree'' scheme where $x=\{3,4,5\}$. This is since the Twitter data set was labelled using Amazon Mechanical Turk (AMT) in order to generate sentiment labels. These labels were assigned by 5 workers on AMT. This implies that, as the number of workers in agreement reduces, the sentiment of the image is more ambiguous in nature. In our experiments, and for all our methods, including ours, we have used the same batch size as those used in \cite{You:2015}, {\it i.e.} 882 for ``3 agree'', 1116 for ``4 agree'' and 1269 for ``5 agree''.
+\vspace{2mm}
+
+\begin{table}[!ht]
+\caption{\textit{Twitter image dataset results}}\textbf{Accuracy, precision, recall and F1-scores yielded by our methods (CNN-C and CNN-F) and those in \cite{You:2015} (CNN and PCNN) when tested upon the Twitter dataset.}
+{\normalsize
+\begin{center}
+\begin{tabular}{*{5}{|M}|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Five agree}}\\ \hline
+\multicolumn{1}{|c|}{Approach} {&Accuracy} {&Precision}   {&Recall}   {&F1-score}\\ \hline 
+\multicolumn{1}{|c|}{CNN-C} &\textbf{74.7} &\textbf{0.74} &\textbf{0.92} &\textbf{0.82}\\ \hline
+\multicolumn{1}{|c|}{CNN-F} &\textbf{77.1} &\textbf{0.79} &\textbf{0.93} &\textbf{0.85}\\ \hline
+\multicolumn{1}{|c|}{CNN} &72.2 &0.749 &0.869 &0.805\\ \hline
+\multicolumn{1}{|c|}{PCNN} &74.7 &0.77 &0.878 &0.821\\ \hline
+\end{tabular}\\\vspace{1mm}
+\begin{tabular}{*{5}{|M}|}
+\hline
+\multicolumn{5}{|c|}{\textbf{At least 4 agree}}\\ \hline
+\multicolumn{1}{|c|}{Approach} {&Accuracy} {&Precision}   {&Recall}   {&F1-score}\\ \hline 
+\multicolumn{1}{|c|}{CNN-C} &\textbf{71.6} &\textbf{0.69} &\textbf{0.91} &\textbf{0.79}\\ \hline
+\multicolumn{1}{|c|}{CNN-F} &\textbf{75.7} &\textbf{0.74} &\textbf{0.93} &\textbf{0.83}\\ \hline
+\multicolumn{1}{|c|}{CNN} &68.6 &0.707 &0.839 &0.768\\ \hline
+\multicolumn{1}{|c|}{PCNN} &71.4 &0.733 &0.845 &0.785\\ \hline
+\end{tabular}\\\vspace{1mm}
+\begin{tabular}{*{5}{|M}|}
+\hline
+\multicolumn{5}{|c|}{\textbf{At least 3 agree}}\\ \hline
+\multicolumn{1}{|c|}{Approach} {&Accuracy} {&Precision}   {&Recall}   {&F1-score}\\ \hline 
+\multicolumn{1}{|c|}{CNN-C} &\textbf{68.6} &\textbf{0.68} &\textbf{0.90} &\textbf{0.77}\\ \hline
+\multicolumn{1}{|c|}{CNN-F} &\textbf{73.6} &\textbf{0.73} &\textbf{0.89} &\textbf{0.80}\\ \hline
+\multicolumn{1}{|c|}{CNN} &66.7 &0.691 &0.814 &0.747\\ \hline
+\multicolumn{1}{|c|}{PCNN} &68.7 &0.714 &0.806 &0.757\\ \hline
+\end{tabular}
+\end{center}}
+\label{tab:01}
+% \vspace{-1mm}
+\end{table}
+\vspace{4.5mm}
+
+In Table \ref{tab:01} we show the accuracy yielded by our methods (CNN-C and CNN-F), which were trained on 10,680 Image Polarity dataset images. The CNN-C results were obtained when training was effected using only captions whereas CNN-F results are those yielded by making use of all image features. 
+The table also shows the Precision, Recall and F1 scores for the each of the ``$x$ agree'' cases of the Twitter data set. From the experimental results, we can appreciate that our methods performs better on all three cases of the Twitter data set. Moreover, even for the more ambiguous case where at least 3 agree, the CNN-F provides a clear margin of advantage against all the alternatives by all measures by just using a fraction of training data (10,680 images) compared to half-a-million images used by methods in \cite{You:2015}. This further gives an experimental proof of the validity of logic rules and corresponding feature-extracting functions used for our task.
+\vspace{2mm}
+
+\subsection{Sentence-level Sentiment Analysis}
+
+To supplement our results on visual sentiment analysis and, in order to show a comparison with the method in \cite{Hu:2019}, we has also performed sentence-level sentiment analysis and classified each sentence into the positive or negative categories. As in our visual sentiment analysis experiments, we have used the Convolutional Neural Network architecture proposed in \cite{Kim:2014} employing it's ``non-static'' version with the exact same configuration as that presented by the authors. Again, we have initialised word vectors using word2vec \cite{Mikolov:2014} and used fine tuning, training the neural network using stochastic gradient descent (SGD) with the AdaDelta updates \cite{Zeiler:2012}.
+\vspace{2mm}
+
+Since contrastive senses are hard to capture, we define a linguistically motivated rule called ``A-but-B'' rule akin to that in \cite{Hu:2019} which states that if a sentence has an ``A-but-B'' structure, the sentiment of the whole sentence will be consistent with the sentiment of it's ``B'' statement. From this rule, we can define a feature-extracting function \begin{math}F_1 = A-but-B(x,y)\end{math} on set $D$ which takes the input pair of sentence-label $(x,y)$ and outputs $(x*,y)$ where $x*$ is corresponding features of ``B''.
+\vspace{2mm}
+
+\begin{table}[!h]
+\caption{\textit{Accuracy results on SST2, MR and CR datasets}}\textbf{Accuracy percentages of sentiment classification task obtained using our method (CNN-F), the method in \cite{Hu:2019} (CNN-rule) and that in \cite{Kim:2014} (CNN).}
+{\normalsize
+\begin{center}
+ \begin{tabular}{|c | c | c | c|} 
+ \hline
+ Approach & \textbf{SST2} & \textbf{MR} & \textbf{CR} \\ [0.5ex] 
+ \hline%\hline
+ CNN & 87.2 & 81.3\pm0.1 & 84.3\pm0.2 \\ 
+ \hline
+ CNN-rule & 88.8 & 81.6\pm0.1 & 85.0\pm0.3 \\
+ \hline
+ CNN-F & 89.1 &81.8\pm0.4 &84.8\pm0.1 \\ [1ex] 
+ \hline
+\end{tabular}
+\end{center}}
+\label{tab:02}
+%\vspace{-8mm}
+\end{table}
+
+\begin{table}[!h]
+\caption{\textit{Classification report on SST2, MR and CR datasets}}\textbf{Precision, recall and f1-scores yielded by our method (CNN-F), the method in \cite{Hu:2019} (CNN-rule) and that in \cite{Kim:2014} (CNN) as applied to the three data sets under study.}
+{\normalsize
+\begin{center}
+\begin{tabular}{*{4}{|M}|}
+\hline
+\multicolumn{4}{|c|}{\textbf{SST2}}\\ \hline
+\multicolumn{1}{|c|}{Approach}  {&Precision}   {&Recall}   {&F1-score}\\ \hline 
+\multicolumn{1}{|c|}{CNN} &0.89 &0.85 &0.87\\ \hline
+\multicolumn{1}{|c|}{CNN-rule} &0.90 &0.87 &0.88\\ \hline
+\multicolumn{1}{|c|}{CNN-F} &0.91 &0.87 &0.89\\ \hline
+\end{tabular}\\\vspace{1mm}
+\begin{tabular}{*{4}{|M}|}
+\hline
+\multicolumn{4}{|c|}{\textbf{MR}}\\ \hline
+\multicolumn{1}{|c|}{Approach}  {&Precision}   {&Recall}   {&F1-score}\\ \hline 
+\multicolumn{1}{|c|}{CNN} &0.80$\pm$0.004 &0.82$\pm$0.005 &0.81$\pm$0.003\\ \hline
+\multicolumn{1}{|c|}{CNN-rule} &0.81$\pm$0.005 &0.82$\pm$0.007 &0.81$\pm$0.003\\ \hline
+\multicolumn{1}{|c|}{CNN-F} &0.81$\pm$0.005 &0.83$\pm$0.004 &0.82$\pm$0.002\\ \hline
+\end{tabular}\\\vspace{1mm}
+\begin{tabular}{*{4}{|M}|}
+\hline
+\multicolumn{4}{|c|}{\textbf{CR}}\\ \hline
+\multicolumn{1}{|c|}{Approach}  {&Precision}   {&Recall}   {&F1-score}\\ \hline 
+\multicolumn{1}{|c|}{CNN} &0.78$\pm$0.012 &0.78$\pm$0.017 &0.78$\pm$0.009\\ \hline
+\multicolumn{1}{|c|}{CNN-rule} &0.77$\pm$0.014 &0.79$\pm$0.014 &0.78$\pm$0.008\\ \hline
+\multicolumn{1}{|c|}{CNN-F} &0.76$\pm$0.014 &0.78$\pm$0.015 &	0.77$\pm$0.008\\ \hline
+\end{tabular}
+\end{center}}
+\label{tab:03}
+\vspace{2mm}
+\end{table}
+
+\newpage
+We evaluate our method on three public data-sets. The first of these is the Stanford sentiment treebank (SST2) \cite{Socher:2014} which contains 2 classes (negative and positive), and 6920/872/1821 sentences in the train/dev/test sets, respectively. Following \cite{Kim:2014} we train the models on both, sentences and phrases. The second data set used here is the movie review one (MR) introduced in \cite{Pang-Lee:2005}. This data set consists of 10,662 one-sentence movie reviews with negative or positive sentiments. Finally, we also employ the customer reviews of various products data set (CR) presented in \cite{Hu-and-Liu:2004}, which contains 2 classes and 3,775 instances.  For the MR and CR, we use 10-fold cross validation so as to be consistent with previous works in \cite{Hu:2019} and \cite{Kim:2014}.
+\vspace{2mm}
+
+Here, we have compared our results with the non-static version of the network in \cite{Kim:2014} as published by the authors and the Iterative-distillation method in \cite{Hu:2019} on the three data sets under consideration. To this end, in Table \ref{tab:02}, we show the accuracy yielded by our method (CNN-F), the method in \cite{Hu:2019} (CNN-rule) and that in \cite{Kim:2014} (CNN). Table \ref{tab:03} shows the Precision, Recall and F1-scores for the three data sets. In both tables, where applicable, {\it i.e.} the MR and CR data sets, we also show the corresponding variance over the ten trails corresponding to the 10-fold cross validation. From the experimental results, we can appreciate that our method performs better on both, the SST2 and MR data sets by all measures. It is quite competitive on the CR data set too, just barely behind the method in \cite{Hu:2019}.
+\vspace{2mm}
+
+\newpage
+\section{\uppercase{Conclusions}}
+
+We have presented an approach to provide an interpretable
+machine output via representing human knowledge in programmable feature extracting functions which directly controls
+what features or what values of input data should the model
+consider for providing output given the presence of a certain
+property in data. We have shown that using feature extracting
+functions, we can create a model whose posterior output can be
+influenced by model parameters as well as direct supervision
+from functions. Thus eliminating the need of transferring that
+supervision knowledge into the parameters.
+\vspace{2mm}
+
+To our understanding, we can only see one drawback of this
+approach that our model will not be considered as an enhanced
+model since it does not have the knowledge encoded in it’s
+parameters and cannot make a decision on it’s own. But if we
+take our approach in-terms of applicability, it can be used in
+each and every possible use-case of the rule-enhanced model.
+\vspace{2mm}
+
+In future, we would like to further expand on the use of feature-extracting functions in constructing a rule-enhanced model and see what new interesting information we can discover in this
+field. Also, we would like to evaluate our method on a range
+of other classification tasks as well as sequence learning tasks
+using the base neural network as a recurrent neural network.
+
+\newpage
+\section{\uppercase{summary}}
+In this project, we have shown how feature extracting functions can be employed to learn logic rules for sentiment analysis. This provides a means to representing human knowledge in neural networks via programmable feature extracting functions. Moreover,  we have shown that, using these feature extracting functions, we can obtain a model whose posterior output can be influenced by domain knowledge expressed in terms of logic rules without the need of transferring these into the network parameters. The approach presented here is quite general in nature, being applicable to a wide variety of logic rules that can be expressed using rule-to-knowledge conditional probability distributions. We have illustrated the utility of our method for both textual and visual sentiment analysis and compared our results with those yielded by a number of alternatives. Thus, we provide a general purpose approach which can be used in both Computer Vision and Natural Language processing tasks. In our experiments, our method was quite competitive, outperforming the alternatives despite using a much smaller data set for training.
+\vspace{2mm}
+
+\newpage
+\bibliographystyle{IEEEtran}
+\bibliography{egbib}
+\end{document}
+

@@ -1,0 +1,154 @@
+\documentclass[DIV=8, pagesize=auto]{scrartcl}
+
+\usepackage{fixltx2e}
+\usepackage{etex}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage[unicode=true]{hyperref}
+
+\newcommand*{\mail}[1]{\href{mailto:#1}{\texttt{#1}}}
+\newcommand*{\pkg}[1]{\textsf{#1}}
+\newcommand*{\cs}[1]{\texttt{\textbackslash#1}}
+\makeatletter
+\newcommand*{\cmd}[1]{\cs{\expandafter\@gobble\string#1}}
+\makeatother
+\newcommand*{\env}[1]{\texttt{#1}}
+\newcommand*{\opt}[1]{\texttt{#1}}
+\newcommand*{\meta}[1]{\textlangle\textsl{#1}\textrangle}
+\newcommand*{\marg}[1]{\texttt{\{}\meta{#1}\texttt{\}}}
+
+\addtokomafont{title}{\rmfamily}
+
+\title{The \pkg{framed} package\thanks{This manual corresponds to \pkg{framed}~v0.96, dated~2011/10/22.}}
+\author{Donald Arseneau  (\mail{asnd@triumf.ca})}
+\date{2012/05/31}
+
+
+\begin{document}
+
+\maketitle
+
+\noindent
+Create framed, shaded, or differently highlighted regions that can 
+break across pages.  The environments defined are
+
+\medskip
+\noindent
+\begin{tabular}{@{}>{\ttfamily}l@{~~--~~}l@{}}
+  framed    & ordinary frame box (\cmd{\fbox}) with edge at margin     \\
+  oframed   & framed with open top/bottom at page breaks               \\
+  shaded    & shaded background (\cmd{\colorbox}) bleeding into margin \\
+  shaded*   & shaded background (\cmd{\colorbox}) with edge at margin  \\
+  snugshade & shaded with tight fit around text (esp. in lists)        \\
+  snugshade*& like snugshade with shading edge at margin               \\
+  leftbar   & thick vertical line in left margin                       \\
+  titled-frame & frame with title-bar; template for others
+\end{tabular}
+\medskip
+
+\noindent
+to be used like
+%
+\begin{verbatim}
+    \begin{framed}
+      copious text
+    \end{framed}
+\end{verbatim}
+
+
+But the more general purpose of this package is to facilitate the
+definition of new environments that take multi-line material,
+wrap it with some non-breakable formatting (some kind of box or
+decoration) and allow page breaks in the material.  Such environments
+are defined to declare (or use) \cmd{\FrameCommand} for applying the boxy 
+decoration, and \cmd{\MakeFramed}\marg{settings} \ldots\ \cmd{\endMakeFramed} 
+wrapped around the main text (environment body).
+
+The ``\env{framed}'' environment uses \cmd{\fbox}, by default, as its \cmd{\FrameCommand} 
+with the additional settings \verb+\fboxrule=\FrameRule+ and \verb+\fboxsep=\FrameSep+.
+You can change these lengths (using \cmd{\setlength}) and you can change 
+the definition of \cmd{\FrameCommand} to use much fancier boxes.
+
+In fact, the ``\env{shaded}'' environment just redefines \cmd{\FrameCommand} to be
+\verb+\colorbox{shadecolor}+ (and you have to define the color ``\texttt{shadecolor}'':
+\verb+\definecolor{shadecolor}...+).
+
+Although the intention is for other packages to define the varieties
+of decoration, a command \cmd{\OpenFbox} is defined for frames with open 
+tops or bottoms, and used for the ``\env{oframed}'' environment.  This 
+facility is based on a more complex and capable command \cmd{\CustomFBox} which can
+be used for a wider range of frame styles.  One such style of a title-bar
+frame with continuation marks is provided as an example.  It is used by
+the ``\env{titled-frame}'' environment.  To make use of \env{titled-frame} in your
+document, or the \cmd{\TitleBarFrame} command in your own environment
+definitions, you must define the colors \texttt{TFFrameColor} (for the frame)
+and a contrasting \texttt{TFTitleColor} (for the title text).
+
+A page break is allowed, and even encouraged, before the \env{framed}
+and other environments.  If you want to attach some text (a box title) to the
+frame, then the text should be inserted by \cmd{\FrameCommand} so it cannot
+be separated from the body. 
+
+The contents of the framed regions are restricted: 
+Floats, footnotes, marginpars and head-line entries will be lost.
+(Some of these may be handled in a later version.)
+This package will not work with the page breaking of \pkg{multicol.sty},
+or other systems that perform column-balancing.
+
+The \env{MakeFramed} environment does the work.  Its ``\meta{settings}'' argument
+should contain any adjustments to the text width (via a setting of \cmd{\hsize}).
+Here, the parameter \cmd{\width} gives the measured extra width
+added by the frame, so a common setting is ``\verb+\advance\hsize-\width+''
+which reduces the width of the text just enough that the outer edge
+of the frame aligns with the margins.  The ``\meta{settings}'' should also
+include a `restore' command -- \cmd{\@parboxrestore} or \cmd{\FrameRestore}
+or something similar; for instance, the snugshade environment uses
+settings to eliminate list indents and vertical space, but uses
+\cmd{\hspace} in its \cmd{\FrameCommand} to reproduce the list margin ouside the
+shading.
+
+There are actually four variants of \cmd{\FrameCommand} to allow different
+formatting for each part of an environment broken over pages.  Unbroken
+text is adorned by \cmd{\FrameCommand}, whereas split text first uses 
+\cmd{\FirstFrameCommand}, possibly followed by \cmd{\MidFrameCommand}, and
+finishing with \cmd{\LastFrameCommand}.  The default definitions for 
+these three just invokes \cmd{\FrameCommand}, so that all portions are
+framed the same way.  See the \env{oframe} environment for use of distinct
+First/Mid/Last frames.
+
+\section*{Expert commands:}
+
+\begin{itemize}
+\item \cmd{\MakeFramed}, \cmd{\endMakeFramed}: the ``\env{MakeFramed}'' environment
+\item \cmd{\FrameCommand}: command to draw the frame around its argument
+\item \cmd{\FirstFrameCommand}: the frame for the first part of a split environment
+\item \cmd{\LastFrameCommand}: frame for the last portion
+\item \cmd{\MidFrameCommand}: for any intermediate segments
+\item \cmd{\FrameRestore}: restore some text settings, but fewer than \cmd{\@parbox\-restore}
+\item \cmd{\FrameRule}: length register; \cmd{\fboxrule} for default ``\env{framed}''.
+\item \cmd{\FrameSep}: length register; \cmd{\fboxsep} for default ``\env{framed}''.
+\item \cmd{\FrameHeightAdjust}: macro; height of frame above baseline at top of page
+\item \cmd{\OuterFrameSep}: vertical space before and after the framed env.; defaults to \cmd{\topsep}
+\end{itemize}
+
+\medskip
+This is still a `pre-production' version because I can think of many
+features/improvements that should be made. Also, a detailed manual needs
+to be written.  Nevertheless, starting with version~0.5 it should be bug-free.
+
+
+\section*{ToDo:}
+
+\begin{itemize}
+\item Test more varieties of list 
+\item Improve and correct documentation
+\item Propagation of \cmd{\marks}
+\item Handle footnotes (how??) floats (?) and marginpars.
+\item Stretchability modification.
+\end{itemize}
+
+\end{document}
