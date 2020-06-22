@@ -1,0 +1,733 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.5.16)  22 JUN 2020 21:29
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**bare_jrnl.tex
+(./bare_jrnl.tex
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 7 language(s) loaded.
+(./IEEEtran.cls
+Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
+-- See the "IEEEtran_HOWTO" manual for usage information.
+-- http://www.michaelshell.org/tex/ieeetran/
+\@IEEEtrantmpdimenA=\dimen102
+\@IEEEtrantmpdimenB=\dimen103
+\@IEEEtrantmpdimenC=\dimen104
+\@IEEEtrantmpcountA=\count79
+\@IEEEtrantmpcountB=\count80
+\@IEEEtrantmpcountC=\count81
+\@IEEEtrantmptoksA=\toks14
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 503.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+-- Using 8.5in x 11in (letter) paper.
+-- Using PDF output.
+\@IEEEnormalsizeunitybaselineskip=\dimen105
+-- This is a 10 point document.
+\CLASSINFOnormalsizebaselineskip=\dimen106
+\CLASSINFOnormalsizeunitybaselineskip=\dimen107
+\IEEEnormaljot=\dimen108
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+
+\IEEEquantizedlength=\dimen109
+\IEEEquantizedlengthdiff=\dimen110
+\IEEEquantizedtextheightdiff=\dimen111
+\IEEEilabelindentA=\dimen112
+\IEEEilabelindentB=\dimen113
+\IEEEilabelindent=\dimen114
+\IEEEelabelindent=\dimen115
+\IEEEdlabelindent=\dimen116
+\IEEElabelindent=\dimen117
+\IEEEiednormlabelsep=\dimen118
+\IEEEiedmathlabelsep=\dimen119
+\IEEEiedtopsep=\skip41
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@IEEEsubequation=\count86
+\abovecaptionskip=\skip42
+\belowcaptionskip=\skip43
+\c@figure=\count87
+\c@table=\count88
+\@IEEEeqnnumcols=\count89
+\@IEEEeqncolcnt=\count90
+\@IEEEsubeqnnumrollback=\count91
+\@IEEEquantizeheightA=\dimen120
+\@IEEEquantizeheightB=\dimen121
+\@IEEEquantizeheightC=\dimen122
+\@IEEEquantizeprevdepth=\dimen123
+\@IEEEquantizemultiple=\count92
+\@IEEEquantizeboxA=\box26
+\@IEEEtmpitemindent=\dimen124
+\IEEEPARstartletwidth=\dimen125
+\c@IEEEbiography=\count93
+\@IEEEtranrubishbin=\box27
+) (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count94
+\float@exts=\toks15
+\float@box=\box28
+\@float@everytoks=\toks16
+\@floatcapt=\box29
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks17
+\c@algorithm=\count95
+)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithmic.sty
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks18
+)
+\c@ALC@unique=\count96
+\c@ALC@line=\count97
+\c@ALC@rem=\count98
+\c@ALC@depth=\count99
+\ALC@tlm=\skip44
+\algorithmicindent=\skip45
+)
+(/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen126
+\captionmargin@=\dimen127
+\captionwidth=\dimen128
+\caption@tempdima=\dimen129
+\caption@indent=\dimen130
+\caption@parindent=\dimen131
+\caption@hangindent=\dimen132
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+)
+
+Package caption Warning: Unsupported document class (or package) detected,
+(caption)                usage of the caption package is not recommended.
+See the caption package documentation for explanation.
+
+Package caption Info: \@makecaption = \long macro:#1#2->\ifx \@captype \@IEEEta
+blestring \footnotesize \bgroup \par \centering \@IEEEtabletopskipstrut {\norma
+lfont \footnotesize #1}\\{\normalfont \footnotesize \scshape #2}\par \addvspace
+ {0.5\baselineskip }\egroup \@IEEEtablecaptionsepspace \else \@IEEEfigurecaptio
+nsepspace \setbox \@tempboxa \hbox {\normalfont \footnotesize {#1.}\nobreakspac
+e \nobreakspace #2}\ifdim \wd \@tempboxa >\hsize \setbox \@tempboxa \hbox {\nor
+malfont \footnotesize {#1.}\nobreakspace \nobreakspace }\parbox [t]{\hsize }{\n
+ormalfont \footnotesize \noindent \unhbox \@tempboxa #2}\else \ifCLASSOPTIONcon
+ference \hbox to\hsize {\normalfont \footnotesize \hfil \box \@tempboxa \hfil }
+\else \hbox to\hsize {\normalfont \footnotesize \box \@tempboxa \hfil }\fi \fi 
+\fi .
+\c@ContinuedFloat=\count100
+Package caption Info: float package is loaded.
+)
+\c@KVtest=\count101
+\sf@farskip=\skip46
+\sf@captopadj=\dimen133
+\sf@capskip=\skip47
+\sf@nearskip=\skip48
+\c@subfigure=\count102
+\c@subfigure@save=\count103
+\c@lofdepth=\count104
+\c@subtable=\count105
+\c@subtable@save=\count106
+\c@lotdepth=\count107
+\sf@top=\skip49
+\sf@bottom=\skip50
+) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen134
+\Gin@req@width=\dimen135
+)
+(./bare_jrnl.aux)
+\openout1 = `bare_jrnl.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 359.
+LaTeX Font Info:    ... okay on input line 359.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 359.
+LaTeX Font Info:    ... okay on input line 359.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 359.
+LaTeX Font Info:    ... okay on input line 359.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 359.
+LaTeX Font Info:    ... okay on input line 359.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 359.
+LaTeX Font Info:    ... okay on input line 359.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 359.
+LaTeX Font Info:    ... okay on input line 359.
+
+-- Lines per column: 58 (exact).
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count108
+\scratchdimen=\dimen136
+\scratchbox=\box30
+\nofMPsegments=\count109
+\nofMParguments=\count110
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count111
+\MPscratchDim=\dimen137
+\MPnumerator=\count112
+\makeMPintoPDFobject=\count113
+\everyMPtoPDFconversion=\toks20
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2018/01/21 v0.26 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Underfull \hbox (badness 7415) in paragraph at lines 436--436
+[][][]\OT1/ptm/m/n/8 Manuscript re-ceived Mon-thTODO 19, 2020; re-vised Month 2
+6,
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 599.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 599.
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 614--616
+
+ []
+
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 754--755
+\OT1/ptm/b/n/10 OUTPUT: $\OML/cmm/m/it/10 Blacklist$\OT1/ptm/m/n/10 : Set of al
+l black-listed
+ []
+
+[3]
+Underfull \hbox (badness 1675) in paragraph at lines 789--790
+\OT1/ptm/b/n/10 OUTPUT: $\OML/cmm/m/it/10 Score[]$\OT1/ptm/m/n/10 : RAW Score o
+f node $\OML/cmm/m/it/10 n \OMS/cmsy/m/n/10 8\OML/cmm/m/it/10 n \OMS/cmsy/m/n/1
+0 2
+ []
+
+
+Underfull \hbox (badness 1755) in paragraph at lines 809--810
+\OML/cmm/m/it/10 m$ \OT1/ptm/m/n/10 by node $\OML/cmm/m/it/10 i$ \OT1/ptm/m/n/1
+0 in a Re-port by node $\OML/cmm/m/it/10 j$ $ \OMS/cmsy/m/n/10 8\OML/cmm/m/it/1
+0 m \OMS/cmsy/m/n/10 2
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 842--843
+\OT1/ptm/b/n/10 OUTPUT: $\OML/cmm/m/it/10 Score[]$\OT1/ptm/m/n/10 : Pri-mary Sc
+ore of Node
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 842--843
+\OML/cmm/m/it/10 n$ \OT1/ptm/m/n/10 cal-cu-lated over a win-dow of size $\OML/c
+mm/m/it/10 w \OMS/cmsy/m/n/10 8\OML/cmm/m/it/10 n \OMS/cmsy/m/n/10 2
+ []
+
+[4] [5]
+<images/cbdmap.jpg, id=31, 1254.6875pt x 860.21375pt>
+File: images/cbdmap.jpg Graphic file (type jpg)
+<use images/cbdmap.jpg>
+Package pdftex.def Info: images/cbdmap.jpg  used on input line 898.
+(pdftex.def)             Requested size: 252.0pt x 172.76161pt.
+ [6 <./images/cbdmap.jpg>]
+<images/SCN0_AbsoluteErrorsInEstimationComparison.pdf, id=36, 939.51pt x 433.62
+pt>
+File: images/SCN0_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
+df)
+<use images/SCN0_AbsoluteErrorsInEstimationComparison.pdf>
+Package pdftex.def Info: images/SCN0_AbsoluteErrorsInEstimationComparison.pdf  
+used on input line 936.
+(pdftex.def)             Requested size: 258.0pt x 127.00113pt.
+<images/SCN1_AbsoluteErrorsInEstimationComparison.pdf, id=38, 939.51pt x 433.62
+pt>
+File: images/SCN1_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
+df)
+<use images/SCN1_AbsoluteErrorsInEstimationComparison.pdf>
+Package pdftex.def Info: images/SCN1_AbsoluteErrorsInEstimationComparison.pdf  
+used on input line 937.
+(pdftex.def)             Requested size: 258.0pt x 127.00113pt.
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 936--938
+[][]
+ []
+
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 936--938
+[] 
+ []
+
+<images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=40, 1156.32pt x 650
+.43pt>
+File: images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
+ pdf)
+<use images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
+Package pdftex.def Info: images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
+  used on input line 942.
+(pdftex.def)             Requested size: 258.0pt x 156.52383pt.
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 942--943
+[][] 
+ []
+
+<images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=42, 1156.32pt x 650
+.43pt>
+File: images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
+ pdf)
+<use images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
+Package pdftex.def Info: images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
+  used on input line 947.
+(pdftex.def)             Requested size: 258.0pt x 156.52383pt.
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 947--948
+[][] 
+ []
+
+<images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf, id=44, 722.7pt x 115
+6.32pt>
+File: images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (ty
+pe pdf)
+<use images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf>
+Package pdftex.def Info: images/SCN12_PrimaryScoreVsActualAccuracyComparitive.p
+df  used on input line 952.
+(pdftex.def)             Requested size: 252.0pt x 259.86153pt.
+[7 <./images/SCN0_AbsoluteErrorsInEstimationComparison.pdf> <./images/SCN1_Abso
+luteErrorsInEstimationComparison.pdf> <./images/SCN1_ReportingAccuracy_Vs_AvgSe
+condaryScore.pdf>] [8 <./images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
+> <./images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf>]
+<images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf, id=335, 722.7pt x 115
+6.32pt>
+File: images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (typ
+e pdf)
+<use images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf>
+Package pdftex.def Info: images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pd
+f  used on input line 1008.
+(pdftex.def)             Requested size: 258.0pt x 266.05243pt.
+<images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf, id=337, 722.7pt x 11
+56.32pt>
+File: images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (ty
+pe pdf)
+<use images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf>
+Package pdftex.def Info: images/SCN10_PrimaryScoreVsActualAccuracyComparitive.p
+df  used on input line 1008.
+(pdftex.def)             Requested size: 258.0pt x 266.05243pt.
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1008--1008
+ [][] 
+ []
+
+File: images/SCN0_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
+df)
+<use images/SCN0_AbsoluteErrorsInEstimationComparison.pdf>
+Package pdftex.def Info: images/SCN0_AbsoluteErrorsInEstimationComparison.pdf  
+used on input line 1012.
+(pdftex.def)             Requested size: 258.0pt x 120.24237pt.
+<images/SCN10_AbsoluteErrorsInEstimationComparison.pdf, id=340, 939.51pt x 433.
+62pt>
+File: images/SCN10_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type 
+pdf)
+<use images/SCN10_AbsoluteErrorsInEstimationComparison.pdf>
+Package pdftex.def Info: images/SCN10_AbsoluteErrorsInEstimationComparison.pdf 
+ used on input line 1012.
+(pdftex.def)             Requested size: 258.0pt x 120.24237pt.
+<images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=342, 1156.32pt x 65
+0.43pt>
+File: images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
+ pdf)
+<use images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
+Package pdftex.def Info: images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
+  used on input line 1017.
+(pdftex.def)             Requested size: 258.0pt x 156.52383pt.
+<images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=344, 1156.32pt x 6
+50.43pt>
+File: images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (typ
+e pdf)
+<use images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
+Package pdftex.def Info: images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pd
+f  used on input line 1017.
+(pdftex.def)             Requested size: 258.0pt x 156.52383pt.
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1012--1018
+ [][] 
+ []
+
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1012--1018
+ [][][][] 
+ []
+
+<images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf, id=346, 722.7pt x 115
+6.32pt>
+File: images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (typ
+e pdf)
+<use images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf>
+Package pdftex.def Info: images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pd
+f  used on input line 1026.
+(pdftex.def)             Requested size: 258.0pt x 266.05243pt.
+<images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf, id=348, 722.7pt x 11
+56.32pt>
+File: images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (ty
+pe pdf)
+<use images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf>
+Package pdftex.def Info: images/SCN11_PrimaryScoreVsActualAccuracyComparitive.p
+df  used on input line 1026.
+(pdftex.def)             Requested size: 258.0pt x 266.05243pt.
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1026--1026
+ [][] 
+ []
+
+File: images/SCN1_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
+df)
+<use images/SCN1_AbsoluteErrorsInEstimationComparison.pdf>
+Package pdftex.def Info: images/SCN1_AbsoluteErrorsInEstimationComparison.pdf  
+used on input line 1030.
+(pdftex.def)             Requested size: 258.0pt x 120.24237pt.
+<images/SCN11_AbsoluteErrorsInEstimationComparison.pdf, id=351, 939.51pt x 433.
+62pt>
+File: images/SCN11_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type 
+pdf)
+<use images/SCN11_AbsoluteErrorsInEstimationComparison.pdf>
+Package pdftex.def Info: images/SCN11_AbsoluteErrorsInEstimationComparison.pdf 
+ used on input line 1030.
+(pdftex.def)             Requested size: 258.0pt x 120.24237pt.
+File: images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
+ pdf)
+<use images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
+Package pdftex.def Info: images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
+  used on input line 1035.
+(pdftex.def)             Requested size: 258.0pt x 156.52383pt.
+<images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=354, 1156.32pt x 6
+50.43pt>
+File: images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (typ
+e pdf)
+<use images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
+Package pdftex.def Info: images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pd
+f  used on input line 1035.
+(pdftex.def)             Requested size: 258.0pt x 156.52383pt.
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1030--1036
+ [][] 
+ []
+
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1030--1036
+ [][][][] 
+ []
+
+<images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf, id=356, 722.7pt x 115
+6.32pt>
+File: images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (typ
+e pdf)
+<use images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf>
+Package pdftex.def Info: images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pd
+f  used on input line 1044.
+(pdftex.def)             Requested size: 258.0pt x 266.05243pt.
+File: images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (ty
+pe pdf)
+<use images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf>
+Package pdftex.def Info: images/SCN12_PrimaryScoreVsActualAccuracyComparitive.p
+df  used on input line 1044.
+(pdftex.def)             Requested size: 258.0pt x 266.05243pt.
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1044--1044
+ [][] 
+ []
+
+<images/SCN2_AbsoluteErrorsInEstimationComparison.pdf, id=359, 939.51pt x 433.6
+2pt>
+File: images/SCN2_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
+df)
+<use images/SCN2_AbsoluteErrorsInEstimationComparison.pdf>
+Package pdftex.def Info: images/SCN2_AbsoluteErrorsInEstimationComparison.pdf  
+used on input line 1048.
+(pdftex.def)             Requested size: 258.0pt x 120.24237pt.
+<images/SCN12_AbsoluteErrorsInEstimationComparison.pdf, id=361, 939.51pt x 433.
+62pt>
+File: images/SCN12_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type 
+pdf)
+<use images/SCN12_AbsoluteErrorsInEstimationComparison.pdf>
+Package pdftex.def Info: images/SCN12_AbsoluteErrorsInEstimationComparison.pdf 
+ used on input line 1048.
+(pdftex.def)             Requested size: 258.0pt x 120.24237pt.
+File: images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
+ pdf)
+<use images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
+Package pdftex.def Info: images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
+  used on input line 1053.
+(pdftex.def)             Requested size: 258.0pt x 156.52383pt.
+<images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=364, 1156.32pt x 6
+50.43pt>
+File: images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (typ
+e pdf)
+<use images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
+Package pdftex.def Info: images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pd
+f  used on input line 1053.
+(pdftex.def)             Requested size: 258.0pt x 156.52383pt.
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1048--1054
+ [][] 
+ []
+
+
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1048--1054
+ [][][][] 
+ []
+
+[9]
+
+LaTeX Warning: Text page 10 contains only floats.
+
+
+Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: Text page 10 contains only floats.
+
+
+Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+
+
+[10 <./images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN10
+_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN10_AbsoluteErrorsInE
+stimationComparison.pdf> <./images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.
+pdf> <./images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>]
+
+LaTeX Warning: Text page 11 contains only floats.
+
+
+Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: Text page 11 contains only floats.
+
+
+Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+
+
+[11 <./images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN11
+_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN11_AbsoluteErrorsInE
+stimationComparison.pdf> <./images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore
+.pdf>]
+
+LaTeX Warning: Text page 12 contains only floats.
+
+
+Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+
+
+
+LaTeX Warning: Text page 12 contains only floats.
+
+
+Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+
+
+[12 <./images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN2_
+AbsoluteErrorsInEstimationComparison.pdf> <./images/SCN12_AbsoluteErrorsInEstim
+ationComparison.pdf> <./images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
+>] (./bare_jrnl.bbl
+Missing character: There is no Ã in font ptmr7t!
+Missing character: There is no ¼ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no “ in font ptmr7t!
+Missing character: There is no Ã in font ptmr7t!
+Missing character: There is no ¼ in font ptmr7t!
+)
+<images/rohanBW.png, id=1140, 414.54875pt x 532.99126pt>
+File: images/rohanBW.png Graphic file (type png)
+<use images/rohanBW.png>
+Package pdftex.def Info: images/rohanBW.png  used on input line 1226.
+(pdftex.def)             Requested size: 70.25728pt x 90.3308pt.
+File: images/rohanBW.png Graphic file (type png)
+<use images/rohanBW.png>
+Package pdftex.def Info: images/rohanBW.png  used on input line 1226.
+(pdftex.def)             Requested size: 70.25728pt x 90.3308pt.
+<images/FrankJiangPhoto.pdf, id=1144, 301.125pt x 376.40625pt>
+File: images/FrankJiangPhoto.pdf Graphic file (type pdf)
+<use images/FrankJiangPhoto.pdf>
+Package pdftex.def Info: images/FrankJiangPhoto.pdf  used on input line 1230.
+(pdftex.def)             Requested size: 72.26688pt x 90.33359pt.
+File: images/FrankJiangPhoto.pdf Graphic file (type pdf)
+<use images/FrankJiangPhoto.pdf>
+Package pdftex.def Info: images/FrankJiangPhoto.pdf  used on input line 1230.
+(pdftex.def)             Requested size: 72.26688pt x 90.33359pt.
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+<images/RobinDossPhoto.pdf, id=1147, 301.125pt x 376.40625pt>
+File: images/RobinDossPhoto.pdf Graphic file (type pdf)
+<use images/RobinDossPhoto.pdf>
+Package pdftex.def Info: images/RobinDossPhoto.pdf  used on input line 1238.
+(pdftex.def)             Requested size: 72.26688pt x 90.33359pt.
+File: images/RobinDossPhoto.pdf Graphic file (type pdf)
+<use images/RobinDossPhoto.pdf>
+Package pdftex.def Info: images/RobinDossPhoto.pdf  used on input line 1238.
+(pdftex.def)             Requested size: 72.26688pt x 90.33359pt.
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
+ [13 <./images/rohanBW.png> <./images/FrankJiangPhoto.pdf> <./images/RobinDossP
+hoto.pdf>] (./bare_jrnl.aux) ) 
+Here is how much of TeX's memory you used:
+ 3919 strings out of 494847
+ 69460 string characters out of 6179080
+ 143542 words of memory out of 5000000
+ 7191 multiletter control sequences out of 15000+600000
+ 41794 words of font info for 71 fonts, out of 8000000 for 9000
+ 62 hyphenation exceptions out of 8191
+ 44i,11n,49p,1602b,714s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/ba
+se/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on bare_jrnl.pdf (13 pages, 1078852 bytes).
+PDF statistics:
+ 1213 PDF objects out of 1440 (max. 8388607)
+ 245 compressed objects within 3 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 285 words of extra memory for PDF output out of 10000 (max. 10000000)
+
