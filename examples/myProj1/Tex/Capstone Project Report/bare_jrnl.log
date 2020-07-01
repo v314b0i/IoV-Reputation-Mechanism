@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.5.16)  29 JUN 2020 07:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.5.16)  2 JUL 2020 09:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -314,7 +314,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 600.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 600.
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
@@ -322,14 +325,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 615--617
 
  []
 
-[2]
+[2] [3]
 Underfull \hbox (badness 10000) in paragraph at lines 755--756
 \OT1/ptm/b/n/10 OUTPUT: $\OML/cmm/m/it/10 Blacklist$\OT1/ptm/m/n/10 : Set of al
 l black-listed
  []
-
-[3]
-Underfull \vbox (badness 2229) has occurred while \output is active []
 
 
 Underfull \hbox (badness 1675) in paragraph at lines 790--791
@@ -708,7 +708,7 @@ hoto.pdf>] (./bare_jrnl.aux) )
 Here is how much of TeX's memory you used:
  3920 strings out of 494847
  69482 string characters out of 6179080
- 138550 words of memory out of 5000000
+ 143550 words of memory out of 5000000
  7192 multiletter control sequences out of 15000+600000
  41794 words of font info for 71 fonts, out of 8000000 for 9000
  62 hyphenation exceptions out of 8191
@@ -727,7 +727,7 @@ sfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_jrnl.pdf (13 pages, 1077579 bytes).
+Output written on bare_jrnl.pdf (13 pages, 1078354 bytes).
 PDF statistics:
  1213 PDF objects out of 1440 (max. 8388607)
  245 compressed objects within 3 object streams
