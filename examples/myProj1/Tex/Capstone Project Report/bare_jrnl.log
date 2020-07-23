@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.5.16)  2 JUL 2020 09:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.5.16)  24 JUL 2020 07:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -326,126 +326,124 @@ Underfull \hbox (badness 10000) in paragraph at lines 615--617
  []
 
 [2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 755--756
+Underfull \hbox (badness 10000) in paragraph at lines 758--759
 \OT1/ptm/b/n/10 OUTPUT: $\OML/cmm/m/it/10 Blacklist$\OT1/ptm/m/n/10 : Set of al
 l black-listed
  []
 
 
-Underfull \hbox (badness 1675) in paragraph at lines 790--791
+Underfull \hbox (badness 1675) in paragraph at lines 796--797
 \OT1/ptm/b/n/10 OUTPUT: $\OML/cmm/m/it/10 Score[]$\OT1/ptm/m/n/10 : RAW Score o
 f node $\OML/cmm/m/it/10 n \OMS/cmsy/m/n/10 8\OML/cmm/m/it/10 n \OMS/cmsy/m/n/1
 0 2
  []
 
 
-Underfull \hbox (badness 1755) in paragraph at lines 810--811
+Underfull \hbox (badness 1755) in paragraph at lines 816--817
 \OML/cmm/m/it/10 m$ \OT1/ptm/m/n/10 by node $\OML/cmm/m/it/10 i$ \OT1/ptm/m/n/1
 0 in a Re-port by node $\OML/cmm/m/it/10 j$ $ \OMS/cmsy/m/n/10 8\OML/cmm/m/it/1
 0 m \OMS/cmsy/m/n/10 2
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 843--844
+Underfull \hbox (badness 10000) in paragraph at lines 849--850
 \OT1/ptm/b/n/10 OUTPUT: $\OML/cmm/m/it/10 Score[]$\OT1/ptm/m/n/10 : Pri-mary Sc
 ore of Node
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 843--844
+Underfull \hbox (badness 10000) in paragraph at lines 849--850
 \OML/cmm/m/it/10 n$ \OT1/ptm/m/n/10 cal-cu-lated over a win-dow of size $\OML/c
 mm/m/it/10 w \OMS/cmsy/m/n/10 8\OML/cmm/m/it/10 n \OMS/cmsy/m/n/10 2
  []
 
-[4] [5]
-<images/cbdmap.jpg, id=31, 1254.6875pt x 860.21375pt>
+[4]
+Underfull \vbox (badness 2318) has occurred while \output is active []
+
+ [5]
+[6]
+<images/cbdmap.jpg, id=35, 1254.6875pt x 860.21375pt>
 File: images/cbdmap.jpg Graphic file (type jpg)
 <use images/cbdmap.jpg>
-Package pdftex.def Info: images/cbdmap.jpg  used on input line 908.
+Package pdftex.def Info: images/cbdmap.jpg  used on input line 926.
 (pdftex.def)             Requested size: 252.0pt x 172.76161pt.
- [6 <./images/cbdmap.jpg>]
-<images/SCN0_AbsoluteErrorsInEstimationComparison.pdf, id=36, 939.51pt x 433.62
+ [7 <./images/cbdmap.jpg>]
+<images/SCN0_AbsoluteErrorsInEstimationComparison.pdf, id=40, 939.51pt x 433.62
 pt>
 File: images/SCN0_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
 df)
 <use images/SCN0_AbsoluteErrorsInEstimationComparison.pdf>
 Package pdftex.def Info: images/SCN0_AbsoluteErrorsInEstimationComparison.pdf  
-used on input line 946.
+used on input line 964.
 (pdftex.def)             Requested size: 258.0pt x 127.00113pt.
-<images/SCN1_AbsoluteErrorsInEstimationComparison.pdf, id=38, 939.51pt x 433.62
+<images/SCN1_AbsoluteErrorsInEstimationComparison.pdf, id=42, 939.51pt x 433.62
 pt>
 File: images/SCN1_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
 df)
 <use images/SCN1_AbsoluteErrorsInEstimationComparison.pdf>
 Package pdftex.def Info: images/SCN1_AbsoluteErrorsInEstimationComparison.pdf  
-used on input line 947.
+used on input line 965.
 (pdftex.def)             Requested size: 258.0pt x 127.00113pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 946--948
+Overfull \hbox (6.0pt too wide) in paragraph at lines 964--966
 [][]
  []
 
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 946--948
+Overfull \hbox (6.0pt too wide) in paragraph at lines 964--966
 [] 
  []
 
-<images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=40, 1156.32pt x 650
+<images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=44, 1156.32pt x 650
 .43pt>
 File: images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
  pdf)
 <use images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
 Package pdftex.def Info: images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
-  used on input line 952.
+  used on input line 970.
 (pdftex.def)             Requested size: 258.0pt x 156.52383pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 952--953
+Overfull \hbox (6.0pt too wide) in paragraph at lines 970--971
 [][] 
  []
 
-<images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=42, 1156.32pt x 650
+<images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=46, 1156.32pt x 650
 .43pt>
 File: images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
  pdf)
 <use images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
 Package pdftex.def Info: images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
-  used on input line 957.
+  used on input line 975.
 (pdftex.def)             Requested size: 258.0pt x 156.52383pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 957--958
+Overfull \hbox (6.0pt too wide) in paragraph at lines 975--976
 [][] 
  []
 
-<images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf, id=44, 722.7pt x 115
-6.32pt>
-File: images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (ty
-pe pdf)
-<use images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf>
-Package pdftex.def Info: images/SCN12_PrimaryScoreVsActualAccuracyComparitive.p
-df  used on input line 962.
-(pdftex.def)             Requested size: 252.0pt x 259.86153pt.
-[7 <./images/SCN0_AbsoluteErrorsInEstimationComparison.pdf> <./images/SCN1_Abso
-luteErrorsInEstimationComparison.pdf> <./images/SCN1_ReportingAccuracy_Vs_AvgSe
-condaryScore.pdf>] [8 <./images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
-> <./images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf>]
-<images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf, id=335, 722.7pt x 115
+
+Underfull \vbox (badness 1184) has occurred while \output is active []
+
+ [8 <./images/SCN0_AbsoluteErrorsInEstimationComparison.pdf> <./images/SCN1_Abs
+oluteErrorsInEstimationComparison.pdf> <./images/SCN1_ReportingAccuracy_Vs_AvgS
+econdaryScore.pdf> <./images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>]
+<images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf, id=269, 722.7pt x 115
 6.32pt>
 File: images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (typ
 e pdf)
 <use images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf>
 Package pdftex.def Info: images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pd
-f  used on input line 1018.
+f  used on input line 1039.
 (pdftex.def)             Requested size: 258.0pt x 266.05243pt.
-<images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf, id=337, 722.7pt x 11
+<images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf, id=271, 722.7pt x 11
 56.32pt>
 File: images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (ty
 pe pdf)
 <use images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf>
 Package pdftex.def Info: images/SCN10_PrimaryScoreVsActualAccuracyComparitive.p
-df  used on input line 1018.
+df  used on input line 1039.
 (pdftex.def)             Requested size: 258.0pt x 266.05243pt.
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1018--1018
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1039--1039
  [][] 
  []
 
@@ -453,60 +451,60 @@ File: images/SCN0_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
 df)
 <use images/SCN0_AbsoluteErrorsInEstimationComparison.pdf>
 Package pdftex.def Info: images/SCN0_AbsoluteErrorsInEstimationComparison.pdf  
-used on input line 1022.
+used on input line 1043.
 (pdftex.def)             Requested size: 258.0pt x 120.24237pt.
-<images/SCN10_AbsoluteErrorsInEstimationComparison.pdf, id=340, 939.51pt x 433.
+<images/SCN10_AbsoluteErrorsInEstimationComparison.pdf, id=274, 939.51pt x 433.
 62pt>
 File: images/SCN10_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type 
 pdf)
 <use images/SCN10_AbsoluteErrorsInEstimationComparison.pdf>
 Package pdftex.def Info: images/SCN10_AbsoluteErrorsInEstimationComparison.pdf 
- used on input line 1022.
+ used on input line 1043.
 (pdftex.def)             Requested size: 258.0pt x 120.24237pt.
-<images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=342, 1156.32pt x 65
+<images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=276, 1156.32pt x 65
 0.43pt>
 File: images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
  pdf)
 <use images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
 Package pdftex.def Info: images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
-  used on input line 1027.
+  used on input line 1048.
 (pdftex.def)             Requested size: 258.0pt x 156.52383pt.
-<images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=344, 1156.32pt x 6
+<images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=278, 1156.32pt x 6
 50.43pt>
 File: images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (typ
 e pdf)
 <use images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
 Package pdftex.def Info: images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pd
-f  used on input line 1027.
+f  used on input line 1048.
 (pdftex.def)             Requested size: 258.0pt x 156.52383pt.
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1022--1028
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1043--1049
  [][] 
  []
 
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1022--1028
- [][][][] 
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1043--1049
+ [] 
  []
 
-<images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf, id=346, 722.7pt x 115
+<images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf, id=280, 722.7pt x 115
 6.32pt>
 File: images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (typ
 e pdf)
 <use images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf>
 Package pdftex.def Info: images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pd
-f  used on input line 1036.
+f  used on input line 1057.
 (pdftex.def)             Requested size: 258.0pt x 266.05243pt.
-<images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf, id=348, 722.7pt x 11
+<images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf, id=282, 722.7pt x 11
 56.32pt>
 File: images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (ty
 pe pdf)
 <use images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf>
 Package pdftex.def Info: images/SCN11_PrimaryScoreVsActualAccuracyComparitive.p
-df  used on input line 1036.
+df  used on input line 1057.
 (pdftex.def)             Requested size: 258.0pt x 266.05243pt.
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1036--1036
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1057--1057
  [][] 
  []
 
@@ -514,97 +512,99 @@ File: images/SCN1_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
 df)
 <use images/SCN1_AbsoluteErrorsInEstimationComparison.pdf>
 Package pdftex.def Info: images/SCN1_AbsoluteErrorsInEstimationComparison.pdf  
-used on input line 1040.
+used on input line 1061.
 (pdftex.def)             Requested size: 258.0pt x 120.24237pt.
-<images/SCN11_AbsoluteErrorsInEstimationComparison.pdf, id=351, 939.51pt x 433.
+<images/SCN11_AbsoluteErrorsInEstimationComparison.pdf, id=285, 939.51pt x 433.
 62pt>
 File: images/SCN11_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type 
 pdf)
 <use images/SCN11_AbsoluteErrorsInEstimationComparison.pdf>
 Package pdftex.def Info: images/SCN11_AbsoluteErrorsInEstimationComparison.pdf 
- used on input line 1040.
+ used on input line 1061.
 (pdftex.def)             Requested size: 258.0pt x 120.24237pt.
 File: images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
  pdf)
 <use images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
 Package pdftex.def Info: images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
-  used on input line 1045.
+  used on input line 1066.
 (pdftex.def)             Requested size: 258.0pt x 156.52383pt.
-<images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=354, 1156.32pt x 6
+<images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=288, 1156.32pt x 6
 50.43pt>
 File: images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (typ
 e pdf)
 <use images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
 Package pdftex.def Info: images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pd
-f  used on input line 1045.
+f  used on input line 1066.
 (pdftex.def)             Requested size: 258.0pt x 156.52383pt.
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1040--1046
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1061--1067
  [][] 
  []
 
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1040--1046
- [][][][] 
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1061--1067
+ [] 
  []
 
-<images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf, id=356, 722.7pt x 115
+<images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf, id=290, 722.7pt x 115
 6.32pt>
 File: images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (typ
 e pdf)
 <use images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf>
 Package pdftex.def Info: images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pd
-f  used on input line 1054.
+f  used on input line 1075.
 (pdftex.def)             Requested size: 258.0pt x 266.05243pt.
+<images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf, id=292, 722.7pt x 11
+56.32pt>
 File: images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf Graphic file (ty
 pe pdf)
 <use images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf>
 Package pdftex.def Info: images/SCN12_PrimaryScoreVsActualAccuracyComparitive.p
-df  used on input line 1054.
+df  used on input line 1075.
 (pdftex.def)             Requested size: 258.0pt x 266.05243pt.
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1054--1054
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1075--1075
  [][] 
  []
 
-<images/SCN2_AbsoluteErrorsInEstimationComparison.pdf, id=359, 939.51pt x 433.6
+<images/SCN2_AbsoluteErrorsInEstimationComparison.pdf, id=294, 939.51pt x 433.6
 2pt>
 File: images/SCN2_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type p
 df)
 <use images/SCN2_AbsoluteErrorsInEstimationComparison.pdf>
 Package pdftex.def Info: images/SCN2_AbsoluteErrorsInEstimationComparison.pdf  
-used on input line 1058.
+used on input line 1079.
 (pdftex.def)             Requested size: 258.0pt x 120.24237pt.
-<images/SCN12_AbsoluteErrorsInEstimationComparison.pdf, id=361, 939.51pt x 433.
+<images/SCN12_AbsoluteErrorsInEstimationComparison.pdf, id=296, 939.51pt x 433.
 62pt>
 File: images/SCN12_AbsoluteErrorsInEstimationComparison.pdf Graphic file (type 
 pdf)
 <use images/SCN12_AbsoluteErrorsInEstimationComparison.pdf>
 Package pdftex.def Info: images/SCN12_AbsoluteErrorsInEstimationComparison.pdf 
- used on input line 1058.
+ used on input line 1079.
 (pdftex.def)             Requested size: 258.0pt x 120.24237pt.
 File: images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (type
  pdf)
 <use images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
 Package pdftex.def Info: images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
-  used on input line 1063.
+  used on input line 1084.
 (pdftex.def)             Requested size: 258.0pt x 156.52383pt.
-<images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=364, 1156.32pt x 6
+<images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf, id=299, 1156.32pt x 6
 50.43pt>
 File: images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf Graphic file (typ
 e pdf)
 <use images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>
 Package pdftex.def Info: images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pd
-f  used on input line 1063.
+f  used on input line 1084.
 (pdftex.def)             Requested size: 258.0pt x 156.52383pt.
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1058--1064
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1079--1085
  [][] 
  []
 
 
-Overfull \hbox (10.50018pt too wide) in paragraph at lines 1058--1064
- [][][][] 
+Overfull \hbox (10.50018pt too wide) in paragraph at lines 1079--1085
+ [] 
  []
 
 [9]
@@ -612,14 +612,14 @@ Overfull \hbox (10.50018pt too wide) in paragraph at lines 1058--1064
 LaTeX Warning: Text page 10 contains only floats.
 
 
-Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+Overfull \vbox (6.0187pt too high) has occurred while \output is active []
 
 
 
 LaTeX Warning: Text page 10 contains only floats.
 
 
-Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+Overfull \vbox (6.0187pt too high) has occurred while \output is active []
 
 
 [10 <./images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN10
@@ -630,14 +630,14 @@ pdf> <./images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>]
 LaTeX Warning: Text page 11 contains only floats.
 
 
-Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+Overfull \vbox (6.0187pt too high) has occurred while \output is active []
 
 
 
 LaTeX Warning: Text page 11 contains only floats.
 
 
-Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+Overfull \vbox (6.0187pt too high) has occurred while \output is active []
 
 
 [11 <./images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN11
@@ -648,57 +648,64 @@ stimationComparison.pdf> <./images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore
 LaTeX Warning: Text page 12 contains only floats.
 
 
-Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+Overfull \vbox (6.0187pt too high) has occurred while \output is active []
 
 
 
 LaTeX Warning: Text page 12 contains only floats.
 
 
-Overfull \vbox (16.0187pt too high) has occurred while \output is active []
+Overfull \vbox (6.0187pt too high) has occurred while \output is active []
 
 
-[12 <./images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN2_
-AbsoluteErrorsInEstimationComparison.pdf> <./images/SCN12_AbsoluteErrorsInEstim
-ationComparison.pdf> <./images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf
->] (./bare_jrnl.bbl
+[12 <./images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN12
+_PrimaryScoreVsActualAccuracyComparitive.pdf> <./images/SCN2_AbsoluteErrorsInEs
+timationComparison.pdf> <./images/SCN12_AbsoluteErrorsInEstimationComparison.pd
+f> <./images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf>]
+(./bare_jrnl.bbl
 Missing character: There is no Ã in font ptmr7t!
 Missing character: There is no ¼ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no “ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ™ in font ptmr7t!
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no “ in font ptmr7t!
 Missing character: There is no Ã in font ptmr7t!
 Missing character: There is no ¼ in font ptmr7t!
 )
-<images/rohanBW.png, id=1140, 414.54875pt x 532.99126pt>
+<images/rohanBW.png, id=1138, 414.54875pt x 532.99126pt>
 File: images/rohanBW.png Graphic file (type png)
 <use images/rohanBW.png>
-Package pdftex.def Info: images/rohanBW.png  used on input line 1236.
+Package pdftex.def Info: images/rohanBW.png  used on input line 1324.
 (pdftex.def)             Requested size: 70.25728pt x 90.3308pt.
 File: images/rohanBW.png Graphic file (type png)
 <use images/rohanBW.png>
-Package pdftex.def Info: images/rohanBW.png  used on input line 1236.
+Package pdftex.def Info: images/rohanBW.png  used on input line 1324.
 (pdftex.def)             Requested size: 70.25728pt x 90.3308pt.
-<images/FrankJiangPhoto.pdf, id=1144, 301.125pt x 376.40625pt>
+<images/FrankJiangPhoto.pdf, id=1142, 301.125pt x 376.40625pt>
 File: images/FrankJiangPhoto.pdf Graphic file (type pdf)
 <use images/FrankJiangPhoto.pdf>
-Package pdftex.def Info: images/FrankJiangPhoto.pdf  used on input line 1240.
+Package pdftex.def Info: images/FrankJiangPhoto.pdf  used on input line 1328.
 (pdftex.def)             Requested size: 72.26688pt x 90.33359pt.
 File: images/FrankJiangPhoto.pdf Graphic file (type pdf)
 <use images/FrankJiangPhoto.pdf>
-Package pdftex.def Info: images/FrankJiangPhoto.pdf  used on input line 1240.
+Package pdftex.def Info: images/FrankJiangPhoto.pdf  used on input line 1328.
 (pdftex.def)             Requested size: 72.26688pt x 90.33359pt.
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
-<images/RobinDossPhoto.pdf, id=1147, 301.125pt x 376.40625pt>
+<images/RobinDossPhoto.pdf, id=1145, 301.125pt x 376.40625pt>
 File: images/RobinDossPhoto.pdf Graphic file (type pdf)
 <use images/RobinDossPhoto.pdf>
-Package pdftex.def Info: images/RobinDossPhoto.pdf  used on input line 1248.
+Package pdftex.def Info: images/RobinDossPhoto.pdf  used on input line 1336.
 (pdftex.def)             Requested size: 72.26688pt x 90.33359pt.
 File: images/RobinDossPhoto.pdf Graphic file (type pdf)
 <use images/RobinDossPhoto.pdf>
-Package pdftex.def Info: images/RobinDossPhoto.pdf  used on input line 1248.
+Package pdftex.def Info: images/RobinDossPhoto.pdf  used on input line 1336.
 (pdftex.def)             Requested size: 72.26688pt x 90.33359pt.
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
@@ -706,13 +713,13 @@ Missing character: There is no ™ in font ptmr7t!
  [13 <./images/rohanBW.png> <./images/FrankJiangPhoto.pdf> <./images/RobinDossP
 hoto.pdf>] (./bare_jrnl.aux) ) 
 Here is how much of TeX's memory you used:
- 3920 strings out of 494847
- 69482 string characters out of 6179080
- 143550 words of memory out of 5000000
- 7192 multiletter control sequences out of 15000+600000
+ 3924 strings out of 494847
+ 69601 string characters out of 6179080
+ 140436 words of memory out of 5000000
+ 7196 multiletter control sequences out of 15000+600000
  41794 words of font info for 71 fonts, out of 8000000 for 9000
  62 hyphenation exceptions out of 8191
- 44i,11n,49p,1429b,714s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,10n,49p,1413b,708s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/ba
 se/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
@@ -727,10 +734,10 @@ sfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_jrnl.pdf (13 pages, 1078354 bytes).
+Output written on bare_jrnl.pdf (13 pages, 1081750 bytes).
 PDF statistics:
- 1213 PDF objects out of 1440 (max. 8388607)
- 245 compressed objects within 3 object streams
+ 1211 PDF objects out of 1440 (max. 8388607)
+ 244 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 285 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 279 words of extra memory for PDF output out of 10000 (max. 10000000)
 

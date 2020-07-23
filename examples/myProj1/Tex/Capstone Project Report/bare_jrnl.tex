@@ -655,15 +655,16 @@ As mentioned previously, the logs at the RSU contain the calculated truth-values
 In order to share it's results the RSU calculates the primary score of each node for various window sizes i.e [10,50,250,1250] or such and sends these (with other metadata) along with the list of blacklisted nodes in a message to all nodes in the network. Whenever a message from an RSU is received the node can make a copy of the blacklist to ignore reports from the blacklisted nodes, until the blacklist is updated again and it can insert dummy messages/reports from various nodes into it's own storage by reverse calculating from the received primary scores and metadata in order to emulate the same knowledge.
 \subsection{Score Generation}
 \label{sec:PM:ScoreGeneretion}
-We describe the method of score-generation in this subsection. All data pertaining to reports and counters in this subsection and in Figures \ref{fig:ALG_ss} to \ref{fig:ALG_PSCalc} refers to the data collected in the staged basket up until the stage shift event occurs and the various score generation methods are called, unless otherwise specified to refer to data in Logs. 
+We describe the method of score-generation in this subsection. All data pertaining to reports and counters in this subsection and in Algorithms \ref{algo:mi} to \ref{algo:PSCalc} refers to the data collected in the staged basket up until the stage shift event occurs and the various score generation methods are called, unless otherwise specified to refer to data in Logs. 
 In order to generate an estimate of the overall accuracy of all the information shared by a node, the system calculates a truth-value for each message sent by that node based on all the feedback on that message, then the mean of the truth-values of a set of messages is taken. This estimate of the overall accuracy of a node is referred to as the Primary Score or the Reputation Score interchangeably in this article. Since the feedback may be deliberately falsified as well, it is first necessary to exclude the feedback from nodes that may be malicious. In order to distinguish nodes with false feedback another parameter is used which is referred to as the "Secondary Score" for a node.
 The following sub-sub-sections describe the methods for ultimately generating the Primary Score for each node.
 %\subsubsection{Reports Based (RAW) Score Generation}
 
 \subsubsection{Secondary Score Generation}
-When ever a new report is received by the RSU, counters corresponding to the number of positive and negative reports on a node and the number of positive and negative reports from a node on another node can be incremented. These counters can then be utilised to quickly calculate each node's median implied reputation score (MI Score), which is defined as the median of all the implied reputation scores for that node, where an implied reputation score of a node is the fraction of positive reports to total reports by another node. See Fig. \ref{fig:ALG_ss}, Alg. \ref{algo:mi}.
+When ever a new report is received by the RSU, counters corresponding to the number of positive and negative reports on a node and the number of positive and negative reports from a node on another node can be incremented. These counters can then be utilised to quickly calculate each node's median implied reputation score (MI Score), which is defined as the median of all the implied reputation scores for that node, where an implied reputation score of a node is the fraction of positive reports to total reports by another node. See %Fig. \ref{fig:ALG_ss}, 
+Alg. \ref{algo:mi}.
 \begin{figure}[!t]\removelatexerror
-	\caption{Calculation of Secondary Scores} 
+	%\caption{Calculation of Secondary Scores}
 	\label{fig:ALG_ss}
 \begin{algorithm}[H]
 	\caption{Calculate Median Implied Scores}  
@@ -737,12 +738,14 @@ When ever a new report is received by the RSU, counters corresponding to the num
 	%	\label{algo:relgraph}
 \end{algorithm}
 \end{figure}
-By assuming the MI score for each node as a benchmark, the deviation of the scores implied by a node's reports from the respective MI scores is utilised as a measure of the utility of it's reports. This deviation is measured in terms of Mean Squared Deviation per report and is termed as the Secondary Score of the Node. It is calculated for each node as described in Fig. \ref{fig:ALG_ss} Alg. \ref{algo:SSCalc}.
+By assuming the MI score for each node as a benchmark, the deviation of the scores implied by a node's reports from the respective MI scores is utilised as a measure of the utility of it's reports. This deviation is measured in terms of Mean Squared Deviation per report and is termed as the Secondary Score of the Node. It is calculated for each node as described in %Fig. \ref{fig:ALG_ss} 
+Algorithm \ref{algo:SSCalc}.
 
 \subsubsection{Blacklist Generation}
-The Secondary Scores are a measure of abnormality on the reports of a node. This measure may be used to scale down the effect of it's reports during the Primary Score generation, or more simply it may be used to blacklist nodes whose Secondary Score crosses a certain threshold. The latter approach was pursued by us during experimentation where a simple heuristic method of determining a dynamic threshold based on the distribution of the secondary scores was adopted. With the assumption of honest majority the median of secondary scores must not be more than that of a dishonest node with abnormally lower utility of reports. Therefore the threshold value was defined as a function of the median of all Secondary Scores and the median absolute deviation around that median. The process of the generation of the blacklist is as described in Fig. \ref{fig:ALG_blklist} Alg. \ref {algo:BLKLGen} 
+The Secondary Scores are a measure of abnormality on the reports of a node. This measure may be used to scale down the effect of it's reports during the Primary Score generation, or more simply it may be used to blacklist nodes whose Secondary Score crosses a certain threshold. The latter approach was pursued by us during experimentation where a simple heuristic method of determining a dynamic threshold based on the distribution of the secondary scores was adopted. With the assumption of honest majority the median of secondary scores must not be more than that of a dishonest node with abnormally lower utility of reports. Therefore the threshold value was defined as a function of the median of all Secondary Scores and the median absolute deviation around that median. The process of the generation of the blacklist is as described in %Fig. \ref{fig:ALG_blklist} 
+Algorithm \ref {algo:BLKLGen} 
 \begin{figure}[!t]\removelatexerror
-	\caption{Generation of Blacklist} 
+	%\caption{Generation of Blacklist} 
 	\label{fig:ALG_blklist}
 \begin{algorithm}[H]
 	\caption{Generate Blacklist}
@@ -773,10 +776,13 @@ The Secondary Scores are a measure of abnormality on the reports of a node. This
 \end{algorithm}
 \end{figure}
 \subsubsection{Primary Score Generation}
-The counters utilised during secondary score calculation may also be used to calculate estimates of accuracy for each node in constant time as described in Fig. \ref{fig:ALG_rawSCalc} - Alg. \ref{algo:rawSCalc}. This estimation is referred to as RAW Score and serves as a baseline during experiments, in itself the RAW score is highly inaccurate however it is quick to calculate therefore it may be employed at nodes where the usual method may not be applicable, this is detailed in Section \ref{sec:PM:usage:raw@node}.\\
-With all the reports on each message indicating it to be either true or false, the mean of these reports can be calculated and treated as a fuzzy truth-value of it. As mentioned earlier the primary score is an estimation of the accuracy of all the information shared by a node, this can be trivially calculated as the mean of the calculated truth-value of a set of messages by that node. During this calculation the reports by blacklisted nodes are ignored. The process of calculating these truth-values is as described in Fig. \ref{fig:ALG_PSCalc} - Alg. \ref{algo:TVCalc}. These calculated truth-values for messages are then inserted into the logs. From these logs we generate the Primary Score which is the mean of the truth-values of a set of messages. Calculating the Primary Score over the all the messages would give a close estimate of a nodes actual accuracy assuming it remains consistent however it is not likely to reflect a change in the accuracy of a node quickly. On the other hand the Primary Score of a node over a small window of message truth-values is likely to fluctuate more on every stage shift and not be an accurate estimate of the behaviour of a node however it would reflect a sudden change in th accuracy of a node quickly. The process of generating Primary Scores over a given window size for all nodes is described in Fig.\ref{fig:ALG_PSCalc} - Alg.\ref{algo:PSCalc}
+The counters utilised during secondary score calculation may also be used to calculate estimates of accuracy for each node in constant time as described in %Fig. \ref{fig:ALG_rawSCalc} - 
+Algorithm \ref{algo:rawSCalc}. This estimation is referred to as RAW Score and serves as a baseline during experiments, in itself the RAW score is highly inaccurate however it is quick to calculate therefore it may be employed at nodes where the usual method may not be applicable, this is detailed in Section \ref{sec:PM:usage:raw@node}.\\
+With all the reports on each message indicating it to be either true or false, the mean of these reports can be calculated and treated as a fuzzy truth-value of it. As mentioned earlier the primary score is an estimation of the accuracy of all the information shared by a node, this can be trivially calculated as the mean of the calculated truth-value of a set of messages by that node. During this calculation the reports by blacklisted nodes are ignored. The process of calculating these truth-values is as described in %Fig. \ref{fig:ALG_PSCalc} - 
+Algorithm \ref{algo:TVCalc}. These calculated truth-values for messages are then inserted into the logs. From these logs we generate the Primary Score which is the mean of the truth-values of a set of messages. Calculating the Primary Score over the all the messages would give a close estimate of a nodes actual accuracy assuming it remains consistent however it is not likely to reflect a change in the accuracy of a node quickly. On the other hand the Primary Score of a node over a small window of message truth-values is likely to fluctuate more on every stage shift and not be an accurate estimate of the behaviour of a node however it would reflect a sudden change in th accuracy of a node quickly. The process of generating Primary Scores over a given window size for all nodes is described in %Fig.\ref{fig:ALG_PSCalc} - 
+Algorithm\ref{algo:PSCalc}
 \begin{figure}[!t]\removelatexerror
-	\caption{RAW Score Calculation} 
+	%\caption{RAW Score Calculation} 
 	\label{fig:ALG_rawSCalc}
 \begin{algorithm}[H]
 	\caption{Calculate RAW Scores}  
@@ -798,7 +804,7 @@ With all the reports on each message indicating it to be either true or false, t
 \end{algorithm}
 \end{figure}
 \begin{figure}[!t]\removelatexerror
-	\caption{Primary Score Calculation} 
+	%\caption{Primary Score Calculation} 
 	\label{fig:ALG_PSCalc}
 \begin{algorithm}[H]
 	\caption{Calculate Truth-values}
@@ -855,7 +861,7 @@ With all the reports on each message indicating it to be either true or false, t
 \end{figure}
 \subsection{Usage}
 \label{sec:PM:usage}
-Trends in the Primary Scores of each nodes, over different window sizes, can be tracked to detect malicious behaviour such as perpetual inconsistency, drastic changes etc. besides the trivial case of being low. Likewise Secondary Scores can be monitored as well to identify and remove nodes from the network. In the process of calculating the MI Scores prior to Secondary Score Calculation (See Fig. \ref{fig:ALG_ss} Alg. \ref{algo:mi}) the distribution of the implied scores can be analysed by using statistical methods of multimodality detection such as Dip test\cite{c:DipTest} or Silverman's test\cite{c:SilvermansTest}, where a high degree of bi-modality can be an indicator of collusion to manipulate the reputation system. These options of deeper analysis have not been further explored in this article however have been mentioned here as an indicator of possible extension of the methods. In the scope of this article the calculated truth values are used to calculate the Primary Scores at various sizes and share them with the Nodes where their utilisation can be done in a number of 
+Trends in the Primary Scores of each nodes, over different window sizes, can be tracked to detect malicious behaviour such as perpetual inconsistency, drastic changes etc. besides the trivial case of being low. Likewise Secondary Scores can be monitored as well to identify and remove nodes from the network. In the process of calculating the MI Scores prior to Secondary Score Calculation (See Algorithm \ref{algo:mi}) the distribution of the implied scores can be analysed by using statistical methods of multimodality detection such as Dip test\cite{c:DipTest} or Silverman's test\cite{c:SilvermansTest}, where a high degree of bi-modality can be an indicator of collusion to manipulate the reputation system. These options of deeper analysis have not been further explored in this article however have been mentioned here as an indicator of possible extension of the methods. In the scope of this article the calculated truth values are used to calculate the Primary Scores at various sizes and share them with the Nodes where their utilisation can be done in a number of 
 %\underline{
 alternative
 %} 
@@ -887,6 +893,7 @@ Reports can be used by nodes to calculate Reputation Scores by using an adaptati
 		\item System is largely dependant on RSU, Estimates will become highly inaccurate over time without RSU updates
 	\end{itemize}
 \subsubsection{Usage at Nodes - Adapted Primary Score Algorithm}
+\label{sec:PM:usage:adapted@node}
 Reports can be used by nodes to calculate Reputation Scores by using an adaptation of the Primary Score Algorithm at the RSU (See Alg. \ref{algo:TVCalc} and \ref{algo:PSCalc}) where the average of the truth-values of the last $ w $ messages on a node is taken as a Primary score over a window size of $ w $. Messages with less than a certain number of reports on it can be kept in a buffer while more reports are received. Whenever a new report on a message is received it's truth-value is accordingly updated and so is the Primary Score over windows that includes the message. When a RSU Broadcast is receivedf, for the smallest window size $ w_1 $, $ w_1 $ messages with truth-value equal to $ Score^{Primary,w_1} $ are inserted. For each subsequent window size $ w_i $ for which a primary score exists on nodes, $ w_i - w_{i-1} $ messages with truth-value calculated as shown in \ref{eqn:PM:usage:tv_conv} are inserted. Reports from nodes that are blacklisted are purged and so are the reports on messages that have been evaluated by the RSU for Score generation. This data can be provided in the metadata of the RSU Broadcast.
 
 \textbf{Advantages:}
@@ -896,16 +903,29 @@ Reports can be used by nodes to calculate Reputation Scores by using an adaptati
 \end{itemize}
 \textbf{Disadvantages:} 
 \begin{itemize}
-	\item System would be adversely affected in the absence of RSU if malicious nodes send false feedback.
+	\item System would be adversely affected in the absence of RSU if malaicious nodes send false feedback.
 	\item Higher amount of computation and storage at node
 \end{itemize}
-
+\section{Comparison}
+\label{sec:comparison}
+Various Trust systems have been categorised and compared by Indu et al. \cite{c:compareTrust}. Based on the factors used in the aforementioned paper for classification, we compare our system in a qualitative manner with two other recent trust systems for IoVs. These systems are "Trust Management System for SIoV" by Fangyu Gai et al.\cite{c:trustSys_Ratee_Centralised_EntityBased} and  "Trust Management Scheme with Affinity Propagation" by Shu Yang et al.\cite{c:trustSys_affinity_Distributed_DataBased}, the former is referred to as the ratee based system and the latter is referred to as the affinity propagation model henceforth in this section.
+\subsection{Centralised vs. Self-Organised/Distributed Trust}
+Centralised Trust systems require a central body for calculation of trust. This can be a advantageous as higher computational and storage capabilities of RSUs can be leveraged, however, it also creates a single point of failure. %Further, it inherently would have more delay in propagation of trust when compared to distributed trust. 
+The ratee based system has the aforementioned drawback due to a centralised system, whereas the affinity propagation model does not. Our system is primarily centralised however it can function even in the absence of the RSUs as explained in section \ref{sec:PM:usage:adapted@node}, therefore it will not fail completely in case there is a failure at the RSU.
+\subsection{Data-Based vs. Entity-Based}
+In Entity-Based systems the trust is assigned to entities in the network i.e nodes/vehicles, as the name suggests, this can be useful for detection of malicious actors that can be evicted/ignored.
+In Data-Based systems the trust is assigned to the data received, these are most often distributed, quick and robust.
+In the comparison done by Indu et al.\cite{c:compareTrust} it was found that a majority of trust systems for IoV and VANETs are Data-Based. The affinity propagation model is Data-Based whereas the ratee based system is Entity-Based. It is speculated by Indu et al.\cite{c:compareTrust} that a combined system would be best suited for IoVs. Although the proposed system is entirely Entity-Based, it can be layered on top of a distributed and entirely Data-Based system where the trust score of the data recieved can be treated as the "truthfulness" of it, some thresholding can be applied to convert the trust score to true or false. This can be done to create a combined trust system from a Data-Based system thereby giving the advantages of having trust assigned to entities.
+ 
+\subsection{Rate of Trust Propagation}
+An important yardstick to evaluate a trust/reputation system is the rate of propagation. This can be viewed in two ways, one is how much time does it take for the reputation of a node to be affected according any other node after it starts to display anomalous behaviour and the second is how much does it take for the change reputation of some node to propagate across the network. 
+In the experimental analysis done by Indu et al.\cite{c:compareTrust} it was found that the rate of Propagation of Trust was slightly better in the affinity propagation model. In the ratee based model it was slower which can be attributed to the centralised system in it. In the system proposed in this article the rate of propagation is expected to be high due to two reasons, firstly, although reputation scores are broadcasted by a central unit, between broadcasts nodes can change the reputation score of vehicles according to them based on what they observe and also based on the constant feedback received from the network which ensures rapid propagation of information and, secondly, since the score is calculated for each node based on its previous messages in various window sizes, as explained in section \ref{sec:PM:usage}, the shortest sized window will be very sensitive to recent changes in behaviour and thus any anomalous behaviour would be detected before more than a few false messages are sent.
 \section{Experiments}
-\begin{figure}[!t]
-	\caption{Melbourne CBD Road Network}
-	\label{fig:CBDRoads}
+\begin{figure}[!t]	
 	%\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}
 	\includegraphics[width=\linewidth,keepaspectratio]{images/cbdmap.jpg}
+	\caption{Melbourne CBD Road Network}
+	\label{fig:CBDRoads}
 \end{figure}
 \label{sec:Experiments}
 The core system was tested by software simulation in various scenarios. Details on the simulation set-up and parameters can be found in Appendix \ref{apdx:simSetUp}. Three different cases in two separate environments were simulated to give a total of six scenarios. The Environments were as follows:
@@ -941,29 +961,32 @@ The various permutations of environments and situations were termed as follows.
 \section{Results}
 \label{sec:Results}
 \begin{figure}[!t]
-	\caption{Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error in Scenario 0 (above) and Scenario 1 (below)}
-	\label{fig:plot:comparitiveSCN0&1}
 	\includegraphics[width=0.5\textwidth, trim={80 20 80 30},clip]{images/SCN0_AbsoluteErrorsInEstimationComparison.pdf}
 	\includegraphics[width=0.5\textwidth, trim={80 20 80 30},clip]{images/SCN1_AbsoluteErrorsInEstimationComparison.pdf}
+	\caption{Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error in Scenario 0 (above) and Scenario 1 (below)}
+	\label{fig:plot:comparitiveSCN0&1}
 \end{figure}
 \begin{figure}[!t]
+	\includegraphics[width=0.5\textwidth, trim={100 50 185 72},clip]{images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 	\caption{Mean Secondary Score vs. Accuracy of Reports Sent, Scatter plot for Scenario 1}
 	\label{fig:plot:ssSCN1}
-	\includegraphics[width=0.5\textwidth, trim={100 50 185 72},clip]{images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 \end{figure}
-\begin{figure}[!t]
+\begin{figure}[!t]	
+	\includegraphics[width=0.5\textwidth, trim={100 50 185 72},clip]{images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 	\caption{Mean Secondary Score vs. Accuracy of Reports Sent, Scatter plot for Scenario 2}
 	\label{fig:plot:ssSCN2}
-	\includegraphics[width=0.5\textwidth, trim={100 50 185 72},clip]{images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 \end{figure}
-\begin{figure}[!t]
-	\caption{Primary Score vs. Actual Accuracy - Scatter plot for Scenario 12. Without blacklisting (above) and with blacklisting (below).}
-	\label{fig:plot:psscatterSCN12}
-	\includegraphics[width=\linewidth, trim={0 5 15 420}, clip]{images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf}
-\end{figure}
+%\begin{figure}[!t]
+%	\includegraphics[width=\linewidth, trim={0 5 15 420}, clip]{images/SCN12_PrimaryScoreVsActualAccuracyComparitive.pdf}
+%	\caption{Primary Score vs. Actual Accuracy - Scatter plot for Scenario 12. Without blacklisting (above) and with blacklisting (below).}
+%	\label{fig:plot:psscatterSCN12}
+%\end{figure}
 Various plots on the results of the simulations for each scenario are presented in Appendix. \ref{apdx:simResults}. It can be observed from the results that in the absence of falsified reports, the system can estimate the accuracy of almost all (~97\%) nodes in city environment and all nodes in highway environment with less than 10 absolute error where accuracy and scores were measured in percentage.\\
 Comparing the system's performance between scenario 0 and scenario 1 (where falsified reports were being sent) shows that significant percentage of scores are highly inaccurate for scores calculated without blacklisting. In scenario 0, 92.2\% of accuracy estimates without blacklisting had less then 10 absolute error (0.1 when normalised) where accuracy and scores were measured in percentage. In scenario 1 this dropped down to 25.5\% of estimates. Whereas the same measure for score calculation with blacklisting remained about the same. This can be seen in Fig. \ref{fig:plot:comparitiveSCN0&1}. Similar observations can be made when comparing scenario 10 and 11. This lack of degradation of the system can be attributed to it's ability to accurately identify nodes that send false feedback all the time. This can be seen in Fig. \ref{fig:plot:ssSCN1}, where nodes with low utility of reports were almost always blacklisted as indicated by the deep red colour.\\
-In Scenarios 2 and 12, where a more intelligent approach to sabotage the system's accuracy estimate (score) of a node was made by 20\% nodes in the network that acted like regular nodes except when sending reports on 5\% nodes that were the targets for the collusion, the accuracy of those target nodes was highly inaccurate as expected, this can be seen in Fig. \ref{fig:plot:psscatterSCN12} (lower) where the accuracy of 5 nodes was uniquely inaccurate. With blacklisting, however, the errors were minimal as can be observed in Fig. \ref{fig:plot:psscatterSCN12} (upper). This lack of error can again be attributed to the system's ability to accurately identify and blacklist nodes that send false feedback even some of the times. This can be observed from in Fig. \ref{fig:plot:ssSCN2} where nodes with slightly lower utility of reports blacklisted sometimes to most often as indicated by the light blue to red colours. It is important to note that the special collusion detection methods of multimodality detection\cite{c:DipTest}\cite{c:SilvermansTest} as explained in section \ref{sec:PM:usage} was not leveraged during experiments.
+In Scenarios 2 and 12, where a more intelligent approach to sabotage the system's accuracy estimate (score) of a node was made by 20\% nodes in the network that acted like regular nodes except when sending reports on 5\% nodes that were the targets for the collusion, the accuracy of those target nodes was highly inaccurate as expected, %this can be seen in Fig. \ref{fig:plot:psscatterSCN12} (lower) where the accuracy of five nodes was uniquely inaccurate.
+around 30\% absolute deviation from the actual value.
+With blacklisting, however, the errors were minimal %as can be observed in Fig. \ref{fig:plot:psscatterSCN12} (upper). 
+, around 6\% absolute deviation from the actual value. This lack of error can again be attributed to the system's ability to accurately identify and blacklist nodes that send false feedback even some of the times. This can be observed from in Fig. \ref{fig:plot:ssSCN2} where nodes with slightly lower utility of reports blacklisted sometimes to most often as indicated by the light blue to red colours. It is important to note that the special collusion detection methods of multimodality detection\cite{c:DipTest}\cite{c:SilvermansTest} as explained in section \ref{sec:PM:usage} was not leveraged during experiments.
 
 \section{Conclusion}
 \label{sec:Conclusion}
@@ -1009,8 +1032,6 @@ Other nodes' behaviour was different from a regular in only ways previously expl
 The the performance of the system in Situations 0 (Scenario 0 \& 10), 1 (Scenario 1 \& 11) and 2 (Scenario 2 \& 12) is visualised in Figures  \ref{fig:apdx:ev0}, \ref{fig:apdx:ev1} and \ref{fig:apdx:ev2} respectively.
 In these figures "Message Average Based Estimation with Blacklisting" refers to the proposed system, "Message Average Based Estimation without Blacklisting" refers to score calculation without blacklisting and "Reports Based Estimation" refers to the RAW Score (See Section \ref{sec:PM:ScoreGeneretion})
 \begin{figure*}[!ht]
-	\caption{Graphs for Results of Scenario 0 and 10. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 0 (left) and Scenario 10 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 0 (left) and Scenario 10 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 0 (left) and Scenario 10 (right)}
-	\label{fig:apdx:ev0}
 	\centering
 	\subfloat[]{
 		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN0_PrimaryScoreVsActualAccuracyComparitive.pdf}
@@ -1025,10 +1046,10 @@ In these figures "Message Average Based Estimation with Blacklisting" refers to 
 		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN0_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 	}
+	\caption{Graphs for Results of Scenario 0 and 10. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 0 (left) and Scenario 10 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 0 (left) and Scenario 10 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 0 (left) and Scenario 10 (right)}
+	\label{fig:apdx:ev0}
 \end{figure*}
 \begin{figure*}[!ht]
-	\caption{Graphs for Results of Scenario 1 and 11. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 1 (left) and Scenario 11 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 1 (left) and Scenario 11 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 1 (left) and Scenario 11 (right)}
-	\label{fig:apdx:ev1}
 	\centering
 	\subfloat[]{
 		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf}
@@ -1043,10 +1064,10 @@ In these figures "Message Average Based Estimation with Blacklisting" refers to 
 		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 	}
+	\caption{Graphs for Results of Scenario 1 and 11. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 1 (left) and Scenario 11 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 1 (left) and Scenario 11 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 1 (left) and Scenario 11 (right)}
+	\label{fig:apdx:ev1}
 \end{figure*}
 \begin{figure*}[!ht]
-	\caption{Graphs for Results of Scenario 2 and 12. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 2 (left) and Scenario 12 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 2 (left) and Scenario 12 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 2 (left) and Scenario 12 (right)}
-	\label{fig:apdx:ev2}
 	\centering
 	\subfloat[]{
 		\includegraphics[width=0.5\linewidth, trim={0 5 15 420}, clip]{images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf}
@@ -1061,6 +1082,8 @@ In these figures "Message Average Based Estimation with Blacklisting" refers to 
 		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 		\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN12_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
 	}
+	\caption{Graphs for Results of Scenario 2 and 12. (a) Primary Score vs. Actual Accuracy - Scatter plot, without (above) and with (below) blacklisting for Scenario 2 (left) and Scenario 12 (right) (b) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error for Scenario 2 (left) and Scenario 12 (right) (c) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot for Scenario 2 (left) and Scenario 12 (right)}
+	\label{fig:apdx:ev2}
 \end{figure*}
 \iffalse
 \begin{figure*}[!ht]
@@ -1089,7 +1112,72 @@ In these figures "Message Average Based Estimation with Blacklisting" refers to 
 		\includegraphics[width=0.5\linewidth, trim={0 5 15 50}, clip]{images/SCN1_PrimaryScoreVsActualAccuracyComparitive.pdf}
 		\label{fig_first_case}
 	}
-	\subfloat[]{
+	\s
+	\includegraphics[width=0.5\linewidth, trim={80 95 100 100}, clip]{images/SCN1_PrimaryScoreKDEComparitive.pdf}
+}
+\hfill
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN1_AbsoluteErrorsInEstimationComparison.pdf}
+}
+\subfloat[]{
+\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN1_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
+}
+\end{figure*}
+\begin{figure*}[!ht]
+\caption{Graphs for Results of Scenario 2). (a) Primary Score vs. Actual Accuracy - Scatter plot. (b) Primary Score and Actual Accuracy KDE. An Indicator of closeness of estimates. (c) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error. (d) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot.}
+\label{fig:apdx:sc2}
+\centering
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={0 5 15 50}, clip]{images/SCN2_PrimaryScoreVsActualAccuracyComparitive.pdf}
+}
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={80 95 100 100}, clip]{images/SCN2_PrimaryScoreKDEComparitive.pdf}
+}
+\hfill
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN2_AbsoluteErrorsInEstimationComparison.pdf}
+}
+\subfloat[]{
+\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN2_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
+}
+\end{figure*}
+\begin{figure*}[!ht]
+\caption{Graphs for Results of Scenario 10. (a) Primary Score vs. Actual Accuracy - Scatter plot. (b) Primary Score and Actual Accuracy KDE. An Indicator of closeness of estimates. (c) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error. (d) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot.}
+\label{fig:apdx:sc10}
+\centering
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={0 5 15 50}, clip]{images/SCN10_PrimaryScoreVsActualAccuracyComparitive.pdf}
+}
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={80 95 100 100}, clip]{images/SCN10_PrimaryScoreKDEComparitive.pdf}
+}
+\hfill
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN10_AbsoluteErrorsInEstimationComparison.pdf}
+}
+\subfloat[]{
+\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN10_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
+}
+\end{figure*}
+\begin{figure*}[!ht]
+\caption{Graphs for Results of Scenario 11. (a) Primary Score vs. Actual Accuracy - Scatter plot. (b) Primary Score and Actual Accuracy KDE. An Indicator of closeness of estimates. (c) Absolute error (difference between actual accuracy of node and estimated accuracy) vs. Percentage of nodes for which there was less than 'x'\% error. (d) Mean Secondary Score vs. Accuracy of Reports Sent - Scatter plot.}
+\label{fig:apdx:sc11}
+\centering
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={0 5 15 50}, clip]{images/SCN11_PrimaryScoreVsActualAccuracyComparitive.pdf}
+}
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={80 95 100 100}, clip]{images/SCN11_PrimaryScoreKDEComparitive.pdf}
+}
+\hfill
+\subfloat[]{
+\includegraphics[width=0.5\linewidth, trim={80 25 90 50}, clip]{images/SCN11_AbsoluteErrorsInEstimationComparison.pdf}
+}
+\subfloat[]{
+\includegraphics[width=0.5\linewidth,trim={100 50 185 72}, clip]{images/SCN11_ReportingAccuracy_Vs_AvgSecondaryScore.pdf}
+}
+\end{figure*}
+\begin{figure*}[!ht]ubfloat[]{
 		\includegraphics[width=0.5\linewidth, trim={80 95 100 100}, clip]{images/SCN1_PrimaryScoreKDEComparitive.pdf}
 	}
 	\hfill
@@ -1203,7 +1291,7 @@ In these figures "Message Average Based Estimation with Blacklisting" refers to 
 % http://www.michaelshell.org/tex/ieeetran/bibtex/
 \newpage
 \vfill\hfill
-\newpage
+%\newpage
 \hfill
 \bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
